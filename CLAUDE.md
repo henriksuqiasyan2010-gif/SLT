@@ -26,7 +26,8 @@ Read `PHASES.md` (the plan) and `STATUS.md` (progress) at the start of every ses
 - Pose wrists (15, 16) are present in every frame of the sample.
 - Full dataset (kernel `asl-stats`, `reports/stats/`): 94,477 clips, 250 signs, 21 participants; 299-415 clips per sign (median 381.5); every parquet has a multiple of 543 rows; no clip without hands; frame numbers are contiguous in 99.95% of clips.
 - **Clip length (frames): median 22, mean 37.9, p75 44, p90 92, p95 135, p99 219, min 2, max 537.** Frames with a detected hand: median 15, p90 54. Phase 2 `T_FIX` is chosen from this (about the median, multiple of 8 → 24; check against p75 = 44 before fixing it).
-- Dominant hand: right in 57.5% of clips, left in 42.4% — handedness cannot be ignored (Phase 2 decision).
+- Dominant hand: right in 57.5% of clips, left in 42.4% — handedness cannot be ignored (Phase 2 decision). Full dataset; dominant = hand detected in more frames (0.13% ties).
+- Both hands (full dataset, from per-clip `left_frames`/`right_frames`/`hand_frames` in `reports/stats/stats.csv`): 95.8% of clips only ever show one hand; 4.2% (3,993) show both hands at some point; 2.5% (2,402) have at least one frame with both hands at once; only 0.5% of all hand frames have both hands. So "one hand per clip" is the norm but not a rule — features must handle both hands present.
 
 ## Decisions
 

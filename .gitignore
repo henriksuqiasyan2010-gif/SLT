@@ -15,6 +15,7 @@ recordings/
 models/
 logs/
 reports/stats/*.zip
+reports/stats/*.csv
 
 # Secrets — never commit
 kaggle.json

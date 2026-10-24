@@ -10,8 +10,14 @@ from asl.landmarks_io import FACE, LEFT_HAND, POSE, RIGHT_HAND
 HAND_EDGES = [(0, 1), (1, 2), (2, 3), (3, 4), (0, 5), (5, 6), (6, 7), (7, 8), (5, 9), (9, 10),
               (10, 11), (11, 12), (9, 13), (13, 14), (14, 15), (15, 16), (13, 17), (0, 17),
               (17, 18), (18, 19), (19, 20)]
+HAND_PALM = [0, 1, 5, 9, 13, 17]
 # MediaPipe pose indices: shoulders 11/12, elbows 13/14, wrists 15/16, hips 23/24.
 POSE_EDGES = [(11, 12), (11, 13), (13, 15), (12, 14), (14, 16), (11, 23), (12, 24), (23, 24)]
+POSE_JOINTS = [11, 12, 13, 14, 15, 16]
+FOREARMS = {"left_hand": (13, 15), "right_hand": (14, 16)}  # (elbow, wrist) per hand block
+TORSO = [11, 12, 24, 23]
+SHOULDERS = (11, 12)
+CHIN = 152
 # Pose-based hand stub (wrist, pinky, index, thumb) drawn when the hand block itself is not detected,
 # e.g. the resting hand. Pose indices: left 15/17/19/21, right 16/18/20/22.
 POSE_HAND_STUBS = {"left_hand": (15, 17, 19, 21), "right_hand": (16, 18, 20, 22)}
@@ -32,35 +38,109 @@ BROW_A = [46, 53, 52, 65, 55]
 BROW_B = [276, 283, 282, 295, 285]
 NOSE_BRIDGE = [168, 6, 197, 195, 5, 4]
 NOSE_BASE = [98, 97, 2, 326, 327]
-FACE_FEATURES = [FACE_OVAL, EYE_A, EYE_B, BROW_A, BROW_B, NOSE_BRIDGE, NOSE_BASE]
+FACE_FEATURES = [EYE_A, EYE_B, BROW_A, BROW_B, NOSE_BRIDGE, NOSE_BASE]
 
 # Lips alone look odd, so they are only drawn together with the rest of the face.
 DRAW_FACE = True
 
-COLORS = {"left_hand": "tab:red", "right_hand": "tab:blue", "pose": "0.4", "lips": "tab:purple",
-          "face": "0.6"}
+# One ink colour for body and face so the figure reads as one person; hands are coloured so the
+# active hand stands out. Line widths are in points at the GIF's dpi.
+INK = "#1d2126"
+LEFT_COLOR = "#c8402f"
+RIGHT_COLOR = "#2463a8"
+STYLES = {
+    "body": {"color": INK, "lw": 3.4},
+    "head": {"color": INK, "lw": 2.4},
+    "face": {"color": INK, "lw": 1.3},
+    "lips": {"color": "#8e2a3a", "lw": 1.5},
+    "left_hand": {"color": LEFT_COLOR, "lw": 2.0},
+    "right_hand": {"color": RIGHT_COLOR, "lw": 2.0},
+    "left_hand_stub": {"color": LEFT_COLOR, "lw": 2.0, "alpha": 0.4},
+    "right_hand_stub": {"color": RIGHT_COLOR, "lw": 2.0, "alpha": 0.4},
+}
+TORSO_FILL_ALPHA = 0.07
+PALM_FILL_ALPHA = 0.18
+BODY_JOINT_SIZE = 5.5
+HAND_JOINT_SIZE = 2.2
+BACKGROUND = "white"
+
+
+def _valid(p) -> bool:
+    return not np.isnan(p[:2]).any()
 
 
 def segments(frame: np.ndarray):
-    """Yield (color, xs, ys) polylines for one (543, 3) frame. Missing points are skipped."""
-    def edges(block, pairs, color):
+    """Yield (part, xs, ys) line segments for one (543, 3) frame; `part` is a key of STYLES.
+
+    Missing points are skipped.
+    """
+    def edges(block, pairs, part):
         pts = frame[block]
         for a, b in pairs:
-            if not (np.isnan(pts[a, :2]).any() or np.isnan(pts[b, :2]).any()):
-                yield color, [pts[a, 0], pts[b, 0]], [pts[a, 1], pts[b, 1]]
+            if _valid(pts[a]) and _valid(pts[b]):
+                yield part, [pts[a, 0], pts[b, 0]], [pts[a, 1], pts[b, 1]]
 
-    yield from edges(POSE, POSE_EDGES, COLORS["pose"])
+    def polyline(line, part):
+        return edges(FACE, list(zip(line[:-1], line[1:])), part)
+
+    pose = frame[POSE]
+    hands = {"left_hand": frame[LEFT_HAND], "right_hand": frame[RIGHT_HAND]}
+    for a, b in POSE_EDGES:
+        pa, pb = pose[a], pose[b]
+        # Pose and hand wrists differ by a few pixels; end the forearm at the hand wrist so they join.
+        for name, (elbow, wrist) in FOREARMS.items():
+            if (a, b) == (elbow, wrist) and _valid(hands[name][0]):
+                pb = hands[name][0]
+        if _valid(pa) and _valid(pb):
+            yield "body", [pa[0], pb[0]], [pa[1], pb[1]]
+    if DRAW_FACE:
+        l_sh, r_sh, chin = pose[SHOULDERS[0]], pose[SHOULDERS[1]], frame[FACE][CHIN]
+        if _valid(l_sh) and _valid(r_sh) and _valid(chin):
+            mid = (l_sh + r_sh) / 2
+            yield "body", [mid[0], chin[0]], [mid[1], chin[1]]  # neck
+        yield from polyline(FACE_OVAL, "head")
+        for line in FACE_FEATURES:
+            yield from polyline(line, "face")
+        for loop in (LIPS_OUTER, LIPS_INNER):
+            yield from polyline(loop, "lips")
     for name, block in (("left_hand", LEFT_HAND), ("right_hand", RIGHT_HAND)):
         if np.isnan(frame[block, :2]).all():
             idx = POSE_HAND_STUBS[name]
-            yield from edges(POSE, [(idx[a], idx[b]) for a, b in STUB_EDGES], COLORS[name])
+            yield from edges(POSE, [(idx[a], idx[b]) for a, b in STUB_EDGES], f"{name}_stub")
         else:
-            yield from edges(block, HAND_EDGES, COLORS[name])
-    if DRAW_FACE:
-        for line in FACE_FEATURES:
-            yield from edges(FACE, list(zip(line[:-1], line[1:])), COLORS["face"])
-        for loop in (LIPS_OUTER, LIPS_INNER):
-            yield from edges(FACE, list(zip(loop[:-1], loop[1:])), COLORS["lips"])
+            yield from edges(block, HAND_EDGES, name)
+
+
+def draw_frame(ax, frame: np.ndarray) -> None:
+    """Draw one (543, 3) frame on a matplotlib axis (fills, lines, joint dots)."""
+    from matplotlib.patches import Polygon
+
+    def fill(points, color, alpha):
+        points = points[:, :2]
+        if not np.isnan(points).any():
+            ax.add_patch(Polygon(points, closed=True, facecolor=color, edgecolor="none", alpha=alpha))
+
+    pose = frame[POSE]
+    fill(pose[TORSO], INK, TORSO_FILL_ALPHA)
+    for name, block in (("left_hand", LEFT_HAND), ("right_hand", RIGHT_HAND)):
+        fill(frame[block][HAND_PALM], STYLES[name]["color"], PALM_FILL_ALPHA)
+
+    for part, xs, ys in segments(frame):
+        st = STYLES[part]
+        ax.plot(xs, ys, color=st["color"], linewidth=st["lw"], alpha=st.get("alpha", 1.0),
+                solid_capstyle="round", solid_joinstyle="round")
+
+    # Skip the pose wrist dot where the detected hand replaces it.
+    shown = [j for j in POSE_JOINTS
+             if not any(j == FOREARMS[n][1] and _valid(frame[b][0])
+                        for n, b in (("left_hand", LEFT_HAND), ("right_hand", RIGHT_HAND)))]
+    joints = pose[shown]
+    joints = joints[~np.isnan(joints[:, :2]).any(axis=1)]
+    ax.plot(joints[:, 0], joints[:, 1], "o", color=INK, markersize=BODY_JOINT_SIZE)
+    for name, block in (("left_hand", LEFT_HAND), ("right_hand", RIGHT_HAND)):
+        pts = frame[block]
+        pts = pts[~np.isnan(pts[:, :2]).any(axis=1)]
+        ax.plot(pts[:, 0], pts[:, 1], "o", color=STYLES[name]["color"], markersize=HAND_JOINT_SIZE)
 
 
 def display_bounds(clip: np.ndarray, margin: float = 0.05):
@@ -84,7 +164,9 @@ def save_gif(clip: np.ndarray, out_path, title: str = "", fps: int = 15) -> None
     from matplotlib.animation import FuncAnimation, PillowWriter
 
     x0, x1, y0, y1 = display_bounds(clip)
-    fig, ax = plt.subplots(figsize=(4, 4 * (y1 - y0) / max(x1 - x0, 1e-6)), dpi=80)
+    fig, ax = plt.subplots(figsize=(4, 4 * (y1 - y0) / max(x1 - x0, 1e-6)), dpi=100)
+    fig.patch.set_facecolor(BACKGROUND)
+    fig.subplots_adjust(left=0.02, right=0.98, bottom=0.02, top=0.92)
 
     def draw(t):
         ax.clear()
@@ -92,9 +174,9 @@ def save_gif(clip: np.ndarray, out_path, title: str = "", fps: int = 15) -> None
         ax.set_ylim(y1, y0)  # image coordinates: y grows downward
         ax.set_aspect("equal")
         ax.axis("off")
-        ax.set_title(f"{title}  {t + 1}/{len(clip)}", fontsize=9)
-        for color, xs, ys in segments(clip[t]):
-            ax.plot(xs, ys, color=color, linewidth=2)
+        ax.set_title(title, fontsize=13, color=INK, fontweight="bold", loc="left")
+        ax.set_title(f"{t + 1}/{len(clip)}", fontsize=9, color="#8a9099", loc="right")
+        draw_frame(ax, clip[t])
 
     anim = FuncAnimation(fig, draw, frames=len(clip))
     anim.save(str(out_path), writer=PillowWriter(fps=fps))
