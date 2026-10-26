@@ -17,6 +17,7 @@ logs/
 reports/stats/*.zip
 reports/stats/*.csv
 reports/check/*.csv
+reports/preprocess/*.csv
 
 # Secrets — never commit
 kaggle.json

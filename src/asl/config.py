@@ -85,3 +85,7 @@ REFERENCE_MIN_HAND_SHARE = 0.5  # the hand must be found in most frames of a ref
 TRIM_IDLE_MIN_SPEED = 0.3  # shoulder widths per second
 TRIM_IDLE_SMOOTH_S = 0.2  # moving average of the speed over this window
 TRIM_IDLE_MARGIN_S = 0.1  # kept before the first and after the last moving frame
+
+# --- Inference -------------------------------------------------------------------
+INFERENCE_THREADS = 2  # onnxruntime intra-op threads; Holistic needs the other cores
+MAX_INFERENCE_MS = 50
