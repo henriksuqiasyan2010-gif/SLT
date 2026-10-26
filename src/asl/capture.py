@@ -216,6 +216,13 @@ def load_recording(npy_path):
     return clip, meta
 
 
+def recording_aspect(meta: dict) -> float:
+    """Frame width / height of a recording (delivered size if known, else requested, else config)."""
+    w = meta.get("frame_width") or meta.get("width")
+    h = meta.get("frame_height") or meta.get("height")
+    return w / h if w and h else config.CAMERA_ASPECT
+
+
 class RecordedSource(LandmarkSource):
     """Replays a recording; with realtime=True frames come at their original pace."""
 

@@ -92,6 +92,11 @@ _SUB_POSE = {p: N_POINTS - len(FACE_POINTS) - len(POSE_POINTS) + i for i, p in e
 L_SHOULDER, R_SHOULDER = _SUB_POSE[11], _SUB_POSE[12]
 
 
+def dataset_aspect(participant_id) -> float:
+    """Frame width / height of a dataset participant's videos (see config.DATASET_ASPECT_BY_PARTICIPANT)."""
+    return config.DATASET_ASPECT_BY_PARTICIPANT.get(int(participant_id), config.DATASET_ASPECT)
+
+
 def feature_dim(use_z: bool = config.FEATURES_USE_Z,
                 fingertips: bool = config.FEATURES_FINGERTIP_DISTANCES) -> int:
     d = 3 if use_z else 2
@@ -113,6 +118,51 @@ def trim_to_hands(clip: np.ndarray):
     if len(idx) == 0:
         return 0, len(clip)
     return int(idx[0]), int(idx[-1]) + 1
+
+
+def hand_speed(clip: np.ndarray, fps: float, aspect: float = config.DATASET_ASPECT) -> np.ndarray:
+    """(T,) speed of the faster hand between frame t-1 and t in shoulder widths per second:
+    mean displacement of its 21 points (so finger motion counts, not only the wrist).
+    NaN where no hand is visible in both frames; speed[0] = NaN."""
+    pts = clip[:, :, :2].astype(np.float64)
+    pts[..., 1] /= aspect
+    sh = pts[:, POSE][:, [11, 12]]
+    widths = np.linalg.norm(sh[:, 0] - sh[:, 1], axis=1)
+    widths = widths[~np.isnan(widths)]
+    sw = float(np.median(widths)) if len(widths) else 0.0
+    if sw <= config.FEATURES_MIN_SCALE:  # no shoulders: same fallback scale as extract()
+        sw = _center_scale(pts[:, SUBSET])[1]
+    speeds = []
+    for block in (LEFT_HAND, RIGHT_HAND):
+        step = np.linalg.norm(np.diff(pts[:, block], axis=0), axis=-1).mean(axis=1)
+        speeds.append(step * fps / sw)
+    with np.errstate(invalid="ignore"):
+        fastest = np.fmax(speeds[0], speeds[1])
+    return np.concatenate([[np.nan], fastest])
+
+
+def trim_idle(clip: np.ndarray, fps: float, aspect: float = config.DATASET_ASPECT):
+    """(start, stop) without the idle start and end: frames where no hand is visible or the hands
+    are almost still (smoothed speed < TRIM_IDLE_MIN_SPEED), plus a TRIM_IDLE_MARGIN_S margin.
+    Falls back to trim_to_hands() when no frame moves. Needs the frame rate; extract() does not."""
+    start, stop = trim_to_hands(clip)
+    speed = hand_speed(clip, fps, aspect)
+    # np.convolve(mode="same") returns max(len, k) values, so the window must not exceed the clip
+    k = max(1, min(int(round(config.TRIM_IDLE_SMOOTH_S * fps)), len(clip)))
+    valid = ~np.isnan(speed)
+    kernel = np.ones(k)
+    num = np.convolve(np.where(valid, speed, 0.0), kernel, mode="same")
+    den = np.convolve(valid.astype(np.float64), kernel, mode="same")
+    with np.errstate(invalid="ignore", divide="ignore"):
+        smooth = num / den
+    moving = np.flatnonzero(valid & (smooth >= config.TRIM_IDLE_MIN_SPEED))
+    if len(moving) == 0:
+        return start, stop
+    margin = int(round(config.TRIM_IDLE_MARGIN_S * fps))
+    # speed[t] is the step from t-1 to t, so the motion starts at frame t-1
+    first = max(start, moving[0] - 1 - margin)
+    last = min(stop, moving[-1] + 1 + margin)
+    return int(first), int(last)
 
 
 def dominant_is_left(clip: np.ndarray) -> bool:

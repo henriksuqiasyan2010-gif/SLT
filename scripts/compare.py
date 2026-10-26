@@ -14,8 +14,8 @@ import numpy as np
 import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
-from asl import config, skeleton  # noqa: E402
-from asl.capture import load_recording  # noqa: E402
+from asl import config, reference, skeleton  # noqa: E402
+from asl.capture import load_recording, recording_aspect  # noqa: E402
 from asl.landmarks_io import LEFT_HAND, POSE, RIGHT_HAND, load_clip  # noqa: E402
 
 L_SHOULDER, R_SHOULDER = 11, 12
@@ -51,6 +51,16 @@ def describe(clip):
     return out
 
 
+def reference_dataset_clip(sign, active=None):
+    """The reference clip of the sign (asl/reference.py rule, same as the GIFs the user learns from)
+    with the same dominant hand as the recording; local sample clip if stats.csv is missing."""
+    if not config.DATASET_STATS_CSV.exists():
+        return best_dataset_clip(sign, active)
+    from _kaggle import download_competition_file
+    row = reference.pick_reference(reference.load_stats(), sign, prefer_right=active != "left_hand")
+    return download_competition_file(row["path"])
+
+
 def best_dataset_clip(sign, active=None):
     """Local dataset clip of the sign with the most hand frames; prefers the same active hand as
     `active` ("left_hand" / "right_hand"), so handedness differences between people don't look like
@@ -64,32 +74,34 @@ def best_dataset_clip(sign, active=None):
     return max(same or paths, key=lambda p: max(hand_frames(load_clip(p)).values()))
 
 
-def save_side_by_side(a, b, titles, out_path, fps=15):
+def save_side_by_side(a, b, titles, out_path, aspects=(1.0, 1.0)):
+    """Both clips stretched to the same number of frames (synchronized start and end); the GIF runs
+    at the dataset clip's real speed, so the recording is shown faster or slower than it was."""
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
-    from matplotlib.animation import FuncAnimation, PillowWriter
 
     n = max(len(a), len(b))
     ia = np.linspace(0, len(a) - 1, n).round().astype(int)
     ib = np.linspace(0, len(b) - 1, n).round().astype(int)
-    bounds = [skeleton.display_bounds(a), skeleton.display_bounds(b)]
+    bounds = [skeleton.display_bounds(a, aspect=aspects[0]), skeleton.display_bounds(b, aspect=aspects[1])]
     fig, axes = plt.subplots(1, 2, figsize=(8, 4.4), dpi=90)
     fig.patch.set_facecolor(skeleton.BACKGROUND)
     fig.subplots_adjust(left=0.01, right=0.99, bottom=0.01, top=0.9, wspace=0.05)
 
-    def draw(t):
-        for ax, clip, idx, (x0, x1, y0, y1), title in zip(axes, (a, b), (ia, ib), bounds, titles):
+    images = []
+    for t in range(n):
+        for ax, clip, idx, (x0, x1, y0, y1), title, asp in zip(axes, (a, b), (ia, ib), bounds, titles, aspects):
             ax.clear()
             ax.set_xlim(x0, x1)
             ax.set_ylim(y1, y0)
             ax.set_aspect("equal")
             ax.axis("off")
             ax.set_title(title, fontsize=11, color=skeleton.INK, loc="left")
-            skeleton.draw_frame(ax, clip[idx[t]])
-
-    FuncAnimation(fig, draw, frames=n).save(str(out_path), writer=PillowWriter(fps=fps))
+            skeleton.draw_frame(ax, clip[idx[t]], asp)
+        images.append(skeleton._figure_image(fig))
     plt.close(fig)
+    skeleton.save_frames_gif(images, out_path, fps=config.DATASET_FPS_ASSUMED * n / len(a))
 
 
 def print_report(name, d):
@@ -119,7 +131,7 @@ def main():
     for rec in recs:
         clip, meta = load_recording(rec)
         info = describe(clip)
-        ds_path = args.dataset or best_dataset_clip(args.sign, info["active"])
+        ds_path = args.dataset or reference_dataset_clip(args.sign, info["active"])
         ds = load_clip(ds_path)
         ds_info = describe(ds)
         print_report(f"dataset {ds_path.parent.name}/{ds_path.name}", ds_info)
@@ -129,7 +141,8 @@ def main():
         print(f"    active hand vs dataset clip: {'MATCH' if same else 'DIFFERENT'}; "
               f"side of body on the image: {'MATCH' if side_same else 'DIFFERENT'}")
         out = out_dir / f"{rec.stem}.gif"
-        save_side_by_side(ds, clip, [f"dataset: {args.sign}", f"you: {rec.stem}"], out)
+        save_side_by_side(ds, clip, [f"dataset: {args.sign}", f"you: {rec.stem}"], out,
+                          aspects=(config.DATASET_ASPECT, recording_aspect(meta)))
         print(f"    gif: {out}")
 
 

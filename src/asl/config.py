@@ -58,6 +58,10 @@ FEATURES_FINGERTIP_DISTANCES = True  # 10 pairwise fingertip distances per hand
 # 0.71-0.81 per participant -> portrait 3:4. Normalized y is multiplied by 1/aspect so that
 # x and y share one unit (fraction of the image width).
 DATASET_ASPECT = 3 / 4
+# Participants whose frames are clearly not 3:4: kernel asl-check measured two face/body proportions
+# for all 21 participants; these 3 deviate > 15% from the median on BOTH rulers (camera, not anatomy).
+# Value = 0.75 x mean relative deviation of the two rulers. The other 18 use DATASET_ASPECT.
+DATASET_ASPECT_BY_PARTICIPANT = {30680: 0.485, 62590: 0.600, 32319: 0.923}
 CAMERA_ASPECT = CAMERA_WIDTH / CAMERA_HEIGHT
 # Only for reports (clip length in seconds); the dataset frame rate is not documented.
 DATASET_FPS_ASSUMED = 30.0
@@ -69,3 +73,15 @@ FEATURES_FALLBACK_SCALE_K = 3.35  # p10-p90 2.4-5.8: rough, only used without sh
 # T_FIX grid (2 of 64 = ~3% of the gesture): Holistic jitters frame to frame and the jitter differs
 # between 30 fps (dataset) and 12-18 fps (our camera). Positions themselves are not smoothed.
 FEATURES_VELOCITY_SMOOTH_SIGMA = 2.0
+
+# --- Reference clips (asl.reference) -----------------------------------------
+DATASET_STATS_CSV = REPORTS_DIR / "stats" / "stats.csv"  # output of the asl-stats kernel (git-ignored)
+REFERENCE_MIN_HAND_SHARE = 0.5  # the hand must be found in most frames of a reference clip
+
+# --- Idle trimming (asl.features.trim_idle) -------------------------------------
+# Leading/trailing frames where no hand is visible or the hands are almost still are cut.
+# Speed = mean displacement of the 21 points of the faster hand, in shoulder widths per second.
+# Dataset sample: median 0.61 sw/s; holds at the end of the user's recordings: < 0.3 sw/s.
+TRIM_IDLE_MIN_SPEED = 0.3  # shoulder widths per second
+TRIM_IDLE_SMOOTH_S = 0.2  # moving average of the speed over this window
+TRIM_IDLE_MARGIN_S = 0.1  # kept before the first and after the last moving frame

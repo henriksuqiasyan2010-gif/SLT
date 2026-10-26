@@ -1,0 +1,169 @@
+{
+  "clips": 94477,
+  "trim": {
+    "frames_total": 3583987,
+    "kept_by_trim_to_hands": 0.9903138599554072,
+    "kept_by_trim_idle": 0.8973179869235016,
+    "extra_cut_by_idle_share_of_hand_frames": 0.09390545441431375,
+    "clips_with_extra_cut": {
+      ">0%": 0.24088402468325623,
+      ">10%": 0.17970511341384676,
+      ">25%": 0.12286588270160992,
+      ">50%": 0.05675455401843835
+    },
+    "extra_cut_percentiles": {
+      "p50": 0.0,
+      "p90": 0.33333333333333337,
+      "p95": 0.5428571428571429,
+      "p99": 0.8
+    },
+    "idle_len_percentiles": {
+      "p5": 2.0,
+      "p25": 10.0,
+      "p50": 20.0,
+      "p75": 39.0,
+      "p95": 126.0
+    },
+    "worst_signs_by_mean_extra_cut": {
+      "lion": 0.141,
+      "dance": 0.131,
+      "night": 0.126,
+      "vacuum": 0.124,
+      "pool": 0.122,
+      "table": 0.119,
+      "book": 0.116,
+      "bed": 0.116,
+      "boat": 0.115,
+      "rain": 0.115
+    }
+  },
+  "per_participant": {
+    "2044": {
+      "r_face": 0.5415,
+      "r_shoulder": 0.1725,
+      "r_face_iqr": 0.0222,
+      "clips": 4810.0
+    },
+    "4718": {
+      "r_face": 0.5261,
+      "r_shoulder": 0.1697,
+      "r_face_iqr": 0.0537,
+      "clips": 3499.0
+    },
+    "16069": {
+      "r_face": 0.5402,
+      "r_shoulder": 0.172,
+      "r_face_iqr": 0.0459,
+      "clips": 4848.0
+    },
+    "18796": {
+      "r_face": 0.6019,
+      "r_shoulder": 0.2035,
+      "r_face_iqr": 0.0364,
+      "clips": 3502.0
+    },
+    "22343": {
+      "r_face": 0.5402,
+      "r_shoulder": 0.1894,
+      "r_face_iqr": 0.0384,
+      "clips": 4677.0
+    },
+    "25571": {
+      "r_face": 0.5089,
+      "r_shoulder": 0.1889,
+      "r_face_iqr": 0.0309,
+      "clips": 3865.0
+    },
+    "26734": {
+      "r_face": 0.5471,
+      "r_shoulder": 0.179,
+      "r_face_iqr": 0.035,
+      "clips": 4841.0
+    },
+    "27610": {
+      "r_face": 0.5863,
+      "r_shoulder": 0.1963,
+      "r_face_iqr": 0.0293,
+      "clips": 4275.0
+    },
+    "28656": {
+      "r_face": 0.5149,
+      "r_shoulder": 0.1873,
+      "r_face_iqr": 0.047,
+      "clips": 4563.0
+    },
+    "29302": {
+      "r_face": 0.5985,
+      "r_shoulder": 0.2027,
+      "r_face_iqr": 0.0302,
+      "clips": 4722.0
+    },
+    "30680": {
+      "r_face": 0.3685,
+      "r_shoulder": 0.117,
+      "r_face_iqr": 0.0741,
+      "clips": 3338.0
+    },
+    "32319": {
+      "r_face": 0.6642,
+      "r_shoulder": 0.2358,
+      "r_face_iqr": 0.0287,
+      "clips": 4753.0
+    },
+    "34503": {
+      "r_face": 0.5894,
+      "r_shoulder": 0.2268,
+      "r_face_iqr": 0.0521,
+      "clips": 4545.0
+    },
+    "36257": {
+      "r_face": 0.5327,
+      "r_shoulder": 0.169,
+      "r_face_iqr": 0.058,
+      "clips": 4896.0
+    },
+    "37055": {
+      "r_face": 0.5713,
+      "r_shoulder": 0.211,
+      "r_face_iqr": 0.047,
+      "clips": 4648.0
+    },
+    "37779": {
+      "r_face": 0.6074,
+      "r_shoulder": 0.1901,
+      "r_face_iqr": 0.0528,
+      "clips": 4782.0
+    },
+    "49445": {
+      "r_face": 0.565,
+      "r_shoulder": 0.1739,
+      "r_face_iqr": 0.0324,
+      "clips": 4968.0
+    },
+    "53618": {
+      "r_face": 0.6119,
+      "r_shoulder": 0.2012,
+      "r_face_iqr": 0.0381,
+      "clips": 4656.0
+    },
+    "55372": {
+      "r_face": 0.5403,
+      "r_shoulder": 0.1871,
+      "r_face_iqr": 0.0262,
+      "clips": 4826.0
+    },
+    "61333": {
+      "r_face": 0.5912,
+      "r_shoulder": 0.2079,
+      "r_face_iqr": 0.0362,
+      "clips": 4900.0
+    },
+    "62590": {
+      "r_face": 0.4587,
+      "r_shoulder": 0.1438,
+      "r_face_iqr": 0.0411,
+      "clips": 4563.0
+    }
+  },
+  "runtime_s": 561.6
+}

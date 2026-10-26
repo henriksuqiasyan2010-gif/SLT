@@ -7,6 +7,9 @@ What is drawn follows the data, nothing is invented:
 - pose points (shoulders, elbows, wrists, hips) are drawn only when they lie inside the image,
   [0, 1] x [0, 1]; the pose model extrapolates the rest, e.g. hips and a resting hand below the frame;
 - the shoulder-elbow-wrist line stays while the hand is lost, as long as its points are inside the frame.
+
+`aspect` = frame width / height of the source (config.DATASET_ASPECT, config.CAMERA_ASPECT): normalized
+y is divided by it for display so that proportions are true. "Inside the image" is checked before that.
 """
 
 import numpy as np
@@ -74,11 +77,16 @@ def _inside(p) -> bool:
     return _valid(p) and bool(0.0 <= p[0] <= 1.0 and 0.0 <= p[1] <= 1.0)
 
 
-def segments(frame: np.ndarray):
+def segments(frame: np.ndarray, aspect: float = 1.0):
     """Yield (part, xs, ys) line segments for one (543, 3) frame; `part` is a key of STYLES.
 
-    Missing points are skipped.
+    Missing points are skipped. ys are divided by `aspect` (true proportions on equal axes).
     """
+    for part, xs, ys in _segments(frame):
+        yield part, xs, [ys[0] / aspect, ys[1] / aspect]
+
+
+def _segments(frame: np.ndarray):
     def edges(block, pairs, part):
         pts = frame[block]
         for a, b in pairs:
@@ -113,12 +121,14 @@ def segments(frame: np.ndarray):
         yield from edges(block, HAND_EDGES, name)  # a lost hand is all NaN, so nothing is yielded
 
 
-def draw_frame(ax, frame: np.ndarray) -> None:
+def draw_frame(ax, frame: np.ndarray, aspect: float = 1.0) -> None:
     """Draw one (543, 3) frame on a matplotlib axis (fills, lines, joint dots)."""
     from matplotlib.patches import Polygon
 
+    scale_y = np.array([1.0, 1.0 / aspect])
+
     def fill(points, color, alpha):
-        points = points[:, :2]
+        points = points[:, :2] * scale_y
         if not np.isnan(points).any():
             ax.add_patch(Polygon(points, closed=True, facecolor=color, edgecolor="none", alpha=alpha))
 
@@ -128,7 +138,7 @@ def draw_frame(ax, frame: np.ndarray) -> None:
     for name, block in (("left_hand", LEFT_HAND), ("right_hand", RIGHT_HAND)):
         fill(frame[block][HAND_PALM], STYLES[name]["color"], PALM_FILL_ALPHA)
 
-    for part, xs, ys in segments(frame):
+    for part, xs, ys in segments(frame, aspect):
         st = STYLES[part]
         ax.plot(xs, ys, color=st["color"], linewidth=st["lw"], alpha=st.get("alpha", 1.0),
                 solid_capstyle="round", solid_joinstyle="round")
@@ -138,11 +148,11 @@ def draw_frame(ax, frame: np.ndarray) -> None:
              if not any(j == FOREARMS[n][1] and _valid(frame[b][0])
                         for n, b in (("left_hand", LEFT_HAND), ("right_hand", RIGHT_HAND)))]
     joints = np.array([pose[j] for j in shown if _inside(pose[j])]).reshape(-1, 3)
-    ax.plot(joints[:, 0], joints[:, 1], "o", color=INK, markersize=BODY_JOINT_SIZE)
+    ax.plot(joints[:, 0], joints[:, 1] / aspect, "o", color=INK, markersize=BODY_JOINT_SIZE)
     for name, block in (("left_hand", LEFT_HAND), ("right_hand", RIGHT_HAND)):
         pts = frame[block]
         pts = pts[~np.isnan(pts[:, :2]).any(axis=1)]
-        ax.plot(pts[:, 0], pts[:, 1], "o", color=STYLES[name]["color"], markersize=HAND_JOINT_SIZE)
+        ax.plot(pts[:, 0], pts[:, 1] / aspect, "o", color=STYLES[name]["color"], markersize=HAND_JOINT_SIZE)
 
 
 def _hex_to_bgr(color: str):
@@ -176,7 +186,7 @@ def draw_cv2(image: np.ndarray, frame: np.ndarray) -> np.ndarray:
     return image
 
 
-def display_bounds(clip: np.ndarray, margin: float = 0.05):
+def display_bounds(clip: np.ndarray, margin: float = 0.05, aspect: float = 1.0):
     """(xmin, xmax, ymin, ymax) over the points that are drawn: non-NaN hand and face points,
     pose points inside the image."""
     hand_idx = np.r_[np.arange(LEFT_HAND.start, LEFT_HAND.stop), np.arange(RIGHT_HAND.start, RIGHT_HAND.stop),
@@ -188,22 +198,29 @@ def display_bounds(clip: np.ndarray, margin: float = 0.05):
     if len(pts) == 0:
         return 0.0, 1.0, 0.0, 1.0
     (x0, y0), (x1, y1) = pts.min(axis=0), pts.max(axis=0)
-    return x0 - margin, x1 + margin, y0 - margin, y1 + margin
+    return x0 - margin, x1 + margin, y0 / aspect - margin, y1 / aspect + margin
 
 
-def save_gif(clip: np.ndarray, out_path, title: str = "", fps: int = 15) -> None:
-    """Render a (T, 543, 3) clip to an animated GIF."""
+def gif_durations(n_frames: int, fps: float):
+    """Per-frame delays in ms. GIF stores delays in 10 ms steps, so 33.3 ms (30 fps) alternates
+    30/40 ms; the total stays equal to n_frames / fps."""
+    edges = np.round(np.arange(n_frames + 1) * 100.0 / fps) * 10
+    return [int(d) for d in np.diff(edges)]
+
+
+def save_gif(clip: np.ndarray, out_path, title: str = "", fps: float = 30.0, aspect: float = 1.0) -> None:
+    """Render a (T, 543, 3) clip to an animated GIF playing at `fps` (the clip's real frame rate)."""
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
-    from matplotlib.animation import FuncAnimation, PillowWriter
 
-    x0, x1, y0, y1 = display_bounds(clip)
+    x0, x1, y0, y1 = display_bounds(clip, aspect=aspect)
     fig, ax = plt.subplots(figsize=(4, 4 * (y1 - y0) / max(x1 - x0, 1e-6)), dpi=100)
     fig.patch.set_facecolor(BACKGROUND)
     fig.subplots_adjust(left=0.02, right=0.98, bottom=0.02, top=0.92)
 
-    def draw(t):
+    images = []
+    for t in range(len(clip)):
         ax.clear()
         ax.set_xlim(x0, x1)
         ax.set_ylim(y1, y0)  # image coordinates: y grows downward
@@ -211,8 +228,21 @@ def save_gif(clip: np.ndarray, out_path, title: str = "", fps: int = 15) -> None
         ax.axis("off")
         ax.set_title(title, fontsize=13, color=INK, fontweight="bold", loc="left")
         ax.set_title(f"{t + 1}/{len(clip)}", fontsize=9, color="#8a9099", loc="right")
-        draw_frame(ax, clip[t])
-
-    anim = FuncAnimation(fig, draw, frames=len(clip))
-    anim.save(str(out_path), writer=PillowWriter(fps=fps))
+        draw_frame(ax, clip[t], aspect)
+        images.append(_figure_image(fig))
     plt.close(fig)
+    save_frames_gif(images, out_path, fps)
+
+
+def _figure_image(fig):
+    from PIL import Image
+
+    fig.canvas.draw()
+    return Image.fromarray(np.asarray(fig.canvas.buffer_rgba())[..., :3].copy())
+
+
+def save_frames_gif(images, out_path, fps: float) -> None:
+    """Write PIL images as a looping GIF with exact real-time delays (see gif_durations)."""
+    frames = [im.convert("P", palette=1, colors=64) for im in images]  # 1 = adaptive palette
+    frames[0].save(out_path, save_all=True, append_images=frames[1:],
+                   duration=gif_durations(len(frames), fps), loop=0, optimize=False, disposal=1)

@@ -1,0 +1,291 @@
+[{"stream_name":"stdout","time":410.969265213,"data":"clips=94477 cpus=4 FEATURES_VERSION=1\n"}
+,{"stream_name":"stdout","time":413.533354887,"data":"0/94477 3s\n"}
+,{"stream_name":"stderr","time":474.072540558,"data":"/kaggle/src/script.py:50: RuntimeWarning: All-NaN slice encountered\n"}
+,{"stream_name":"stderr","time":474.07258416,"data":"  r_face = np.nanmedian((mouth_y - eye_y) / io)\n"}
+,{"stream_name":"stderr","time":474.072590685,"data":"/kaggle/src/script.py:51: RuntimeWarning: All-NaN slice encountered\n"}
+,{"stream_name":"stderr","time":474.072596042,"data":"  r_shoulder = np.nanmedian((mouth_y - eye_y) / sw)\n"}
+,{"stream_name":"stdout","time":475.225033488,"data":"10000/94477 65s\n"}
+,{"stream_name":"stderr","time":487.947288242,"data":"/kaggle/src/script.py:50: RuntimeWarning: All-NaN slice encountered\n"}
+,{"stream_name":"stderr","time":487.947328237,"data":"  r_face = np.nanmedian((mouth_y - eye_y) / io)\n"}
+,{"stream_name":"stderr","time":487.947336042,"data":"/kaggle/src/script.py:51: RuntimeWarning: All-NaN slice encountered\n"}
+,{"stream_name":"stderr","time":487.947366949,"data":"  r_shoulder = np.nanmedian((mouth_y - eye_y) / sw)\n"}
+,{"stream_name":"stderr","time":515.641989279,"data":"/kaggle/src/script.py:50: RuntimeWarning: All-NaN slice encountered\n"}
+,{"stream_name":"stderr","time":515.642035379,"data":"  r_face = np.nanmedian((mouth_y - eye_y) / io)\n"}
+,{"stream_name":"stderr","time":515.642041923,"data":"/kaggle/src/script.py:51: RuntimeWarning: All-NaN slice encountered\n"}
+,{"stream_name":"stderr","time":515.642046635,"data":"  r_shoulder = np.nanmedian((mouth_y - eye_y) / sw)\n"}
+,{"stream_name":"stderr","time":520.907323006,"data":"/kaggle/src/script.py:50: RuntimeWarning: All-NaN slice encountered\n"}
+,{"stream_name":"stderr","time":520.907396595,"data":"  r_face = np.nanmedian((mouth_y - eye_y) / io)\n"}
+,{"stream_name":"stderr","time":520.907411205,"data":"/kaggle/src/script.py:51: RuntimeWarning: All-NaN slice encountered\n"}
+,{"stream_name":"stderr","time":520.90741837,"data":"  r_shoulder = np.nanmedian((mouth_y - eye_y) / sw)\n"}
+,{"stream_name":"stdout","time":535.940965501,"data":"20000/94477 125s\n"}
+,{"stream_name":"stderr","time":537.994492119,"data":"/kaggle/src/script.py:50: RuntimeWarning: All-NaN slice encountered\n"}
+,{"stream_name":"stderr","time":537.994532976,"data":"  r_face = np.nanmedian((mouth_y - eye_y) / io)\n"}
+,{"stream_name":"stderr","time":537.994555808,"data":"/kaggle/src/script.py:51: RuntimeWarning: All-NaN slice encountered\n"}
+,{"stream_name":"stderr","time":537.994562241,"data":"  r_shoulder = np.nanmedian((mouth_y - eye_y) / sw)\n"}
+,{"stream_name":"stderr","time":565.375497943,"data":"/kaggle/src/script.py:50: RuntimeWarning: All-NaN slice encountered\n"}
+,{"stream_name":"stderr","time":565.375564488,"data":"  r_face = np.nanmedian((mouth_y - eye_y) / io)\n"}
+,{"stream_name":"stderr","time":565.375582139,"data":"/kaggle/src/script.py:51: RuntimeWarning: All-NaN slice encountered\n"}
+,{"stream_name":"stderr","time":565.375606502,"data":"  r_shoulder = np.nanmedian((mouth_y - eye_y) / sw)\n"}
+,{"stream_name":"stderr","time":596.471684179,"data":"/kaggle/src/script.py:50: RuntimeWarning: All-NaN slice encountered\n"}
+,{"stream_name":"stderr","time":596.47173588,"data":"  r_face = np.nanmedian((mouth_y - eye_y) / io)\n"}
+,{"stream_name":"stderr","time":596.471742732,"data":"/kaggle/src/script.py:51: RuntimeWarning: All-NaN slice encountered\n"}
+,{"stream_name":"stderr","time":596.471747703,"data":"  r_shoulder = np.nanmedian((mouth_y - eye_y) / sw)\n"}
+,{"stream_name":"stdout","time":601.516799818,"data":"30000/94477 191s\n"}
+,{"stream_name":"stdout","time":662.971443963,"data":"40000/94477 252s\n"}
+,{"stream_name":"stderr","time":674.970234161,"data":"/kaggle/src/script.py:50: RuntimeWarning: All-NaN slice encountered\n"}
+,{"stream_name":"stderr","time":674.970277135,"data":"  r_face = np.nanmedian((mouth_y - eye_y) / io)\n"}
+,{"stream_name":"stderr","time":674.970282199,"data":"/kaggle/src/script.py:51: RuntimeWarning: All-NaN slice encountered\n"}
+,{"stream_name":"stderr","time":674.970286138,"data":"  r_shoulder = np.nanmedian((mouth_y - eye_y) / sw)\n"}
+,{"stream_name":"stderr","time":716.707502806,"data":"/kaggle/src/script.py:50: RuntimeWarning: All-NaN slice encountered\n"}
+,{"stream_name":"stderr","time":716.707570936,"data":"  r_face = np.nanmedian((mouth_y - eye_y) / io)\n"}
+,{"stream_name":"stderr","time":716.707600657,"data":"/kaggle/src/script.py:51: RuntimeWarning: All-NaN slice encountered\n"}
+,{"stream_name":"stderr","time":716.707606832,"data":"  r_shoulder = np.nanmedian((mouth_y - eye_y) / sw)\n"}
+,{"stream_name":"stdout","time":722.844212444,"data":"50000/94477 312s\n"}
+,{"stream_name":"stderr","time":735.737298283,"data":"/kaggle/src/script.py:50: RuntimeWarning: All-NaN slice encountered\n"}
+,{"stream_name":"stderr","time":735.737374648,"data":"  r_face = np.nanmedian((mouth_y - eye_y) / io)\n"}
+,{"stream_name":"stderr","time":735.737383906,"data":"/kaggle/src/script.py:51: RuntimeWarning: All-NaN slice encountered\n"}
+,{"stream_name":"stderr","time":735.73738936,"data":"  r_shoulder = np.nanmedian((mouth_y - eye_y) / sw)\n"}
+,{"stream_name":"stderr","time":753.463566405,"data":"/kaggle/src/script.py:50: RuntimeWarning: All-NaN slice encountered\n"}
+,{"stream_name":"stderr","time":753.463636088,"data":"  r_face = np.nanmedian((mouth_y - eye_y) / io)\n"}
+,{"stream_name":"stderr","time":753.463643391,"data":"/kaggle/src/script.py:51: RuntimeWarning: All-NaN slice encountered\n"}
+,{"stream_name":"stderr","time":753.463664565,"data":"  r_shoulder = np.nanmedian((mouth_y - eye_y) / sw)\n"}
+,{"stream_name":"stderr","time":757.077931013,"data":"/kaggle/src/script.py:50: RuntimeWarning: All-NaN slice encountered\n"}
+,{"stream_name":"stderr","time":757.07796944,"data":"  r_face = np.nanmedian((mouth_y - eye_y) / io)\n"}
+,{"stream_name":"stderr","time":757.077976041,"data":"/kaggle/src/script.py:51: RuntimeWarning: All-NaN slice encountered\n"}
+,{"stream_name":"stderr","time":757.07798148,"data":"  r_shoulder = np.nanmedian((mouth_y - eye_y) / sw)\n"}
+,{"stream_name":"stderr","time":770.092533387,"data":"/kaggle/src/script.py:50: RuntimeWarning: All-NaN slice encountered\n"}
+,{"stream_name":"stderr","time":770.092573846,"data":"  r_face = np.nanmedian((mouth_y - eye_y) / io)\n"}
+,{"stream_name":"stderr","time":770.092580068,"data":"/kaggle/src/script.py:51: RuntimeWarning: All-NaN slice encountered\n"}
+,{"stream_name":"stderr","time":770.092585345,"data":"  r_shoulder = np.nanmedian((mouth_y - eye_y) / sw)\n"}
+,{"stream_name":"stderr","time":779.010320423,"data":"/kaggle/src/script.py:50: RuntimeWarning: All-NaN slice encountered\n"}
+,{"stream_name":"stderr","time":779.010378895,"data":"  r_face = np.nanmedian((mouth_y - eye_y) / io)\n"}
+,{"stream_name":"stderr","time":779.010388078,"data":"/kaggle/src/script.py:51: RuntimeWarning: All-NaN slice encountered\n"}
+,{"stream_name":"stderr","time":779.010393649,"data":"  r_shoulder = np.nanmedian((mouth_y - eye_y) / sw)\n"}
+,{"stream_name":"stderr","time":779.906006702,"data":"/kaggle/src/script.py:50: RuntimeWarning: All-NaN slice encountered\n"}
+,{"stream_name":"stderr","time":779.906045489,"data":"  r_face = np.nanmedian((mouth_y - eye_y) / io)\n"}
+,{"stream_name":"stderr","time":779.90605243,"data":"/kaggle/src/script.py:51: RuntimeWarning: All-NaN slice encountered\n"}
+,{"stream_name":"stderr","time":779.906074962,"data":"  r_shoulder = np.nanmedian((mouth_y - eye_y) / sw)\n"}
+,{"stream_name":"stdout","time":781.958317356,"data":"60000/94477 371s\n"}
+,{"stream_name":"stdout","time":838.634265767,"data":"70000/94477 428s\n"}
+,{"stream_name":"stderr","time":850.966735051,"data":"/kaggle/src/script.py:50: RuntimeWarning: All-NaN slice encountered\n"}
+,{"stream_name":"stderr","time":850.966776801,"data":"  r_face = np.nanmedian((mouth_y - eye_y) / io)\n"}
+,{"stream_name":"stderr","time":850.96678425,"data":"/kaggle/src/script.py:51: RuntimeWarning: All-NaN slice encountered\n"}
+,{"stream_name":"stderr","time":850.966790775,"data":"  r_shoulder = np.nanmedian((mouth_y - eye_y) / sw)\n"}
+,{"stream_name":"stderr","time":856.273505854,"data":"/kaggle/src/script.py:50: RuntimeWarning: All-NaN slice encountered\n"}
+,{"stream_name":"stderr","time":856.273567952,"data":"  r_face = np.nanmedian((mouth_y - eye_y) / io)\n"}
+,{"stream_name":"stderr","time":856.273649507,"data":"/kaggle/src/script.py:51: RuntimeWarning: All-NaN slice encountered\n"}
+,{"stream_name":"stderr","time":856.27365992,"data":"  r_shoulder = np.nanmedian((mouth_y - eye_y) / sw)\n"}
+,{"stream_name":"stderr","time":869.417124897,"data":"/kaggle/src/script.py:50: RuntimeWarning: All-NaN slice encountered\n"}
+,{"stream_name":"stderr","time":869.417180555,"data":"  r_face = np.nanmedian((mouth_y - eye_y) / io)\n"}
+,{"stream_name":"stderr","time":869.417186297,"data":"/kaggle/src/script.py:51: RuntimeWarning: All-NaN slice encountered\n"}
+,{"stream_name":"stderr","time":869.417190014,"data":"  r_shoulder = np.nanmedian((mouth_y - eye_y) / sw)\n"}
+,{"stream_name":"stderr","time":877.327712666,"data":"/kaggle/src/script.py:50: RuntimeWarning: All-NaN slice encountered\n"}
+,{"stream_name":"stderr","time":877.327755743,"data":"  r_face = np.nanmedian((mouth_y - eye_y) / io)\n"}
+,{"stream_name":"stderr","time":877.327763023,"data":"/kaggle/src/script.py:51: RuntimeWarning: All-NaN slice encountered\n"}
+,{"stream_name":"stderr","time":877.327771169,"data":"  r_shoulder = np.nanmedian((mouth_y - eye_y) / sw)\n"}
+,{"stream_name":"stderr","time":883.721203466,"data":"/kaggle/src/script.py:50: RuntimeWarning: All-NaN slice encountered\n"}
+,{"stream_name":"stderr","time":883.721245798,"data":"  r_face = np.nanmedian((mouth_y - eye_y) / io)\n"}
+,{"stream_name":"stderr","time":883.721252696,"data":"/kaggle/src/script.py:51: RuntimeWarning: All-NaN slice encountered\n"}
+,{"stream_name":"stderr","time":883.721257932,"data":"  r_shoulder = np.nanmedian((mouth_y - eye_y) / sw)\n"}
+,{"stream_name":"stdout","time":892.781409725,"data":"80000/94477 482s\n"}
+,{"stream_name":"stderr","time":896.880152403,"data":"/kaggle/src/script.py:50: RuntimeWarning: All-NaN slice encountered\n"}
+,{"stream_name":"stderr","time":896.880212528,"data":"  r_face = np.nanmedian((mouth_y - eye_y) / io)\n"}
+,{"stream_name":"stderr","time":896.880274644,"data":"/kaggle/src/script.py:51: RuntimeWarning: All-NaN slice encountered\n"}
+,{"stream_name":"stderr","time":896.880283014,"data":"  r_shoulder = np.nanmedian((mouth_y - eye_y) / sw)\n"}
+,{"stream_name":"stderr","time":909.697413181,"data":"/kaggle/src/script.py:50: RuntimeWarning: All-NaN slice encountered\n"}
+,{"stream_name":"stderr","time":909.697452269,"data":"  r_face = np.nanmedian((mouth_y - eye_y) / io)\n"}
+,{"stream_name":"stderr","time":909.697458355,"data":"/kaggle/src/script.py:51: RuntimeWarning: All-NaN slice encountered\n"}
+,{"stream_name":"stderr","time":909.697463489,"data":"  r_shoulder = np.nanmedian((mouth_y - eye_y) / sw)\n"}
+,{"stream_name":"stderr","time":935.236012593,"data":"/kaggle/src/script.py:50: RuntimeWarning: All-NaN slice encountered\n"}
+,{"stream_name":"stderr","time":935.236074762,"data":"  r_face = np.nanmedian((mouth_y - eye_y) / io)\n"}
+,{"stream_name":"stderr","time":935.23608011,"data":"/kaggle/src/script.py:51: RuntimeWarning: All-NaN slice encountered\n"}
+,{"stream_name":"stderr","time":935.236084293,"data":"  r_shoulder = np.nanmedian((mouth_y - eye_y) / sw)\n"}
+,{"stream_name":"stderr","time":944.832526146,"data":"/kaggle/src/script.py:50: RuntimeWarning: All-NaN slice encountered\n"}
+,{"stream_name":"stderr","time":944.832565327,"data":"  r_face = np.nanmedian((mouth_y - eye_y) / io)\n"}
+,{"stream_name":"stderr","time":944.832571317,"data":"/kaggle/src/script.py:51: RuntimeWarning: All-NaN slice encountered\n"}
+,{"stream_name":"stderr","time":944.832575552,"data":"  r_shoulder = np.nanmedian((mouth_y - eye_y) / sw)\n"}
+,{"stream_name":"stdout","time":947.233518898,"data":"90000/94477 537s\n"}
+,{"stream_name":"stderr","time":947.853396911,"data":"/kaggle/src/script.py:50: RuntimeWarning: All-NaN slice encountered\n"}
+,{"stream_name":"stderr","time":947.853436872,"data":"  r_face = np.nanmedian((mouth_y - eye_y) / io)\n"}
+,{"stream_name":"stderr","time":947.853531638,"data":"/kaggle/src/script.py:51: RuntimeWarning: All-NaN slice encountered\n"}
+,{"stream_name":"stderr","time":947.853540567,"data":"  r_shoulder = np.nanmedian((mouth_y - eye_y) / sw)\n"}
+,{"stream_name":"stderr","time":952.726907467,"data":"/kaggle/src/script.py:50: RuntimeWarning: All-NaN slice encountered\n"}
+,{"stream_name":"stderr","time":952.726944244,"data":"  r_face = np.nanmedian((mouth_y - eye_y) / io)\n"}
+,{"stream_name":"stderr","time":952.726949212,"data":"/kaggle/src/script.py:51: RuntimeWarning: All-NaN slice encountered\n"}
+,{"stream_name":"stderr","time":952.726973707,"data":"  r_shoulder = np.nanmedian((mouth_y - eye_y) / sw)\n"}
+,{"stream_name":"stdout","time":972.287592516,"data":"{\n"}
+,{"stream_name":"stdout","time":972.287631028,"data":"  \"clips\": 94477,\n"}
+,{"stream_name":"stdout","time":972.287637866,"data":"  \"trim\": {\n"}
+,{"stream_name":"stdout","time":972.287643796,"data":"    \"frames_total\": 3583987,\n"}
+,{"stream_name":"stdout","time":972.287649164,"data":"    \"kept_by_trim_to_hands\": 0.9903138599554072,\n"}
+,{"stream_name":"stdout","time":972.287655179,"data":"    \"kept_by_trim_idle\": 0.8973179869235016,\n"}
+,{"stream_name":"stdout","time":972.28766049,"data":"    \"extra_cut_by_idle_share_of_hand_frames\": 0.09390545441431375,\n"}
+,{"stream_name":"stdout","time":972.28766655,"data":"    \"clips_with_extra_cut\": {\n"}
+,{"stream_name":"stdout","time":972.287671865,"data":"      \"\u003e0%\": 0.24088402468325623,\n"}
+,{"stream_name":"stdout","time":972.287677887,"data":"      \"\u003e10%\": 0.17970511341384676,\n"}
+,{"stream_name":"stdout","time":972.28768349,"data":"      \"\u003e25%\": 0.12286588270160992,\n"}
+,{"stream_name":"stdout","time":972.287688579,"data":"      \"\u003e50%\": 0.05675455401843835\n"}
+,{"stream_name":"stdout","time":972.287694673,"data":"    },\n"}
+,{"stream_name":"stdout","time":972.287700313,"data":"    \"extra_cut_percentiles\": {\n"}
+,{"stream_name":"stdout","time":972.287705767,"data":"      \"p50\": 0.0,\n"}
+,{"stream_name":"stdout","time":972.287710712,"data":"      \"p90\": 0.33333333333333337,\n"}
+,{"stream_name":"stdout","time":972.28771647,"data":"      \"p95\": 0.5428571428571429,\n"}
+,{"stream_name":"stdout","time":972.287721757,"data":"      \"p99\": 0.8\n"}
+,{"stream_name":"stdout","time":972.287726766,"data":"    },\n"}
+,{"stream_name":"stdout","time":972.287732205,"data":"    \"idle_len_percentiles\": {\n"}
+,{"stream_name":"stdout","time":972.287751653,"data":"      \"p5\": 2.0,\n"}
+,{"stream_name":"stdout","time":972.287755746,"data":"      \"p25\": 10.0,\n"}
+,{"stream_name":"stdout","time":972.287761102,"data":"      \"p50\": 20.0,\n"}
+,{"stream_name":"stdout","time":972.287765019,"data":"      \"p75\": 39.0,\n"}
+,{"stream_name":"stdout","time":972.287769257,"data":"      \"p95\": 126.0\n"}
+,{"stream_name":"stdout","time":972.287772919,"data":"    },\n"}
+,{"stream_name":"stdout","time":972.287777328,"data":"    \"worst_signs_by_mean_extra_cut\": {\n"}
+,{"stream_name":"stdout","time":972.287781533,"data":"      \"lion\": 0.141,\n"}
+,{"stream_name":"stdout","time":972.287785979,"data":"      \"dance\": 0.131,\n"}
+,{"stream_name":"stdout","time":972.287789936,"data":"      \"night\": 0.126,\n"}
+,{"stream_name":"stdout","time":972.287794399,"data":"      \"vacuum\": 0.124,\n"}
+,{"stream_name":"stdout","time":972.287798465,"data":"      \"pool\": 0.122,\n"}
+,{"stream_name":"stdout","time":972.287803345,"data":"      \"table\": 0.119,\n"}
+,{"stream_name":"stdout","time":972.287807348,"data":"      \"book\": 0.116,\n"}
+,{"stream_name":"stdout","time":972.287811672,"data":"      \"bed\": 0.116,\n"}
+,{"stream_name":"stdout","time":972.287815988,"data":"      \"boat\": 0.115,\n"}
+,{"stream_name":"stdout","time":972.28782048,"data":"      \"rain\": 0.115\n"}
+,{"stream_name":"stdout","time":972.287824212,"data":"    }\n"}
+,{"stream_name":"stdout","time":972.287828914,"data":"  },\n"}
+,{"stream_name":"stdout","time":972.287833236,"data":"  \"per_participant\": {\n"}
+,{"stream_name":"stdout","time":972.287837853,"data":"    \"2044\": {\n"}
+,{"stream_name":"stdout","time":972.287841938,"data":"      \"r_face\": 0.5415,\n"}
+,{"stream_name":"stdout","time":972.2878464,"data":"      \"r_shoulder\": 0.1725,\n"}
+,{"stream_name":"stdout","time":972.287850959,"data":"      \"r_face_iqr\": 0.0222,\n"}
+,{"stream_name":"stdout","time":972.287855164,"data":"      \"clips\": 4810.0\n"}
+,{"stream_name":"stdout","time":972.28785908,"data":"    },\n"}
+,{"stream_name":"stdout","time":972.287864095,"data":"    \"4718\": {\n"}
+,{"stream_name":"stdout","time":972.28786805,"data":"      \"r_face\": 0.5261,\n"}
+,{"stream_name":"stdout","time":972.287872536,"data":"      \"r_shoulder\": 0.1697,\n"}
+,{"stream_name":"stdout","time":972.287876706,"data":"      \"r_face_iqr\": 0.0537,\n"}
+,{"stream_name":"stdout","time":972.287881333,"data":"      \"clips\": 3499.0\n"}
+,{"stream_name":"stdout","time":972.287885654,"data":"    },\n"}
+,{"stream_name":"stdout","time":972.287889775,"data":"    \"16069\": {\n"}
+,{"stream_name":"stdout","time":972.28789356,"data":"      \"r_face\": 0.5402,\n"}
+,{"stream_name":"stdout","time":972.287897646,"data":"      \"r_shoulder\": 0.172,\n"}
+,{"stream_name":"stdout","time":972.28790169,"data":"      \"r_face_iqr\": 0.0459,\n"}
+,{"stream_name":"stdout","time":972.287905648,"data":"      \"clips\": 4848.0\n"}
+,{"stream_name":"stdout","time":972.287910211,"data":"    },\n"}
+,{"stream_name":"stdout","time":972.287914093,"data":"    \"18796\": {\n"}
+,{"stream_name":"stdout","time":972.287918812,"data":"      \"r_face\": 0.6019,\n"}
+,{"stream_name":"stdout","time":972.287922831,"data":"      \"r_shoulder\": 0.2035,\n"}
+,{"stream_name":"stdout","time":972.287927272,"data":"      \"r_face_iqr\": 0.0364,\n"}
+,{"stream_name":"stdout","time":972.28793086,"data":"      \"clips\": 3502.0\n"}
+,{"stream_name":"stdout","time":972.287934737,"data":"    },\n"}
+,{"stream_name":"stdout","time":972.28793898,"data":"    \"22343\": {\n"}
+,{"stream_name":"stdout","time":972.287950542,"data":"      \"r_face\": 0.5402,\n"}
+,{"stream_name":"stdout","time":972.287955337,"data":"      \"r_shoulder\": 0.1894,\n"}
+,{"stream_name":"stdout","time":972.287959396,"data":"      \"r_face_iqr\": 0.0384,\n"}
+,{"stream_name":"stdout","time":972.287963753,"data":"      \"clips\": 4677.0\n"}
+,{"stream_name":"stdout","time":972.287967675,"data":"    },\n"}
+,{"stream_name":"stdout","time":972.287972095,"data":"    \"25571\": {\n"}
+,{"stream_name":"stdout","time":972.287975676,"data":"      \"r_face\": 0.5089,\n"}
+,{"stream_name":"stdout","time":972.287979682,"data":"      \"r_shoulder\": 0.1889,\n"}
+,{"stream_name":"stdout","time":972.287983689,"data":"      \"r_face_iqr\": 0.0309,\n"}
+,{"stream_name":"stdout","time":972.287987679,"data":"      \"clips\": 3865.0\n"}
+,{"stream_name":"stdout","time":972.287992246,"data":"    },\n"}
+,{"stream_name":"stdout","time":972.287996694,"data":"    \"26734\": {\n"}
+,{"stream_name":"stdout","time":972.288001117,"data":"      \"r_face\": 0.5471,\n"}
+,{"stream_name":"stdout","time":972.288005199,"data":"      \"r_shoulder\": 0.179,\n"}
+,{"stream_name":"stdout","time":972.288009677,"data":"      \"r_face_iqr\": 0.035,\n"}
+,{"stream_name":"stdout","time":972.288013363,"data":"      \"clips\": 4841.0\n"}
+,{"stream_name":"stdout","time":972.288018336,"data":"    },\n"}
+,{"stream_name":"stdout","time":972.288022285,"data":"    \"27610\": {\n"}
+,{"stream_name":"stdout","time":972.288026665,"data":"      \"r_face\": 0.5863,\n"}
+,{"stream_name":"stdout","time":972.288030317,"data":"      \"r_shoulder\": 0.1963,\n"}
+,{"stream_name":"stdout","time":972.28803478,"data":"      \"r_face_iqr\": 0.0293,\n"}
+,{"stream_name":"stdout","time":972.288051825,"data":"      \"clips\": 4275.0\n"}
+,{"stream_name":"stdout","time":972.28805582,"data":"    },\n"}
+,{"stream_name":"stdout","time":972.288059967,"data":"    \"28656\": {\n"}
+,{"stream_name":"stdout","time":972.288063748,"data":"      \"r_face\": 0.5149,\n"}
+,{"stream_name":"stdout","time":972.28806775,"data":"      \"r_shoulder\": 0.1873,\n"}
+,{"stream_name":"stdout","time":972.288071362,"data":"      \"r_face_iqr\": 0.047,\n"}
+,{"stream_name":"stdout","time":972.288079339,"data":"      \"clips\": 4563.0\n"}
+,{"stream_name":"stdout","time":972.28808347,"data":"    },\n"}
+,{"stream_name":"stdout","time":972.288087809,"data":"    \"29302\": {\n"}
+,{"stream_name":"stdout","time":972.288091941,"data":"      \"r_face\": 0.5985,\n"}
+,{"stream_name":"stdout","time":972.288096012,"data":"      \"r_shoulder\": 0.2027,\n"}
+,{"stream_name":"stdout","time":972.28810019,"data":"      \"r_face_iqr\": 0.0302,\n"}
+,{"stream_name":"stdout","time":972.288104434,"data":"      \"clips\": 4722.0\n"}
+,{"stream_name":"stdout","time":972.288108845,"data":"    },\n"}
+,{"stream_name":"stdout","time":972.288112668,"data":"    \"30680\": {\n"}
+,{"stream_name":"stdout","time":972.288116961,"data":"      \"r_face\": 0.3685,\n"}
+,{"stream_name":"stdout","time":972.288121082,"data":"      \"r_shoulder\": 0.117,\n"}
+,{"stream_name":"stdout","time":972.288125535,"data":"      \"r_face_iqr\": 0.0741,\n"}
+,{"stream_name":"stdout","time":972.288134079,"data":"      \"clips\": 3338.0\n"}
+,{"stream_name":"stdout","time":972.288138516,"data":"    },\n"}
+,{"stream_name":"stdout","time":972.288142579,"data":"    \"32319\": {\n"}
+,{"stream_name":"stdout","time":972.288146676,"data":"      \"r_face\": 0.6642,\n"}
+,{"stream_name":"stdout","time":972.288151057,"data":"      \"r_shoulder\": 0.2358,\n"}
+,{"stream_name":"stdout","time":972.288162819,"data":"      \"r_face_iqr\": 0.0287,\n"}
+,{"stream_name":"stdout","time":972.288167162,"data":"      \"clips\": 4753.0\n"}
+,{"stream_name":"stdout","time":972.288171074,"data":"    },\n"}
+,{"stream_name":"stdout","time":972.288174714,"data":"    \"34503\": {\n"}
+,{"stream_name":"stdout","time":972.288179293,"data":"      \"r_face\": 0.5894,\n"}
+,{"stream_name":"stdout","time":972.288183057,"data":"      \"r_shoulder\": 0.2268,\n"}
+,{"stream_name":"stdout","time":972.288187738,"data":"      \"r_face_iqr\": 0.0521,\n"}
+,{"stream_name":"stdout","time":972.288191839,"data":"      \"clips\": 4545.0\n"}
+,{"stream_name":"stdout","time":972.288196274,"data":"    },\n"}
+,{"stream_name":"stdout","time":972.288200188,"data":"    \"36257\": {\n"}
+,{"stream_name":"stdout","time":972.288204199,"data":"      \"r_face\": 0.5327,\n"}
+,{"stream_name":"stdout","time":972.288208098,"data":"      \"r_shoulder\": 0.169,\n"}
+,{"stream_name":"stdout","time":972.288212281,"data":"      \"r_face_iqr\": 0.058,\n"}
+,{"stream_name":"stdout","time":972.288216227,"data":"      \"clips\": 4896.0\n"}
+,{"stream_name":"stdout","time":972.28822075,"data":"    },\n"}
+,{"stream_name":"stdout","time":972.288225043,"data":"    \"37055\": {\n"}
+,{"stream_name":"stdout","time":972.28822974,"data":"      \"r_face\": 0.5713,\n"}
+,{"stream_name":"stdout","time":972.288233784,"data":"      \"r_shoulder\": 0.211,\n"}
+,{"stream_name":"stdout","time":972.288239019,"data":"      \"r_face_iqr\": 0.047,\n"}
+,{"stream_name":"stdout","time":972.28824325,"data":"      \"clips\": 4648.0\n"}
+,{"stream_name":"stdout","time":972.288246825,"data":"    },\n"}
+,{"stream_name":"stdout","time":972.288250919,"data":"    \"37779\": {\n"}
+,{"stream_name":"stdout","time":972.288255668,"data":"      \"r_face\": 0.6074,\n"}
+,{"stream_name":"stdout","time":972.288259786,"data":"      \"r_shoulder\": 0.1901,\n"}
+,{"stream_name":"stdout","time":972.288264158,"data":"      \"r_face_iqr\": 0.0528,\n"}
+,{"stream_name":"stdout","time":972.288268411,"data":"      \"clips\": 4782.0\n"}
+,{"stream_name":"stdout","time":972.28827244,"data":"    },\n"}
+,{"stream_name":"stdout","time":972.288276324,"data":"    \"49445\": {\n"}
+,{"stream_name":"stdout","time":972.288280443,"data":"      \"r_face\": 0.565,\n"}
+,{"stream_name":"stdout","time":972.288284686,"data":"      \"r_shoulder\": 0.1739,\n"}
+,{"stream_name":"stdout","time":972.288288653,"data":"      \"r_face_iqr\": 0.0324,\n"}
+,{"stream_name":"stdout","time":972.288292898,"data":"      \"clips\": 4968.0\n"}
+,{"stream_name":"stdout","time":972.28829722,"data":"    },\n"}
+,{"stream_name":"stdout","time":972.288301529,"data":"    \"53618\": {\n"}
+,{"stream_name":"stdout","time":972.288305453,"data":"      \"r_face\": 0.6119,\n"}
+,{"stream_name":"stdout","time":972.28830961,"data":"      \"r_shoulder\": 0.2012,\n"}
+,{"stream_name":"stdout","time":972.288313433,"data":"      \"r_face_iqr\": 0.0381,\n"}
+,{"stream_name":"stdout","time":972.28831811,"data":"      \"clips\": 4656.0\n"}
+,{"stream_name":"stdout","time":972.288322434,"data":"    },\n"}
+,{"stream_name":"stdout","time":972.288326699,"data":"    \"55372\": {\n"}
+,{"stream_name":"stdout","time":972.288330516,"data":"      \"r_face\": 0.5403,\n"}
+,{"stream_name":"stdout","time":972.288334894,"data":"      \"r_shoulder\": 0.1871,\n"}
+,{"stream_name":"stdout","time":972.288358886,"data":"      \"r_face_iqr\": 0.0262,\n"}
+,{"stream_name":"stdout","time":972.288368867,"data":"      \"clips\": 4826.0\n"}
+,{"stream_name":"stdout","time":972.288376008,"data":"    },\n"}
+,{"stream_name":"stdout","time":972.288387512,"data":"    \"61333\": {\n"}
+,{"stream_name":"stdout","time":972.288392113,"data":"      \"r_face\": 0.5912,\n"}
+,{"stream_name":"stdout","time":972.288396494,"data":"      \"r_shoulder\": 0.2079,\n"}
+,{"stream_name":"stdout","time":972.28840069,"data":"      \"r_face_iqr\": 0.0362,\n"}
+,{"stream_name":"stdout","time":972.288404859,"data":"      \"clips\": 4900.0\n"}
+,{"stream_name":"stdout","time":972.288409808,"data":"    },\n"}
+,{"stream_name":"stdout","time":972.288413936,"data":"    \"62590\": {\n"}
+,{"stream_name":"stdout","time":972.288418426,"data":"      \"r_face\": 0.4587,\n"}
+,{"stream_name":"stdout","time":972.288422464,"data":"      \"r_shoulder\": 0.1438,\n"}
+,{"stream_name":"stdout","time":972.28842728,"data":"      \"r_face_iqr\": 0.0411,\n"}
+,{"stream_name":"stdout","time":972.288431216,"data":"      \"clips\": 4563.0\n"}
+,{"stream_name":"stdout","time":972.288435826,"data":"    }\n"}
+,{"stream_name":"stdout","time":972.288440165,"data":"  },\n"}
+,{"stream_name":"stdout","time":972.288443943,"data":"  \"runtime_s\": 561.6\n"}
+,{"stream_name":"stdout","time":972.288448027,"data":"}\n"}
+,{"stream_name":"stderr","time":975.790296254,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":975.790378797,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":976.294652347,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":976.294684242,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":978.819726411,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":980.200065795,"data":"[NbConvertApp] Writing 297863 bytes to __results__.html\n"}
+]

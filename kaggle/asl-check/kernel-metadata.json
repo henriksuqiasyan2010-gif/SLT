@@ -1,0 +1,13 @@
+{
+  "id": "henriksuqiasyan/asl-check",
+  "title": "asl-check",
+  "code_file": "asl_check.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": false,
+  "enable_internet": false,
+  "dataset_sources": ["henriksuqiasyan/asl-src"],
+  "competition_sources": ["asl-signs"],
+  "kernel_sources": []
+}

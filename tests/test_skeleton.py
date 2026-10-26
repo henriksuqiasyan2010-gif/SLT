@@ -116,3 +116,28 @@ def test_draw_cv2_draws_in_pixels(sample_parquets):
     blank = np.zeros((480, 640, 3), dtype=np.uint8)
     skeleton.draw_cv2(blank, np.full((543, 3), np.nan, dtype=np.float32))
     assert not blank.any()
+
+
+def test_gif_durations_keep_real_time():
+    d = skeleton.gif_durations(30, 30.0)
+    assert set(d) <= {30, 40} and sum(d) == 1000
+    assert sum(skeleton.gif_durations(17, 17.0)) == 1000
+
+
+def test_save_gif_real_speed(tmp_path, sample_parquets):
+    from PIL import Image, ImageSequence
+    clip = next(c for c in map(load_clip, sample_parquets) if len(c) >= 12)[:12]
+    out = tmp_path / "clip.gif"
+    skeleton.save_gif(clip, out, fps=30.0, aspect=0.75)
+    with Image.open(out) as im:
+        total = sum(f.info["duration"] for f in ImageSequence.Iterator(im))
+        assert im.n_frames == 12
+    assert total == 400
+
+
+def test_aspect_scales_only_y():
+    frame = np.full((543, 3), np.nan, dtype=np.float32)
+    frame[POSE.start + 11] = (0.6, 0.3, 0)
+    frame[POSE.start + 13] = (0.7, 0.6, 0)
+    (part, xs, ys), = list(skeleton.segments(frame, aspect=0.75))
+    assert xs == pytest.approx([0.6, 0.7]) and ys == pytest.approx([0.4, 0.8])
