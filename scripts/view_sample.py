@@ -15,17 +15,25 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 from asl import config, skeleton  # noqa: E402
-from asl.landmarks_io import load_clip  # noqa: E402
+from asl.landmarks_io import LEFT_HAND, RIGHT_HAND, load_clip  # noqa: E402
 
 
 def find_sample_for_sign(sign: str) -> Path:
+    """The local clip that shows the sign best: right hand active if possible, longest hand presence."""
     train = pd.read_csv(config.SAMPLE_DIR / "train.csv")
-    for rel in train.loc[train["sign"] == sign, "path"]:
-        p = config.SAMPLE_DIR / rel
-        if p.exists():
-            return p
-    local = sorted(set(train.loc[train["path"].map(lambda r: (config.SAMPLE_DIR / r).exists()), "sign"]))
-    raise SystemExit(f"No local clip for sign '{sign}'. Signs in data/sample: {', '.join(local)}")
+    paths = [config.SAMPLE_DIR / rel for rel in train.loc[train["sign"] == sign, "path"]]
+    paths = [p for p in paths if p.exists()]
+    if not paths:
+        local = sorted(set(train.loc[train["path"].map(lambda r: (config.SAMPLE_DIR / r).exists()), "sign"]))
+        raise SystemExit(f"No local clip for sign '{sign}'. Signs in data/sample: {', '.join(local)}")
+
+    def score(p):
+        clip = load_clip(p)
+        right = int((~np.isnan(clip[:, RIGHT_HAND, 0]).all(1)).sum())
+        left = int((~np.isnan(clip[:, LEFT_HAND, 0]).all(1)).sum())
+        return (right > left, max(right, left))
+
+    return max(paths, key=score)
 
 
 def main():

@@ -25,3 +25,6 @@ settings.json
 # Editors
 .vscode/
 .idea/
+
+# Generated comparison GIFs (regenerate with scripts/compare.py)
+reports/compare/

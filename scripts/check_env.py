@@ -26,17 +26,19 @@ def check_packages(lines):
 
 
 def check_camera(lines):
-    import cv2
-    cap = cv2.VideoCapture(config.CAMERA_INDEX, cv2.CAP_DSHOW)
+    from asl.capture import CameraError, open_camera
     try:
-        if not cap.isOpened():
-            lines.append(f"  camera {config.CAMERA_INDEX}: cannot open")
-            return False
+        cap = open_camera(config.CAMERA_INDEX, config.CAMERA_WIDTH, config.CAMERA_HEIGHT)
+    except CameraError as e:
+        lines.append(f"  camera {config.CAMERA_INDEX}: {e}")
+        return False
+    try:
         ok, frame = cap.read()
         if not ok or frame is None:
             lines.append(f"  camera {config.CAMERA_INDEX}: opened but no frame")
             return False
-        lines.append(f"  camera {config.CAMERA_INDEX}: frame {frame.shape[1]}x{frame.shape[0]}")
+        lines.append(f"  camera {config.CAMERA_INDEX}: frame {frame.shape[1]}x{frame.shape[0]}"
+                     f" via {cap.getBackendName()}")
         return True
     finally:
         cap.release()

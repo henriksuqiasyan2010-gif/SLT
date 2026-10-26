@@ -1,6 +1,12 @@
 """Skeleton drawing for landmark clips: hands, upper-body pose and face (oval, brows, eyes, nose, lips).
 
 Used by scripts/view_sample.py now and by compare.py / Learn mode later.
+
+What is drawn follows the data, nothing is invented:
+- a hand is drawn only when its 21 points are not NaN (a lost or resting hand is simply absent);
+- pose points (shoulders, elbows, wrists, hips) are drawn only when they lie inside the image,
+  [0, 1] x [0, 1]; the pose model extrapolates the rest, e.g. hips and a resting hand below the frame;
+- the shoulder-elbow-wrist line stays while the hand is lost, as long as its points are inside the frame.
 """
 
 import numpy as np
@@ -18,10 +24,6 @@ FOREARMS = {"left_hand": (13, 15), "right_hand": (14, 16)}  # (elbow, wrist) per
 TORSO = [11, 12, 24, 23]
 SHOULDERS = (11, 12)
 CHIN = 152
-# Pose-based hand stub (wrist, pinky, index, thumb) drawn when the hand block itself is not detected,
-# e.g. the resting hand. Pose indices: left 15/17/19/21, right 16/18/20/22.
-POSE_HAND_STUBS = {"left_hand": (15, 17, 19, 21), "right_hand": (16, 18, 20, 22)}
-STUB_EDGES = [(0, 1), (0, 2), (0, 3), (1, 2)]
 
 # Face-mesh lip contours (outer, inner), closed loops.
 LIPS_OUTER = [61, 185, 40, 39, 37, 0, 267, 269, 270, 409, 291, 375, 321, 405, 314, 17, 84, 181,
@@ -55,8 +57,6 @@ STYLES = {
     "lips": {"color": "#8e2a3a", "lw": 1.5},
     "left_hand": {"color": LEFT_COLOR, "lw": 2.0},
     "right_hand": {"color": RIGHT_COLOR, "lw": 2.0},
-    "left_hand_stub": {"color": LEFT_COLOR, "lw": 2.0, "alpha": 0.4},
-    "right_hand_stub": {"color": RIGHT_COLOR, "lw": 2.0, "alpha": 0.4},
 }
 TORSO_FILL_ALPHA = 0.07
 PALM_FILL_ALPHA = 0.18
@@ -67,6 +67,11 @@ BACKGROUND = "white"
 
 def _valid(p) -> bool:
     return not np.isnan(p[:2]).any()
+
+
+def _inside(p) -> bool:
+    """Not NaN and inside the image: pose points outside it are model guesses, not observations."""
+    return _valid(p) and bool(0.0 <= p[0] <= 1.0 and 0.0 <= p[1] <= 1.0)
 
 
 def segments(frame: np.ndarray):
@@ -87,15 +92,16 @@ def segments(frame: np.ndarray):
     hands = {"left_hand": frame[LEFT_HAND], "right_hand": frame[RIGHT_HAND]}
     for a, b in POSE_EDGES:
         pa, pb = pose[a], pose[b]
-        # Pose and hand wrists differ by a few pixels; end the forearm at the hand wrist so they join.
+        ok_b = _inside(pb)
+        # Pose and hand wrists differ by a few pixels; end the forearm at the detected hand's wrist.
         for name, (elbow, wrist) in FOREARMS.items():
             if (a, b) == (elbow, wrist) and _valid(hands[name][0]):
-                pb = hands[name][0]
-        if _valid(pa) and _valid(pb):
+                pb, ok_b = hands[name][0], True
+        if _inside(pa) and ok_b:
             yield "body", [pa[0], pb[0]], [pa[1], pb[1]]
     if DRAW_FACE:
         l_sh, r_sh, chin = pose[SHOULDERS[0]], pose[SHOULDERS[1]], frame[FACE][CHIN]
-        if _valid(l_sh) and _valid(r_sh) and _valid(chin):
+        if _inside(l_sh) and _inside(r_sh) and _valid(chin):
             mid = (l_sh + r_sh) / 2
             yield "body", [mid[0], chin[0]], [mid[1], chin[1]]  # neck
         yield from polyline(FACE_OVAL, "head")
@@ -104,11 +110,7 @@ def segments(frame: np.ndarray):
         for loop in (LIPS_OUTER, LIPS_INNER):
             yield from polyline(loop, "lips")
     for name, block in (("left_hand", LEFT_HAND), ("right_hand", RIGHT_HAND)):
-        if np.isnan(frame[block, :2]).all():
-            idx = POSE_HAND_STUBS[name]
-            yield from edges(POSE, [(idx[a], idx[b]) for a, b in STUB_EDGES], f"{name}_stub")
-        else:
-            yield from edges(block, HAND_EDGES, name)
+        yield from edges(block, HAND_EDGES, name)  # a lost hand is all NaN, so nothing is yielded
 
 
 def draw_frame(ax, frame: np.ndarray) -> None:
@@ -121,7 +123,8 @@ def draw_frame(ax, frame: np.ndarray) -> None:
             ax.add_patch(Polygon(points, closed=True, facecolor=color, edgecolor="none", alpha=alpha))
 
     pose = frame[POSE]
-    fill(pose[TORSO], INK, TORSO_FILL_ALPHA)
+    if all(_inside(pt) for pt in pose[TORSO]):  # hips are usually below the frame -> no fill
+        fill(pose[TORSO], INK, TORSO_FILL_ALPHA)
     for name, block in (("left_hand", LEFT_HAND), ("right_hand", RIGHT_HAND)):
         fill(frame[block][HAND_PALM], STYLES[name]["color"], PALM_FILL_ALPHA)
 
@@ -134,8 +137,7 @@ def draw_frame(ax, frame: np.ndarray) -> None:
     shown = [j for j in POSE_JOINTS
              if not any(j == FOREARMS[n][1] and _valid(frame[b][0])
                         for n, b in (("left_hand", LEFT_HAND), ("right_hand", RIGHT_HAND)))]
-    joints = pose[shown]
-    joints = joints[~np.isnan(joints[:, :2]).any(axis=1)]
+    joints = np.array([pose[j] for j in shown if _inside(pose[j])]).reshape(-1, 3)
     ax.plot(joints[:, 0], joints[:, 1], "o", color=INK, markersize=BODY_JOINT_SIZE)
     for name, block in (("left_hand", LEFT_HAND), ("right_hand", RIGHT_HAND)):
         pts = frame[block]
@@ -143,12 +145,45 @@ def draw_frame(ax, frame: np.ndarray) -> None:
         ax.plot(pts[:, 0], pts[:, 1], "o", color=STYLES[name]["color"], markersize=HAND_JOINT_SIZE)
 
 
+def _hex_to_bgr(color: str):
+    color = color.lstrip("#")
+    r, g, b = (int(color[i:i + 2], 16) for i in (0, 2, 4))
+    return b, g, r
+
+
+# Overlay colours on a camera image: the dark ink is invisible on dark clothes, so body/face are light.
+OVERLAY_BGR = {
+    "body": (235, 235, 235), "head": (235, 235, 235), "face": (235, 235, 235),
+    "lips": _hex_to_bgr("#e0607a"),
+    "left_hand": _hex_to_bgr(LEFT_COLOR), "right_hand": _hex_to_bgr(RIGHT_COLOR),
+}
+OVERLAY_THICKNESS = {"body": 3, "head": 2, "face": 1, "lips": 1}
+
+
+def draw_cv2(image: np.ndarray, frame: np.ndarray) -> np.ndarray:
+    """Draw the skeleton of one (543, 3) frame onto a BGR image in place (normalized -> pixels)."""
+    import cv2
+
+    h, w = image.shape[:2]
+    for part, xs, ys in segments(frame):
+        p0 = (int(round(xs[0] * w)), int(round(ys[0] * h)))
+        p1 = (int(round(xs[1] * w)), int(round(ys[1] * h)))
+        cv2.line(image, p0, p1, OVERLAY_BGR[part], OVERLAY_THICKNESS.get(part, 2), cv2.LINE_AA)
+    for name, block in (("left_hand", LEFT_HAND), ("right_hand", RIGHT_HAND)):
+        pts = frame[block]
+        for x, y in pts[~np.isnan(pts[:, :2]).any(axis=1), :2]:
+            cv2.circle(image, (int(round(x * w)), int(round(y * h))), 3, OVERLAY_BGR[name], -1, cv2.LINE_AA)
+    return image
+
+
 def display_bounds(clip: np.ndarray, margin: float = 0.05):
-    """(xmin, xmax, ymin, ymax) over the displayed points of the whole clip."""
-    idx = np.r_[np.arange(LEFT_HAND.start, LEFT_HAND.stop), np.arange(RIGHT_HAND.start, RIGHT_HAND.stop),
-                POSE.start + np.array(sorted({i for e in POSE_EDGES for i in e})),
-                FACE.start + np.array(FACE_OVAL if DRAW_FACE else [0])]
-    pts = clip[:, idx, :2].reshape(-1, 2)
+    """(xmin, xmax, ymin, ymax) over the points that are drawn: non-NaN hand and face points,
+    pose points inside the image."""
+    hand_idx = np.r_[np.arange(LEFT_HAND.start, LEFT_HAND.stop), np.arange(RIGHT_HAND.start, RIGHT_HAND.stop),
+                     FACE.start + np.array(FACE_OVAL if DRAW_FACE else [0])]
+    pose = clip[:, POSE.start + np.array(sorted({i for e in POSE_EDGES for i in e})), :2].reshape(-1, 2)
+    pose = pose[((pose >= 0) & (pose <= 1)).all(axis=1)]  # NaN compares False -> dropped too
+    pts = np.concatenate([clip[:, hand_idx, :2].reshape(-1, 2), pose])
     pts = pts[~np.isnan(pts).any(axis=1)]
     if len(pts) == 0:
         return 0.0, 1.0, 0.0, 1.0
