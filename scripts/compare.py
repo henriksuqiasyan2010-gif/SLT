@@ -44,7 +44,8 @@ def describe(clip):
         out["active_hand_side"] = "right" if np.median(pts[:, 0]) > mid_x else "left"
         out["active_hand_x"] = (float(pts[:, 0].min()), float(pts[:, 0].max()))
         out["active_hand_y"] = (float(pts[:, 1].min()), float(pts[:, 1].max()))
-        # Position relative to the body, in shoulder widths: comparable across cameras and aspect ratios.
+        # Report only, not model input. Relative to the body in shoulder widths: x is comparable across
+        # cameras, y is not (no aspect correction here; features.extract does that).
         rel = (np.median(pts, axis=0) - [mid_x, np.nanmedian(sh[:, :, 1])]) / max(width, 1e-6)
         out["active_hand_rel_body"] = (round(float(rel[0]), 2), round(float(rel[1]), 2))
     return out
