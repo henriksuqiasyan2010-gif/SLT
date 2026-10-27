@@ -38,4 +38,5 @@
 
 | 2026-10-27 | `henriksuqiasyan/asl-twohands v1` | CPU: main-reg30 on fold-0 val clips with both hands in a frame, with / without keep_moving_hand (orig + 13 fps) | done (6 min): 1,833 clips, top-1 36.7% -> 61.3%, whole val 62.7% -> 65.1%; `reports/twohands/` |
 
-| 2026-10-27 | `henriksuqiasyan/asl-preprocess v2` | FEATURES_VERSION 2 (keep_moving_hand inside extract): X64/X32 + raw subset (CPU) | running |
+| 2026-10-27 | `henriksuqiasyan/asl-preprocess v2` | FEATURES_VERSION 2 (keep_moving_hand inside extract): X64/X32 + raw subset (CPU) | still RUNNING after 89 min (v1 took 18 min), probably queued; replaced by v3 |
+| 2026-10-27 | `henriksuqiasyan/asl-preprocess v3` | re-run of v2 | running |
