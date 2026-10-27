@@ -1,0 +1,144 @@
+{
+ "model": "main-reg30_T32",
+ "val_participants": [
+  27610,
+  28656,
+  29302,
+  49445
+ ],
+ "n_val": 18528,
+ "n_both_in_one_frame": 1833,
+ "n_both_at_some_time": 2774,
+ "orig": {
+  "top1_without": 0.36661211129296234,
+  "top1_with": 0.6126568466993999,
+  "top3_without": 0.49372613202400434,
+  "top3_with": 0.762138570649209
+ },
+ "13fps": {
+  "top1_without": 0.3557010365521004,
+  "top1_with": 0.5711947626841244,
+  "top3_without": 0.4653573376977632,
+  "top3_with": 0.6966721222040371
+ },
+ "dropped_hand_was_extract_dominant": 464,
+ "signs_most_changed": {
+  "worse": [
+   {
+    "sign": "hide",
+    "n": 4,
+    "without": 0.25,
+    "with_": 0.0,
+    "delta": -0.25
+   },
+   {
+    "sign": "mitten",
+    "n": 8,
+    "without": 0.375,
+    "with_": 0.125,
+    "delta": -0.25
+   },
+   {
+    "sign": "sleepy",
+    "n": 4,
+    "without": 0.75,
+    "with_": 0.5,
+    "delta": -0.25
+   },
+   {
+    "sign": "night",
+    "n": 6,
+    "without": 0.167,
+    "with_": 0.0,
+    "delta": -0.167
+   },
+   {
+    "sign": "finish",
+    "n": 6,
+    "without": 0.667,
+    "with_": 0.5,
+    "delta": -0.167
+   },
+   {
+    "sign": "chin",
+    "n": 8,
+    "without": 0.125,
+    "with_": 0.0,
+    "delta": -0.125
+   },
+   {
+    "sign": "before",
+    "n": 10,
+    "without": 0.4,
+    "with_": 0.3,
+    "delta": -0.1
+   },
+   {
+    "sign": "icecream",
+    "n": 10,
+    "without": 1.0,
+    "with_": 0.9,
+    "delta": -0.1
+   }
+  ],
+  "better": [
+   {
+    "sign": "cloud",
+    "n": 6,
+    "without": 0.0,
+    "with_": 0.833,
+    "delta": 0.833
+   },
+   {
+    "sign": "pool",
+    "n": 5,
+    "without": 0.0,
+    "with_": 0.8,
+    "delta": 0.8
+   },
+   {
+    "sign": "first",
+    "n": 5,
+    "without": 0.2,
+    "with_": 1.0,
+    "delta": 0.8
+   },
+   {
+    "sign": "flag",
+    "n": 8,
+    "without": 0.25,
+    "with_": 1.0,
+    "delta": 0.75
+   },
+   {
+    "sign": "make",
+    "n": 4,
+    "without": 0.0,
+    "with_": 0.75,
+    "delta": 0.75
+   },
+   {
+    "sign": "outside",
+    "n": 7,
+    "without": 0.143,
+    "with_": 0.857,
+    "delta": 0.714
+   },
+   {
+    "sign": "many",
+    "n": 7,
+    "without": 0.143,
+    "with_": 0.857,
+    "delta": 0.714
+   },
+   {
+    "sign": "penny",
+    "n": 9,
+    "without": 0.111,
+    "with_": 0.778,
+    "delta": 0.667
+   }
+  ]
+ },
+ "runtime_s": 361.1
+}

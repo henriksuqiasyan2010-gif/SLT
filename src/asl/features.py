@@ -165,6 +165,33 @@ def trim_idle(clip: np.ndarray, fps: float, aspect: float = config.DATASET_ASPEC
     return int(first), int(last)
 
 
+def hand_paths(clip: np.ndarray, aspect: float = config.DATASET_ASPECT) -> tuple:
+    """(left, right) distance travelled by each hand over the clip: sum over consecutive frames
+    where the hand is visible in both of the mean displacement of its 21 points (y / aspect)."""
+    pts = clip[:, :, :2].astype(np.float64)
+    pts[..., 1] /= aspect
+    paths = []
+    for block in (LEFT_HAND, RIGHT_HAND):
+        step = np.linalg.norm(np.diff(pts[:, block], axis=0), axis=-1).mean(axis=1)
+        paths.append(float(np.nansum(step)))
+    return tuple(paths)
+
+
+def keep_moving_hand(clip: np.ndarray, aspect: float = config.DATASET_ASPECT) -> np.ndarray:
+    """Live path only (like trim_idle): if both hands are visible together in any frame, the hand
+    that travels less is set to NaN in every frame, as if Holistic had not found it. In the dataset
+    a still second hand is rarely detected (sick: 2.9% of clips show both hands), so the model has
+    hardly seen one. Returns the clip unchanged (same object) when there is nothing to drop."""
+    left, right = hand_presence(clip)
+    if not (left & right).any():
+        return clip
+    path_left, path_right = hand_paths(clip, aspect)
+    drop = LEFT_HAND if path_left <= path_right else RIGHT_HAND  # tie -> keep the right one
+    out = clip.copy()
+    out[:, drop] = np.nan
+    return out
+
+
 def dominant_is_left(clip: np.ndarray) -> bool:
     """Left hand seen in strictly more frames than the right one (tie -> right, no mirroring)."""
     left, right = hand_presence(clip)

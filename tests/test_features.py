@@ -315,3 +315,51 @@ def test_dataset_aspect_per_participant():
     assert F.dataset_aspect(30680) == config.DATASET_ASPECT_BY_PARTICIPANT[30680]
     assert F.dataset_aspect("62590") == config.DATASET_ASPECT_BY_PARTICIPANT[62590]
     assert F.dataset_aspect(16069) == config.DATASET_ASPECT
+
+
+# --- keep_moving_hand (live path only) ------------------------------------------------------------
+
+def with_still_other_hand(clip):
+    """Right-dominant clip + a still left hand in every frame (a copy of the first right-hand pose)."""
+    out = clip.copy()
+    first = clip[F.hand_presence(clip)[1]][0, RIGHT_HAND]
+    out[:, LEFT_HAND] = first + np.array([0.2, 0.0, 0.0], np.float32)
+    return out
+
+
+def test_keep_moving_hand_one_hand_is_untouched(sample_clips):
+    for clip in sample_clips:  # the sample never shows both hands in one frame
+        assert F.keep_moving_hand(clip) is clip
+
+
+def test_keep_moving_hand_drops_the_still_hand(sample_clips):
+    for clip in right_dominant(sample_clips, min_frames=10):
+        both = with_still_other_hand(clip)
+        assert (F.hand_presence(both)[0] & F.hand_presence(both)[1]).any()
+        kept = F.keep_moving_hand(both)
+        assert np.isnan(kept[:, LEFT_HAND]).all()
+        np.testing.assert_array_equal(kept[:, RIGHT_HAND], clip[:, RIGHT_HAND])
+        np.testing.assert_array_equal(F.extract(kept)[0], F.extract(clip)[0])
+        # the same with the sides swapped: the still hand is the right one
+        swapped = both.copy()
+        swapped[:, LEFT_HAND], swapped[:, RIGHT_HAND] = both[:, RIGHT_HAND], both[:, LEFT_HAND]
+        assert np.isnan(F.keep_moving_hand(swapped)[:, RIGHT_HAND]).all()
+        assert not np.isnan(both[:, LEFT_HAND]).all()  # input not modified
+
+
+def test_hand_paths_are_aspect_corrected():
+    clip = np.full((3, 543, 3), np.nan, np.float32)
+    clip[:, RIGHT_HAND, :2] = 0.5
+    clip[:, RIGHT_HAND, 1] = [[0.0], [0.1], [0.2]]
+    left, right = F.hand_paths(clip, aspect=0.5)
+    assert left == 0.0 and right == pytest.approx(0.4)
+
+
+def test_keep_moving_hand_on_two_handed_sick():
+    files = sorted(glob.glob(str(config.RECORDINGS_DIR / "sick-2h_*.npy")))
+    if not files:
+        pytest.skip("no recordings/sick-2h_*.npy")
+    for f in files:  # right hand at the forehead moves, the left one waits at the stomach
+        clip, _ = load_recording(f)
+        kept = F.keep_moving_hand(clip, config.CAMERA_ASPECT)
+        assert np.isnan(kept[:, LEFT_HAND]).all() and not np.isnan(kept[:, RIGHT_HAND]).all()

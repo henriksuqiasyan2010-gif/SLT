@@ -6,7 +6,7 @@
 | 1 | Camera and live landmarks | done | 2026-10-26 | 34 tests pass; 13 recordings (hello 5, please 3, mom 5); FPS median 16.7 over the log but today 9-14 (throttling) - re-check in Phase 4; no mirroring; 640x480; Holistic complexity 1 |
 | 2 | Features | done | 2026-10-26 | FEATURES_VERSION 1, F=542, T_FIX=64 (param); extract ~1 ms/clip; aspect 3:4 + 3 participant overrides (asl-check); trim_idle for live only (cuts 9.4% of dataset hand frames); reference-clip rule; GIFs at real speed |
 | 3 | Training on Kaggle | done | 2026-10-27 | 90 tests pass; `models/` = main-reg30 (Transformer T=32): top-1 62.7% / top-3 76.9%, 13 fps 59.6% / 74.5% on held-out participants 27610, 28656, 29302, 49445 — below the 0.70 target, ACCEPTED by the user (per participant 71 / 68 / 47 / 65%; ensemble of the 3 trained models only +1.1 pp); baseline CNN T=32 52.6% / 69.3%; ONNX parity 8e-7; CPU latency 1.2 ms model / 2.5 ms live path; smoke test on 24 user recordings: top-1 19/24, top-3 22/24 (ensemble 17/24 -> not used); two-handed sick fails 2/2 (second hand, see CLAUDE.md); 5-fold check deferred to Phase 8 |
-| 4 | App shell and Single word mode | not started | | |
+| 4 | App shell and Single word mode | in progress | 2026-10-27 | keep_moving_hand ON in the live path (asl-twohands: val 62.7% -> 65.1%, two-hand clips 36.7% -> 61.3%) |
 | 5 | Sentence mode | not started | | |
 | 6 | Learn mode | not started | | |
 | 7 | Translations and Armenian audio | not started | | |
@@ -34,3 +34,5 @@
 | 2026-10-27 | `henriksuqiasyan/asl-train-main-reg30 v1` | main-reg on 30 augmented versions (asl-augment-0..5): options 1 + 2 (GPU) | done: best epoch 88 (epoch 100: 62.5%), 29 s/epoch; top-1 62.7% / top-3 76.9% (13 fps 59.6% / 74.5%) = main-reg within noise (62.3%); synonyms merged, PRESENTATION ONLY: 64.1% (13 fps 61.0%); ONNX parity 8e-7; `reports/main-reg30/`, copied to `models/` |
 
 | 2026-10-27 | `henriksuqiasyan/asl-ensemble v1` | CPU: averaged probabilities of main / main-reg / main-reg30 on the val participants (orig + 13 fps), per participant | done (7 min CPU): reproduces the training numbers; main-reg+main-reg30 63.1%, main+main-reg+main-reg30 63.8% / top-3 78.1% (13 fps 61.1%) vs best single 62.7%; `reports/ensemble/` |
+
+| 2026-10-27 | `henriksuqiasyan/asl-twohands v1` | CPU: main-reg30 on fold-0 val clips with both hands in a frame, with / without keep_moving_hand (orig + 13 fps) | done (6 min): 1,833 clips, top-1 36.7% -> 61.3%, whole val 62.7% -> 65.1%; `reports/twohands/` |
