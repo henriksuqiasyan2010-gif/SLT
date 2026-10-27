@@ -5,7 +5,7 @@
 | 0 | Setup and data access | done | 2026-10-25 | 11 tests pass; camera OK, Kaggle OK; asl-stats done (median 22 frames, p90 92); vocab.csv reviewed by user; user confirmed GIF look (face + both hands added on request) |
 | 1 | Camera and live landmarks | done | 2026-10-26 | 34 tests pass; 13 recordings (hello 5, please 3, mom 5); FPS median 16.7 over the log but today 9-14 (throttling) - re-check in Phase 4; no mirroring; 640x480; Holistic complexity 1 |
 | 2 | Features | done | 2026-10-26 | FEATURES_VERSION 1, F=542, T_FIX=64 (param); extract ~1 ms/clip; aspect 3:4 + 3 participant overrides (asl-check); trim_idle for live only (cuts 9.4% of dataset hand frames); reference-clip rule; GIFs at real speed |
-| 3 | Training on Kaggle | in progress | 2026-10-26 | smoke test on the user's recordings: DEFERRED until the user re-records to their satisfaction (preliminary run on the 2026-10-26 19:2x recordings). main: top-1 56.8% < 0.70 target -> waiting for the user's decision; latency 1.5 ms model / 3.0 ms full path; preliminary smoke test top-1 4/6, top-3 4/6 (both mom -> arm) |
+| 3 | Training on Kaggle | in progress | 2026-10-26 | smoke test on the user's recordings: DEFERRED until the user re-records to their satisfaction (preliminary run on the 2026-10-26 19:2x recordings). main 56.8%, main-reg 62.3% (< 0.70) -> main-reg30 (main-reg on 30 augmented versions) per the user's plan; models/ = main-reg: latency 5.1 ms model / 6.6 ms full path; preliminary smoke test top-1 6/6, top-3 6/6 |
 | 4 | App shell and Single word mode | not started | | |
 | 5 | Sentence mode | not started | | |
 | 6 | Learn mode | not started | | |
@@ -26,4 +26,7 @@
 | 2026-10-27 | `henriksuqiasyan/asl-augment-1 v1` | augmented features T=32, versions 5-9 (CPU) | done 2026-10-27 12:15 |
 | 2026-10-27 | `henriksuqiasyan/asl-augment-2 v1` | augmented features T=32, versions 10-14 (CPU) | done 2026-10-27 12:15 |
 | 2026-10-27 | `henriksuqiasyan/asl-train-main v1` | main: Transformer T=32 on 15 precomputed augmented versions, early stopping (GPU) | done: stopped at epoch 30 (best 20), 40 s/epoch, GPU busy 78%; top-1 56.8% / top-3 72.9% (13 fps 54.9% / 71.3%) vs baseline T32 52.6% / 69.3%; train acc 92% (overfitting); ONNX parity 7e-7; `reports/main/`, copied to `models/` |
-| 2026-10-27 | `henriksuqiasyan/asl-train-main-reg v1` | main + regularisation: 100 epochs, cosine to the end (no early stopping, best val epoch kept), dropout 0.3/0.2/0.4, GPU frame-span + point-group masking, mixup; synonyms-merged metric for the presentation (GPU) | running |
+| 2026-10-27 | `henriksuqiasyan/asl-train-main-reg v1` | main + regularisation: 100 epochs, cosine to the end (no early stopping, best val epoch kept), dropout 0.3/0.2/0.4, GPU frame-span + point-group masking, mixup; synonyms-merged metric for the presentation (GPU) | done: 100 epochs, best 78 (epoch 100: 62.0%), 36 s/epoch; top-1 62.3% / top-3 77.1% (13 fps 59.6% / 74.5%); synonyms merged, PRESENTATION ONLY: 63.8% (13 fps 61.0%); ONNX parity 8e-7; `reports/main-reg/`, copied to `models/` |
+| 2026-10-27 | `henriksuqiasyan/asl-augment-3 v1` | augmented features T=32, versions 15-19 (CPU), for main-reg30 | running |
+| 2026-10-27 | `henriksuqiasyan/asl-augment-4 v1` | augmented features T=32, versions 20-24 (CPU), for main-reg30 | running |
+| 2026-10-27 | `henriksuqiasyan/asl-augment-5 v1` | augmented features T=32, versions 25-29 (CPU), for main-reg30 | running |

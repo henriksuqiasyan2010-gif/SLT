@@ -10,6 +10,7 @@ PRESET (set by scripts/push_kernel.py when the kernel is pushed):
   main-reg    main against overfitting: the cosine schedule runs to the end (no early stopping,
               the best validation epoch is kept), stronger dropout, and on the GPU over the ready
               features: masking of a span of frames and of point groups, mixup
+  main-reg30  main-reg on 30 augmented versions (asl-augment-0..5) instead of 15
 
 Every model is evaluated twice on the held-out participants: on the original clips and on the
 clips thinned to EVAL_FPS frames per second (the user's camera runs at 12-15 fps).
@@ -28,13 +29,15 @@ PRESETS = {
     "main-trial": dict(model="transformer", t_values=[32], epochs=2, batch=256, lr=1e-3, wd=0.05,
                        label_smoothing=0.1, augment="online", patience=0, warmup_epochs=1),
     "main": dict(model="transformer", t_values=[32], epochs=60, batch=256, lr=1e-3, wd=0.05,
-                 label_smoothing=0.1, augment="precomputed", patience=10, warmup_epochs=2),
+                 label_smoothing=0.1, augment="precomputed", aug_versions=15, patience=10, warmup_epochs=2),
     "main-reg": dict(model="transformer", t_values=[32], epochs=100, batch=256, lr=1e-3, wd=0.05,
-                     label_smoothing=0.1, augment="precomputed", patience=0, warmup_epochs=2,
+                     label_smoothing=0.1, augment="precomputed", aug_versions=15, patience=0, warmup_epochs=2,
                      drop=0.3, conv_drop=0.2, head_drop=0.4,
                      gpu_aug=dict(p_frames=0.5, frame_span=(0.1, 0.25), p_group=0.1,
                                   p_mixup=0.5, mixup_alpha=0.4)),
 }
+# main-reg on 30 precomputed versions (asl-augment-0..5) instead of 15: options 1 + 2
+PRESETS["main-reg30"] = dict(PRESETS["main-reg"], aug_versions=30)
 SEED = 42
 N_FOLDS = 5
 VAL_FOLD = 0
@@ -169,13 +172,15 @@ class AugmentedVersions:
     Epoch e trains on version e % V (training rows only); the next version is read from disk in a
     background thread while the GPU works on the current one."""
 
-    def __init__(self, t, train_idx):
+    def __init__(self, t, train_idx, expected):
         from concurrent.futures import ThreadPoolExecutor
 
         root = Path(os.environ.get("ASL_AUG", "/kaggle/input"))
         self.files = sorted(root.glob(f"**/Xaug{t}_v*.npy"), key=lambda f: int(f.stem.split("_v")[1]))
         if not self.files:
             raise FileNotFoundError(f"no Xaug{t}_v*.npy under {root}")
+        if len(self.files) != expected:
+            raise RuntimeError(f"expected {expected} augmented versions, found {len(self.files)}")
         self.train_idx = train_idx
         self.executor = ThreadPoolExecutor(max_workers=1)
         self.pending = None
@@ -489,7 +494,7 @@ def train_one(data, cfg, t, out_dir):
             OnlineDataset(data, data.train_idx, t, train=True), batch_size=cfg["batch"], shuffle=True,
             num_workers=NUM_WORKERS, pin_memory=True, persistent_workers=True, prefetch_factor=4, drop_last=False)
     if cfg["augment"] == "precomputed":
-        versions = AugmentedVersions(t, data.train_idx)
+        versions = AugmentedVersions(t, data.train_idx, cfg["aug_versions"])
         y_tr = torch.from_numpy(data.y[data.train_idx]).to(DEVICE)
         m_tr = torch.from_numpy(M[data.train_idx]).to(DEVICE)
         gen = torch.Generator(device=DEVICE)

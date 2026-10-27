@@ -5,8 +5,8 @@
 
 The kernel folder is generated in build/kernels/<name>/ from kaggle/<kernel>/<script>.py; only the
 parameter line (PRESET = "..." or SHARD = N) differs, so the outputs of different presets never
-overwrite each other. asl-train presets with augment="precomputed" (main, main-reg) also mount the
-outputs of the asl-augment-<shard> kernels.
+overwrite each other. asl-train presets with augment="precomputed" also mount the outputs of
+aug_versions / 5 asl-augment-<shard> kernels (main, main-reg: 0..2; main-reg30: 0..5).
 """
 
 import argparse
@@ -23,7 +23,7 @@ from asl import config  # noqa: E402
 
 STATUS = config.ROOT / "STATUS.md"
 KERNELS_HEADER = "## Kaggle kernels"
-AUGMENT_SHARDS = 3  # asl-augment-0..2, 5 versions each
+VERSIONS_PER_SHARD = 5  # augmented versions written by one asl-augment-<shard> kernel
 
 KERNELS = {
     "asl-train": {"script": "asl_train.py", "param": r'^PRESET = "[\w-]+"', "fmt": 'PRESET = "{}"', "gpu": True},
@@ -40,11 +40,20 @@ def log_kernel(slug: str, purpose: str, result: str) -> None:
     STATUS.write_text(text, encoding="utf-8")
 
 
-def uses_augment_kernels(src: str, preset: str) -> bool:
-    """True if the preset trains on versions precomputed by the asl-augment kernels."""
-    block = re.search(rf'^    "{re.escape(preset)}": dict\((.*?)\),\n(?=    "|\}})', src, flags=re.M | re.S)
-    assert block, f"preset {preset} not found"
-    return 'augment="precomputed"' in block.group(1)
+def train_presets(src: str) -> dict:
+    """PRESETS of asl_train.py: the plain-literal head of the script (up to SEED) is executed alone,
+    without the imports and the Kaggle-only code below it."""
+    ns = {}
+    exec(src[:src.index("\nSEED = ")], ns)
+    return ns["PRESETS"]
+
+
+def augment_shards(cfg: dict) -> int:
+    """Number of asl-augment-<shard> kernels a preset trains on (0 = none)."""
+    if cfg.get("augment") != "precomputed":
+        return 0
+    assert cfg["aug_versions"] % VERSIONS_PER_SHARD == 0, cfg["aug_versions"]
+    return cfg["aug_versions"] // VERSIONS_PER_SHARD
 
 
 def main():
@@ -56,18 +65,19 @@ def main():
 
     spec = KERNELS[args.kernel]
     src = (config.ROOT / "kaggle" / args.kernel / spec["script"]).read_text(encoding="utf-8")
+    shards = 0
     if args.kernel == "asl-train":
-        presets = re.findall(r'^    "([\w-]+)": dict\(', src, flags=re.M)
+        presets = train_presets(src)
         if args.preset not in presets:
-            raise SystemExit(f"unknown preset {args.preset}; known: {presets}")
+            raise SystemExit(f"unknown preset {args.preset}; known: {list(presets)}")
+        shards = augment_shards(presets[args.preset])
     src, n = re.subn(spec["param"], spec["fmt"].format(args.preset), src, count=1, flags=re.M)
     assert n == 1, "parameter line not found"
 
     name = f"{args.kernel}-{args.preset}"
     slug = f"{config.KAGGLE_USER}/{name}"
     sources = [f"{config.KAGGLE_USER}/asl-preprocess"]
-    if args.kernel == "asl-train" and uses_augment_kernels(src, args.preset):
-        sources += [f"{config.KAGGLE_USER}/asl-augment-{k}" for k in range(AUGMENT_SHARDS)]
+    sources += [f"{config.KAGGLE_USER}/asl-augment-{k}" for k in range(shards)]
     folder = config.ROOT / "build" / "kernels" / name
     folder.mkdir(parents=True, exist_ok=True)
     (folder / spec["script"]).write_text(src, encoding="utf-8")
