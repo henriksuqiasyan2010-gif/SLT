@@ -65,14 +65,18 @@ def test_load_reports_missing_files(tmp_path):
 def test_real_model_if_present():
     if not (config.MODELS_DIR / "model.onnx").exists():
         pytest.skip("no models/model.onnx yet")
+    meta = json.loads((config.MODELS_DIR / "metrics.json").read_text(encoding="utf-8"))
+    if meta["FEATURES_VERSION"] != features.FEATURES_VERSION:  # an older model must be refused, not used
+        with pytest.raises(ModelError, match="FEATURES_VERSION"):
+            SignModel.load()
+        return
     model = SignModel.load()
     probs = model.predict(np.zeros((model.t_fix, model.n_features), np.float32), np.ones(model.t_fix, bool))
     assert probs.shape == (len(model.labels),) and abs(float(probs.sum()) - 1) < 1e-3
 
 
-
 def test_predict_clip_drops_a_still_second_hand(sample_parquets):
-    """keep_moving_hand is part of the live path: a still extra hand does not reach the model."""
+    """Since FEATURES_VERSION 2 extract() drops a still second hand: it does not reach the model."""
     from asl.landmarks_io import LEFT_HAND, RIGHT_HAND, load_clip
     model = SignModel(FakeSession(), metrics(T_FIX=32), LABELS)
     clip = next(c for c in map(load_clip, sample_parquets)
@@ -81,8 +85,7 @@ def test_predict_clip_drops_a_still_second_hand(sample_parquets):
     both = clip.copy()
     both[:, LEFT_HAND] = clip[right][0, RIGHT_HAND] + np.array([0.2, 0.0, 0.0], np.float32)
     seen = []
-    for c, keep in ((clip, True), (both, True), (both, False)):
-        model.predict_clip(c, 30.0, config.DATASET_ASPECT, keep_moving_hand=keep)
+    for c in (clip, both):
+        model.predict_clip(c, 30.0, config.DATASET_ASPECT)
         seen.append(model.session.last["features"].copy())
     np.testing.assert_array_equal(seen[1], seen[0])
-    assert not np.array_equal(seen[2], seen[0])

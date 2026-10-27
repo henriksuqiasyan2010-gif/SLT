@@ -5,6 +5,8 @@
 Kaggle kernels and the app import this module; never re-implement any of it elsewhere.
 NumPy only, deterministic. Steps, in order:
 
+0. (since FEATURES_VERSION 2) If both hands are visible together in any frame, the hand that
+   travels less is dropped (keep_moving_hand) - a still second hand is noise for one-hand signs.
 1. y is converted to the unit of x (fraction of the image width) with the frame aspect ratio,
    because the dataset videos are portrait 3:4 and our camera is landscape 4:3.
 2. Leading and trailing frames without any hand are trimmed (none are trimmed if no frame has a hand).
@@ -34,7 +36,8 @@ from asl.landmarks_io import FACE, LEFT_HAND, N_LANDMARKS, POSE, RIGHT_HAND
 
 # Bump on ANY change of the output for the same input. Saved in model metadata (Phase 3);
 # the app refuses a model trained with another version.
-FEATURES_VERSION = 1
+# 1: Phase 2 pipeline. 2: + keep_moving_hand() as step 0 (Phase 4, asl-twohands).
+FEATURES_VERSION = 2
 
 # --- Landmark subset (130 points), indices into the 543-point frame ---------------------------
 # Face part follows the 1st-place solution of the Kaggle competition (lips, nose, eyes); pose part
@@ -178,10 +181,11 @@ def hand_paths(clip: np.ndarray, aspect: float = config.DATASET_ASPECT) -> tuple
 
 
 def keep_moving_hand(clip: np.ndarray, aspect: float = config.DATASET_ASPECT) -> np.ndarray:
-    """Live path only (like trim_idle): if both hands are visible together in any frame, the hand
-    that travels less is set to NaN in every frame, as if Holistic had not found it. In the dataset
-    a still second hand is rarely detected (sick: 2.9% of clips show both hands), so the model has
-    hardly seen one. Returns the clip unchanged (same object) when there is nothing to drop."""
+    """Step 0 of extract() since FEATURES_VERSION 2: if both hands are visible together in any frame,
+    the hand that travels less is set to NaN in every frame, as if Holistic had not found it.
+    A still second hand (resting at the stomach, on the table) is noise for one-hand signs; the
+    dominant-hand rule "seen in more frames" then often picks it (asl-twohands, Phase 4).
+    Returns the clip unchanged (same object) when there is nothing to drop."""
     left, right = hand_presence(clip)
     if not (left & right).any():
         return clip
@@ -266,6 +270,7 @@ def extract(clip: np.ndarray, t_fix: int = config.T_FIX, aspect: float = config.
     if len(clip) == 0:
         return np.zeros((t_fix, dim), np.float32), np.zeros(t_fix, bool)
 
+    clip = keep_moving_hand(clip, aspect)
     start, stop = trim_to_hands(clip)
     clip = clip[start:stop]
     mirror = dominant_is_left(clip)
@@ -301,7 +306,7 @@ def extract(clip: np.ndarray, t_fix: int = config.T_FIX, aspect: float = config.
 
 def extract_info(clip: np.ndarray, aspect: float = config.DATASET_ASPECT) -> dict:
     """What extract() decides about a clip, for reports and tests (not model input)."""
-    clip = np.asarray(clip, dtype=np.float32)
+    clip = keep_moving_hand(np.asarray(clip, dtype=np.float32), aspect)
     start, stop = trim_to_hands(clip)
     trimmed = clip[start:stop]
     left, right = hand_presence(trimmed)

@@ -11,6 +11,7 @@ PRESET (set by scripts/push_kernel.py when the kernel is pushed):
               the best validation epoch is kept), stronger dropout, and on the GPU over the ready
               features: masking of a span of frames and of point groups, mixup
   main-reg30  main-reg on 30 augmented versions (asl-augment-0..5) instead of 15
+  main-fv2    main-reg on FEATURES_VERSION 2 features (keep_moving_hand in extract)
 
 Every model is evaluated twice on the held-out participants: on the original clips and on the
 clips thinned to EVAL_FPS frames per second (the user's camera runs at 12-15 fps).
@@ -38,6 +39,9 @@ PRESETS = {
 }
 # main-reg on 30 precomputed versions (asl-augment-0..5) instead of 15: options 1 + 2
 PRESETS["main-reg30"] = dict(PRESETS["main-reg"], aug_versions=30)
+# main-reg on FEATURES_VERSION 2 (keep_moving_hand inside extract); the preprocess and augment
+# outputs must be v2 too (checked when they are loaded)
+PRESETS["main-fv2"] = dict(PRESETS["main-reg"])
 SEED = 42
 N_FOLDS = 5
 VAL_FOLD = 0
@@ -181,6 +185,10 @@ class AugmentedVersions:
             raise FileNotFoundError(f"no Xaug{t}_v*.npy under {root}")
         if len(self.files) != expected:
             raise RuntimeError(f"expected {expected} augmented versions, found {len(self.files)}")
+        for meta_file in sorted(root.glob("**/aug_meta_*.json")):
+            version = json.loads(meta_file.read_text())["FEATURES_VERSION"]
+            if version != F.FEATURES_VERSION:
+                raise RuntimeError(f"{meta_file}: FEATURES_VERSION {version} != code {F.FEATURES_VERSION}")
         self.train_idx = train_idx
         self.executor = ThreadPoolExecutor(max_workers=1)
         self.pending = None

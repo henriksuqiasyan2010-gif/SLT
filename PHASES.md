@@ -328,6 +328,26 @@ asl-translator/
 
 ---
 
+### Phase 7.5 — Interface design
+
+**Goal:** the app looks finished and consistent in all three modes. Added by the user in Phase 4. **Do this step only after all three modes (Phases 4–6) work.**
+
+**Tasks**
+1. Qt styles: one stylesheet (QSS) for the whole app — colours, fonts, spacing, buttons, tabs, dialogs; no ad-hoc styling inside widgets. It must keep Armenian text readable (the font from `asl.app.fonts`).
+2. Name and logo: 🧑 **USER** chooses the app name (en / hy / ru); a logo in `assets/branding/`, shown in the window and in the About dialog.
+3. Icon: window and taskbar icon (`.ico` for Windows; Phase 8 uses it for the PyInstaller build).
+4. Result display: the design of the recognized word (three languages, confidence, top-3) in Single word, Sentence and Learn modes, the recording countdown and indicator, the hints over the video.
+5. Screenshots of every mode before and after, taken programmatically with `QWidget.grab()`, into `reports/ui/`.
+
+🧑 **USER:** choose the name, approve the logo, icon and colours, and give feedback on the screenshots and the running app.
+
+**Done when**
+- [ ] the stylesheet is applied in all modes and dialogs; Armenian text renders correctly everywhere
+- [ ] the name, logo and icon are in the window, the About dialog and the taskbar
+- [ ] the user approved the design
+
+---
+
 ### Phase 8 — Packaging and defense kit
 
 **Goal:** the program runs on any Windows computer, and the team has everything for the report, presentation and contest.

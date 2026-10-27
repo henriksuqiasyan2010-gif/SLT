@@ -10,6 +10,7 @@
 | 5 | Sentence mode | not started | | |
 | 6 | Learn mode | not started | | |
 | 7 | Translations and Armenian audio | not started | | |
+| 7.5 | Interface design | not started | | added by the user in Phase 4: Qt styles, name and logo, icon, result display; after all three modes are ready |
 | 8 | Packaging and defense kit | not started | | |
 
 ## Kaggle kernels
@@ -36,3 +37,5 @@
 | 2026-10-27 | `henriksuqiasyan/asl-ensemble v1` | CPU: averaged probabilities of main / main-reg / main-reg30 on the val participants (orig + 13 fps), per participant | done (7 min CPU): reproduces the training numbers; main-reg+main-reg30 63.1%, main+main-reg+main-reg30 63.8% / top-3 78.1% (13 fps 61.1%) vs best single 62.7%; `reports/ensemble/` |
 
 | 2026-10-27 | `henriksuqiasyan/asl-twohands v1` | CPU: main-reg30 on fold-0 val clips with both hands in a frame, with / without keep_moving_hand (orig + 13 fps) | done (6 min): 1,833 clips, top-1 36.7% -> 61.3%, whole val 62.7% -> 65.1%; `reports/twohands/` |
+
+| 2026-10-27 | `henriksuqiasyan/asl-preprocess v2` | FEATURES_VERSION 2 (keep_moving_hand inside extract): X64/X32 + raw subset (CPU) | running |

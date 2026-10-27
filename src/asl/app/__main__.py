@@ -32,6 +32,7 @@ def setup_logging() -> None:
     config.LOGS_DIR.mkdir(exist_ok=True)
     logging.basicConfig(filename=config.APP_LOG, level=logging.INFO, encoding="utf-8",
                         format="%(asctime)s %(levelname)s %(name)s: %(message)s")
+    logging.getLogger("comtypes").setLevel(logging.WARNING)  # pyttsx3 / SAPI5 logs every COM cache lookup
 
 
 def main(argv=None) -> int:

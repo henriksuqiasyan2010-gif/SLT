@@ -135,7 +135,7 @@ class Prediction:
 
 
 def classify(model, clip: Clip, aspect: float, threshold: float, top_k: int = config.TOP_K) -> Prediction:
-    """Live path of SignModel.predict_clip (trim_idle -> keep_moving_hand -> extract -> model)."""
+    """Live path of SignModel.predict_clip (trim_idle -> extract -> model)."""
     lm = clip.landmarks
     left, right = features.hand_presence(lm) if len(lm) else (np.zeros(0, bool), np.zeros(0, bool))
     hand_frames = int((left | right).sum())
@@ -155,7 +155,7 @@ class PredictionLog:
     logs/attempts/ (same format as recordings/) so attempts can be scored again with later models."""
 
     FIELDS = ["time", "mode", "top1", "p1", "top2", "p2", "top3", "p3", "accepted", "threshold", "frames", "fps",
-              "duration_s", "kept_s", "hand_share", "model", "keep_moving_hand", "attempt"]
+              "duration_s", "kept_s", "hand_share", "model", "features_version", "attempt"]
 
     RECORDING_KEYS = ("frames", "fps", "duration_s", "timestamps")  # written by save_recording itself
 
@@ -173,7 +173,7 @@ class PredictionLog:
         row = {"time": pred.time, "mode": mode, "accepted": pred.accepted, "threshold": pred.threshold,
                "frames": pred.n_frames, "fps": pred.fps, "duration_s": pred.duration_s, "kept_s": pred.kept_s,
                "hand_share": pred.hand_share, "model": model_name,
-               "keep_moving_hand": config.LIVE_KEEP_MOVING_HAND, "attempt": pred.attempt}
+               "features_version": features.FEATURES_VERSION, "attempt": pred.attempt}
         for i in range(config.TOP_K):
             sign, p = pred.top[i] if i < len(pred.top) else ("", "")
             row[f"top{i + 1}"], row[f"p{i + 1}"] = sign, round(p, 4) if p != "" else ""
