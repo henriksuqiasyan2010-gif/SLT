@@ -1,0 +1,52 @@
+{
+ "T32": {
+  "orig": {
+   "top1": 0.6266731433506045,
+   "top3": 0.7685125215889465
+  },
+  "thinned_13fps": {
+   "top1": 0.5957469775474957,
+   "top3": 0.7451964594127807
+  },
+  "presentation_synonyms_merged": {
+   "note": "PRESENTATION ONLY, not a model metric: a prediction counts as correct if it is the true sign or its near-synonym from config.SYNONYM_GROUPS; the model metrics are 'orig' and 'thinned_13fps'",
+   "groups": [
+    [
+     "awake",
+     "wake"
+    ],
+    [
+     "give",
+     "gift"
+    ],
+    [
+     "goose",
+     "duck"
+    ],
+    [
+     "kitty",
+     "cat"
+    ],
+    [
+     "pencil",
+     "pen"
+    ],
+    [
+     "mouth",
+     "lips"
+    ],
+    [
+     "listen",
+     "hear"
+    ]
+   ],
+   "orig_top1": 0.6408139032815199,
+   "thinned_13fps_top1": 0.6096718480138169
+  },
+  "best_epoch": 88,
+  "epochs_run": 100,
+  "mean_epoch_s": 29.240000000000006,
+  "gpu_util_mean": 76.8,
+  "data_wait_share": 0.7096000000000002
+ }
+}

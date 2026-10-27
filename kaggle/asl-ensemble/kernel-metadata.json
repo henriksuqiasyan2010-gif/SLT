@@ -1,0 +1,14 @@
+{
+  "id": "henriksuqiasyan/asl-ensemble",
+  "title": "asl-ensemble",
+  "code_file": "asl_ensemble.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": false,
+  "enable_internet": true,
+  "dataset_sources": ["henriksuqiasyan/asl-src"],
+  "competition_sources": ["asl-signs"],
+  "kernel_sources": ["henriksuqiasyan/asl-preprocess", "henriksuqiasyan/asl-train-main",
+                     "henriksuqiasyan/asl-train-main-reg", "henriksuqiasyan/asl-train-main-reg30"]
+}
