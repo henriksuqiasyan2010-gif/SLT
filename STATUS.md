@@ -20,4 +20,8 @@
 | 2026-10-26 | `henriksuqiasyan/asl-check` v1 | aspect per participant + trim_idle share (CPU) | ERROR: trim_idle on clips shorter than its window (fixed) |
 | 2026-10-26 | `henriksuqiasyan/asl-check` v2 | same | done, `reports/check/` |
 | 2026-10-26 | `henriksuqiasyan/asl-preprocess` v1 | extract() for T=64/32 + raw subset (CPU, 12 min) | done, 12 GB output on Kaggle, meta in `reports/preprocess/` |
-| 2026-10-27 | `henriksuqiasyan/asl-train-baseline v1` | baseline 1D-CNN, T=64 and T=32, val orig + 13 fps (GPU) | running |
+| 2026-10-27 | `henriksuqiasyan/asl-train-baseline v1` | baseline 1D-CNN, T=64 and T=32, val orig + 13 fps (GPU) | done: T64 top-1 53.1% (13 fps 51.2%), T32 52.6% (51.8%); `reports/baseline/` |
+| 2026-10-27 | `henriksuqiasyan/asl-train-main-trial v1` | trial 2 epochs: Transformer T=32, online augmentation + extract; epoch time, GPU utilisation, data wait | done: epoch 66 s, GPU busy 15%, waiting for data 76% -> augmentation moved to CPU kernels; val top-1 43% after 2 epochs; ONNX ok; `reports/main-trial/` |
+| 2026-10-27 | `henriksuqiasyan/asl-augment-0 v1` | augmented features T=32, versions 0-4 (CPU) | running |
+| 2026-10-27 | `henriksuqiasyan/asl-augment-1 v1` | augmented features T=32, versions 5-9 (CPU) | running |
+| 2026-10-27 | `henriksuqiasyan/asl-augment-2 v1` | augmented features T=32, versions 10-14 (CPU) | running |

@@ -1,0 +1,35 @@
+[{"stream_name":"stdout","time":327.929169698,"data":"preset=main-trial cfg={'model': 'transformer', 't_values': [32], 'epochs': 2, 'batch': 256, 'lr': 0.001, 'wd': 0.05, 'label_smoothing': 0.1, 'augment': True, 'patience': 0, 'warmup_epochs': 1} device=cuda torch=2.11.0+cu128 FEATURES_VERSION=1\n"}
+,{"stream_name":"stdout","time":358.758815544,"data":"X32 loaded into RAM: 3.28 GB in 28s\n"}
+,{"stream_name":"stdout","time":361.406622941,"data":"[main-trial_T32] model=transformer params=1,930,490 train=75949 val=18528 val participants=[27610, 28656, 29302, 49445]\n"}
+,{"stream_name":"stdout","time":423.853712913,"data":"val thinned to 13.0 fps: 18528 clips in 62s\n"}
+,{"stream_name":"stdout","time":576.325670599,"data":"{\"epoch\": 1, \"train_loss\": 4.372010550952074, \"train_acc\": 0.1860590659521521, \"val_top1\": 0.328529792746114, \"val_top3\": 0.5137089810017271, \"epoch_s\": 144.3, \"data_wait_share\": 0.902, \"gpu_util_mean\": 4.390070921985815, \"lr\": 0.0005}\n"}
+,{"stream_name":"stdout","time":644.492485732,"data":"{\"epoch\": 2, \"train_loss\": 2.860474708708162, \"train_acc\": 0.5168863316172695, \"val_top1\": 0.4329663212435233, \"val_top3\": 0.615662780656304, \"epoch_s\": 65.9, \"data_wait_share\": 0.756, \"gpu_util_mean\": 14.603174603174603, \"lr\": 0.0}\n"}
+,{"stream_name":"stdout","time":647.937837367,"data":"[main-trial_T32] {\"orig\": {\"top1\": 0.4329663212435233, \"top3\": 0.615662780656304}, \"thinned_13fps\": {\"top1\": 0.42039075993091535, \"top3\": 0.6041126943005182}}\n"}
+,{"stream_name":"stderr","time":648.020868857,"data":"/kaggle/src/script.py:501: DeprecationWarning: You are using the legacy TorchScript-based ONNX export. Starting in PyTorch 2.9, the new torch.export-based ONNX exporter has become the default. Learn more about the new export logic: https://docs.pytorch.org/docs/stable/onnx_export.html. For exporting control flow: https://pytorch.org/tutorials/beginner/onnx/export_control_flow_model_to_onnx_tutorial.html\n"}
+,{"stream_name":"stderr","time":648.020902167,"data":"  torch.onnx.export(model, dummy, str(path), dynamo=False, **kwargs)\n"}
+,{"stream_name":"stderr","time":648.257512342,"data":"/kaggle/src/script.py:284: TracerWarning: Iterating over a tensor might cause the trace to be incorrect. Passing a tensor of different shape won't change the number of iterations executed (and might lead to errors or silently give incorrect results).\n"}
+,{"stream_name":"stderr","time":648.2575435,"data":"  q, k, v = self.qkv(x).reshape(b, t, 3, self.h, self.dk).permute(2, 0, 3, 1, 4)\n"}
+,{"stream_name":"stdout","time":648.94763885,"data":"ONNX parity on 100 samples: max abs diff 2.98e-07\n"}
+,{"stream_name":"stdout","time":650.244129068,"data":"{\n"}
+,{"stream_name":"stdout","time":650.244160712,"data":" \"T32\": {\n"}
+,{"stream_name":"stdout","time":650.244164676,"data":"  \"orig\": {\n"}
+,{"stream_name":"stdout","time":650.244167753,"data":"   \"top1\": 0.4329663212435233,\n"}
+,{"stream_name":"stdout","time":650.244170698,"data":"   \"top3\": 0.615662780656304\n"}
+,{"stream_name":"stdout","time":650.244173558,"data":"  },\n"}
+,{"stream_name":"stdout","time":650.244176924,"data":"  \"thinned_13fps\": {\n"}
+,{"stream_name":"stdout","time":650.244194884,"data":"   \"top1\": 0.42039075993091535,\n"}
+,{"stream_name":"stdout","time":650.244200166,"data":"   \"top3\": 0.6041126943005182\n"}
+,{"stream_name":"stdout","time":650.244205292,"data":"  },\n"}
+,{"stream_name":"stdout","time":650.244210113,"data":"  \"epochs_run\": 2,\n"}
+,{"stream_name":"stdout","time":650.244214958,"data":"  \"mean_epoch_s\": 105.10000000000001,\n"}
+,{"stream_name":"stdout","time":650.244219224,"data":"  \"gpu_util_mean\": 14.603174603174603,\n"}
+,{"stream_name":"stdout","time":650.244223386,"data":"  \"data_wait_share\": 0.829\n"}
+,{"stream_name":"stdout","time":650.244237641,"data":" }\n"}
+,{"stream_name":"stdout","time":650.244240939,"data":"}\n"}
+,{"stream_name":"stderr","time":656.179490332,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":656.179515909,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":656.429300655,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":656.429324441,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":657.249590311,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":658.30791457,"data":"[NbConvertApp] Writing 436186 bytes to __results__.html\n"}
+]

@@ -4,7 +4,9 @@ PRESET (set by scripts/push_kernel.py when the kernel is pushed):
   baseline    small 1D-CNN on the precomputed features, T = 64 and T = 32 one after another
   main-trial  1D-CNN + Transformer, on-the-fly augmentation + extract(), 2 epochs: epoch time,
               GPU utilisation and the share of time the GPU waits for data
-  main        the same model, full training with early stopping
+  main        the same model, full training with early stopping, on augmented feature versions
+              precomputed by the CPU kernels asl-augment-<shard> (one version per epoch, the next
+              one loads in a background thread) - online augmentation left the GPU 85% idle
 
 Every model is evaluated twice on the held-out participants: on the original clips and on the
 clips thinned to EVAL_FPS frames per second (the user's camera runs at 12-15 fps).
@@ -17,10 +19,10 @@ PRESET = "baseline"  # replaced by scripts/push_kernel.py
 PRESETS = {
     "baseline": dict(model="cnn", t_values=[64, 32], epochs=20, batch=256, lr=2e-3, wd=1e-4,
                      label_smoothing=0.0, augment=False, patience=0, warmup_epochs=1),
-    "main-trial": dict(model="transformer", t_values=[64], epochs=2, batch=256, lr=1e-3, wd=0.05,
-                       label_smoothing=0.1, augment=True, patience=0, warmup_epochs=1),
-    "main": dict(model="transformer", t_values=[64], epochs=60, batch=256, lr=1e-3, wd=0.05,
-                 label_smoothing=0.1, augment=True, patience=10, warmup_epochs=2),
+    "main-trial": dict(model="transformer", t_values=[32], epochs=2, batch=256, lr=1e-3, wd=0.05,
+                       label_smoothing=0.1, augment="online", patience=0, warmup_epochs=1),
+    "main": dict(model="transformer", t_values=[32], epochs=60, batch=256, lr=1e-3, wd=0.05,
+                 label_smoothing=0.1, augment="precomputed", patience=10, warmup_epochs=2),
 }
 SEED = 42
 N_FOLDS = 5
@@ -31,10 +33,6 @@ ONNX_PARITY_SAMPLES = 100
 ONNX_PARITY_ATOL = 1e-4
 ONNX_OPSET = 17
 GPU_SAMPLE_S = 1.0
-# Augmentation (main): probabilities and ranges. Applied to raw landmarks before extract().
-AUG = dict(p_fps=0.5, fps_range=(12.0, 15.0), p_warp=0.5, warp_speed=(0.6, 1.6),
-           p_drop=0.5, drop_max=0.15, p_hand_gap=0.3, hand_gap=(0.1, 0.3),
-           p_rotate=0.5, rotate_deg=15.0, p_stretch=0.8, stretch=0.10)
 
 import json  # noqa: E402
 import os  # noqa: E402
@@ -62,7 +60,7 @@ SRC_DIR = Path("/tmp/asl_src")
 if Path("/kaggle/input").exists():
     shutil.copytree(find_one("**/landmarks_io.py").parent, SRC_DIR / "asl", dirs_exist_ok=True)
 sys.path.insert(0, str(SRC_DIR))
-from asl import config, features as F  # noqa: E402
+from asl import augment as A, config, features as F  # noqa: E402
 
 OUT_ROOT = Path(os.environ.get("ASL_OUT", "/kaggle/working"))
 PRE_DIR = Path(os.environ["ASL_PRE"]) if "ASL_PRE" in os.environ else find_one("**/X64.npy").parent
@@ -120,62 +118,11 @@ def raw_clip(i):
     return np.asarray(xy[off[i]:off[i + 1]], dtype=np.float32)
 
 
-def to_clip(xy):
-    """(T, 130, 2) subset x, y -> (T, 543, 3) clip for extract() (everything else NaN)."""
-    clip = np.full((len(xy), 543, 3), np.nan, np.float32)
-    clip[:, F.SUBSET, :2] = xy
-    return clip
-
-
-def thin_index(n, fps_dst, fps_src=config.DATASET_FPS_ASSUMED):
-    """Frames kept when an fps_src clip is recorded at fps_dst instead."""
-    idx = np.unique(np.round(np.arange(0.0, n, fps_src / fps_dst)).astype(int))
-    return idx[idx < n]
-
-
-def augment(xy, aspect, rng):
-    """Random time and geometry changes of raw (T, 130, 2) landmarks; extract() runs afterwards."""
-    a = AUG
-    xy = xy.copy()
-    if rng.random() < a["p_fps"] and len(xy) > 2:
-        xy = xy[thin_index(len(xy), rng.uniform(*a["fps_range"]))]
-    t = len(xy)
-    if rng.random() < a["p_warp"] and t >= 4:
-        steps = rng.uniform(*a["warp_speed"], size=t)
-        pos = np.concatenate([[0.0], np.cumsum(steps[:-1])])
-        pos = pos / pos[-1] * (t - 1)
-        xy = xy[np.round(pos).astype(int)]
-    if rng.random() < a["p_drop"] and t > 4:
-        keep = rng.random(t) >= rng.uniform(0, a["drop_max"])
-        keep[[0, -1]] = True
-        xy = xy[keep]
-    t = len(xy)
-    if rng.random() < a["p_hand_gap"] and t >= 4:
-        n = max(1, int(t * rng.uniform(*a["hand_gap"])))
-        s = rng.integers(0, t - n + 1)
-        xy[s:s + n, :42] = np.nan  # both hand blocks: Holistic lost the hands
-    # geometry in isotropic units (y / aspect) around the shoulder centre
-    xy[..., 1] /= aspect
-    sh = xy[:, [F.L_SHOULDER, F.R_SHOULDER]].reshape(-1, 2)
-    sh = sh[~np.isnan(sh).any(1)]
-    c = sh.mean(0) if len(sh) else np.nanmean(xy.reshape(-1, 2), axis=0)
-    p = xy - c
-    if rng.random() < a["p_rotate"]:
-        ang = np.deg2rad(rng.uniform(-a["rotate_deg"], a["rotate_deg"]))
-        rot = np.array([[np.cos(ang), -np.sin(ang)], [np.sin(ang), np.cos(ang)]], np.float32)
-        p = p @ rot.T
-    if rng.random() < a["p_stretch"]:
-        p = p * rng.uniform(1 - a["stretch"], 1 + a["stretch"], size=2).astype(np.float32)
-    xy = p + c
-    xy[..., 1] *= aspect
-    return xy
-
-
 def _val_thinned_one(args):
     i, group, t = args
     xy = raw_clip(i)
-    xy = xy[thin_index(len(xy), EVAL_FPS)]
-    return F.extract(to_clip(xy), t_fix=t, aspect=F.dataset_aspect(group))
+    xy = xy[A.thin_index(len(xy), EVAL_FPS)]
+    return F.extract(A.subset_to_clip(xy), t_fix=t, aspect=F.dataset_aspect(group))
 
 
 def val_thinned_features(data, t):
@@ -201,9 +148,45 @@ class OnlineDataset(torch.utils.data.Dataset):
         aspect = F.dataset_aspect(self.groups[i])
         if self.train:
             rng = np.random.default_rng((SEED, i, int(time.time_ns() % 2**31)))
-            xy = augment(xy, aspect, rng)
-        feats, mask = F.extract(to_clip(xy), t_fix=self.t, aspect=aspect)
+            xy = A.augment(xy, aspect, rng)
+        feats, mask = F.extract(A.subset_to_clip(xy), t_fix=self.t, aspect=aspect)
         return torch.from_numpy(feats), torch.from_numpy(mask), int(self.y[i])
+
+
+class AugmentedVersions:
+    """Augmented feature versions precomputed by the asl-augment-<shard> CPU kernels.
+    Epoch e trains on version e % V (training rows only); the next version is read from disk in a
+    background thread while the GPU works on the current one."""
+
+    def __init__(self, t, train_idx):
+        from concurrent.futures import ThreadPoolExecutor
+
+        root = Path(os.environ.get("ASL_AUG", "/kaggle/input"))
+        self.files = sorted(root.glob(f"**/Xaug{t}_v*.npy"), key=lambda f: int(f.stem.split("_v")[1]))
+        if not self.files:
+            raise FileNotFoundError(f"no Xaug{t}_v*.npy under {root}")
+        self.train_idx = train_idx
+        self.executor = ThreadPoolExecutor(max_workers=1)
+        self.pending = None
+        print(f"{len(self.files)} augmented versions: {[f.stem for f in self.files]}", flush=True)
+
+    def _load(self, k):
+        return np.array(np.load(self.files[k], mmap_mode="r")[self.train_idx])
+
+    def get(self, epoch):
+        k = epoch % len(self.files)
+        fut = self.pending if self.pending is not None else self.executor.submit(self._load, k)
+        X = fut.result()
+        self.pending = self.executor.submit(self._load, (epoch + 1) % len(self.files))
+        return X, self.files[k].stem
+
+
+def device_batches(X, M, y, batch, gen):
+    """Shuffled batches from tensors already on the GPU (float16 features): no CPU work per batch."""
+    order = torch.randperm(len(y), device=X.device, generator=gen)
+    for s in range(0, len(order), batch):
+        b = order[s:s + batch]
+        yield X[b].float(), M[b], y[b]
 
 
 def tensor_batches(X, M, y, idx, batch, shuffle, rng):
@@ -391,9 +374,11 @@ def train_one(data, cfg, t, out_dir):
     rng = np.random.default_rng(SEED)
     torch.manual_seed(SEED)
     X, M = data.features(t)
-    if not cfg["augment"]:
-        print(f"loading X{t} into RAM ...", flush=True)
-        X = np.asarray(X)  # float16, ~6.5 GB for T=64
+    tl = time.time()
+    # np.array copies the memmap with one sequential read; np.asarray would only wrap it and the
+    # first epoch would page 6.5 GB in by random access (cost 23 min of GPU time in baseline v1).
+    X = np.array(X)
+    print(f"X{t} loaded into RAM: {X.nbytes / 1e9:.2f} GB in {time.time() - tl:.0f}s", flush=True)
     mean, std = feature_stats(X, data.train_idx, rng)
     model = build_model(cfg["model"], X.shape[-1], data.n_classes, mean, std, t).to(DEVICE)
     n_params = sum(p.numel() for p in model.parameters())
@@ -412,16 +397,30 @@ def train_one(data, cfg, t, out_dir):
     scaler = torch.amp.GradScaler(enabled=DEVICE.type == "cuda")
     loss_fn = nn.CrossEntropyLoss(label_smoothing=cfg["label_smoothing"])
 
-    if cfg["augment"]:
+    if cfg["augment"] == "online":
         loader = torch.utils.data.DataLoader(
             OnlineDataset(data, data.train_idx, t, train=True), batch_size=cfg["batch"], shuffle=True,
             num_workers=NUM_WORKERS, pin_memory=True, persistent_workers=True, prefetch_factor=4, drop_last=False)
+    if cfg["augment"] == "precomputed":
+        versions = AugmentedVersions(t, data.train_idx)
+        y_tr = torch.from_numpy(data.y[data.train_idx]).to(DEVICE)
+        m_tr = torch.from_numpy(M[data.train_idx]).to(DEVICE)
+        gen = torch.Generator(device=DEVICE)
+        gen.manual_seed(SEED)
     gpu = GpuMonitor()
     history, best, best_state, bad = [], -1.0, None, 0
     for epoch in range(cfg["epochs"]):
         model.train()
-        batches = loader if cfg["augment"] else tensor_batches(X, M, data.y, data.train_idx, cfg["batch"], True, rng)
-        te, wait, n, correct, loss_sum = time.time(), 0.0, 0, 0, 0.0
+        te, wait, n, correct, loss_sum, version = time.time(), 0.0, 0, 0, 0.0, None
+        if cfg["augment"] == "online":
+            batches = loader
+        elif cfg["augment"] == "precomputed":
+            Xa, version = versions.get(epoch)
+            Xg = torch.from_numpy(Xa).to(DEVICE)  # float16, ~2.6 GB for T=32
+            batches = device_batches(Xg, m_tr, y_tr, cfg["batch"], gen)
+        else:
+            batches = tensor_batches(X, M, data.y, data.train_idx, cfg["batch"], True, rng)
+        wait = time.time() - te  # waiting for the augmented version to finish loading
         gpu.take()
         tw = time.time()
         for x, m, y in batches:
@@ -444,11 +443,13 @@ def train_one(data, cfg, t, out_dir):
         if DEVICE.type == "cuda":
             torch.cuda.synchronize()
         epoch_s = time.time() - te
+        if cfg["augment"] == "precomputed":
+            del Xg  # free GPU memory before the next version
         pv, yv = evaluate(model, tensor_batches(X, M, data.y, data.val_idx, 512, False, rng))
         row = {"epoch": epoch + 1, "train_loss": loss_sum / n, "train_acc": correct / n,
                "val_top1": topk(pv, yv, 1), "val_top3": topk(pv, yv, 3), "epoch_s": round(epoch_s, 1),
                "data_wait_share": round(wait / epoch_s, 3), "gpu_util_mean": gpu.take(),
-               "lr": opt.param_groups[0]["lr"]}
+               "lr": opt.param_groups[0]["lr"], "aug_version": version}
         history.append(row)
         print(json.dumps(row), flush=True)
         if row["val_top1"] > best:
@@ -476,7 +477,8 @@ def train_one(data, cfg, t, out_dir):
         "FEATURES_VERSION": F.FEATURES_VERSION, "params": n_params, **results,
         "val_participants": data.val_participants, "n_train": int(len(data.train_idx)),
         "n_val": int(len(data.val_idx)), "split": f"GroupKFold({N_FOLDS}) by participant, fold {VAL_FOLD}",
-        "config": cfg, "augmentation": AUG if cfg["augment"] else None, "eval_fps": EVAL_FPS,
+        "config": cfg, "augmentation": config.AUGMENT if cfg["augment"] else None, "eval_fps": EVAL_FPS,
+        "aug_versions": len(versions.files) if cfg["augment"] == "precomputed" else None,
         "onnx_parity_max_abs_diff": parity, "history": history,
         "versions": {"torch": torch.__version__, "device": str(DEVICE),
                      "gpu": torch.cuda.get_device_name(0) if DEVICE.type == "cuda" else None},

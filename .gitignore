@@ -30,3 +30,4 @@ settings.json
 
 # Generated comparison GIFs (regenerate with scripts/compare.py)
 reports/compare/
+reports/**/*.onnx

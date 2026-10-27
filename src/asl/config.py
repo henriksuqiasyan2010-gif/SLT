@@ -89,3 +89,9 @@ TRIM_IDLE_MARGIN_S = 0.1  # kept before the first and after the last moving fram
 # --- Inference -------------------------------------------------------------------
 INFERENCE_THREADS = 2  # onnxruntime intra-op threads; Holistic needs the other cores
 MAX_INFERENCE_MS = 50
+
+# --- Training augmentation (asl.augment, Kaggle kernels) -----------------------------
+# Raw landmarks are augmented before extract(). fps_range = the user's real camera rate.
+AUGMENT = dict(p_fps=0.5, fps_range=(12.0, 15.0), p_warp=0.5, warp_speed=(0.6, 1.6),
+               p_drop=0.5, drop_max=0.15, p_hand_gap=0.3, hand_gap=(0.1, 0.3),
+               p_rotate=0.5, rotate_deg=15.0, p_stretch=0.8, stretch=0.10)

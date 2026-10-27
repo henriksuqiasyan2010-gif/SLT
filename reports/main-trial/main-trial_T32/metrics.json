@@ -1,0 +1,93 @@
+{
+ "preset": "main-trial",
+ "model": "transformer",
+ "T_FIX": 32,
+ "F": 542,
+ "FEATURES_VERSION": 1,
+ "params": 1930490,
+ "orig": {
+  "top1": 0.4329663212435233,
+  "top3": 0.615662780656304
+ },
+ "thinned_13fps": {
+  "top1": 0.42039075993091535,
+  "top3": 0.6041126943005182
+ },
+ "val_participants": [
+  27610,
+  28656,
+  29302,
+  49445
+ ],
+ "n_train": 75949,
+ "n_val": 18528,
+ "split": "GroupKFold(5) by participant, fold 0",
+ "config": {
+  "model": "transformer",
+  "t_values": [
+   32
+  ],
+  "epochs": 2,
+  "batch": 256,
+  "lr": 0.001,
+  "wd": 0.05,
+  "label_smoothing": 0.1,
+  "augment": true,
+  "patience": 0,
+  "warmup_epochs": 1
+ },
+ "augmentation": {
+  "p_fps": 0.5,
+  "fps_range": [
+   12.0,
+   15.0
+  ],
+  "p_warp": 0.5,
+  "warp_speed": [
+   0.6,
+   1.6
+  ],
+  "p_drop": 0.5,
+  "drop_max": 0.15,
+  "p_hand_gap": 0.3,
+  "hand_gap": [
+   0.1,
+   0.3
+  ],
+  "p_rotate": 0.5,
+  "rotate_deg": 15.0,
+  "p_stretch": 0.8,
+  "stretch": 0.1
+ },
+ "eval_fps": 13.0,
+ "onnx_parity_max_abs_diff": 2.980232238769531e-07,
+ "history": [
+  {
+   "epoch": 1,
+   "train_loss": 4.372010550952074,
+   "train_acc": 0.1860590659521521,
+   "val_top1": 0.328529792746114,
+   "val_top3": 0.5137089810017271,
+   "epoch_s": 144.3,
+   "data_wait_share": 0.902,
+   "gpu_util_mean": 4.390070921985815,
+   "lr": 0.0005
+  },
+  {
+   "epoch": 2,
+   "train_loss": 2.860474708708162,
+   "train_acc": 0.5168863316172695,
+   "val_top1": 0.4329663212435233,
+   "val_top3": 0.615662780656304,
+   "epoch_s": 65.9,
+   "data_wait_share": 0.756,
+   "gpu_util_mean": 14.603174603174603,
+   "lr": 0.0
+  }
+ ],
+ "versions": {
+  "torch": "2.11.0+cu128",
+  "device": "cuda",
+  "gpu": "Tesla T4"
+ }
+}

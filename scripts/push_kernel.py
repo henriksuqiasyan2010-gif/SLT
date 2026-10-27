@@ -1,9 +1,11 @@
-"""Push the training kernel with a preset as its own Kaggle kernel and log it in STATUS.md.
+"""Push a parameterised Kaggle kernel and log it in STATUS.md.
 
-    python scripts/push_kernel.py --preset baseline        # -> <KAGGLE_USER>/asl-train-baseline
+    python scripts/push_kernel.py --kernel asl-train --preset baseline    # -> <user>/asl-train-baseline (GPU)
+    python scripts/push_kernel.py --kernel asl-augment --preset 0         # -> <user>/asl-augment-0 (CPU)
 
-The kernel folder is generated in build/kernels/asl-train-<preset>/ from kaggle/asl-train/asl_train.py
-(only the PRESET line differs), so the outputs of different presets never overwrite each other.
+The kernel folder is generated in build/kernels/<name>/ from kaggle/<kernel>/<script>.py; only the
+parameter line (PRESET = "..." or SHARD = N) differs, so the outputs of different presets never
+overwrite each other. asl-train-main also mounts the outputs of the asl-augment-<shard> kernels.
 """
 
 import argparse
@@ -18,9 +20,14 @@ from _kaggle import run_kaggle
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 from asl import config  # noqa: E402
 
-SOURCE = config.ROOT / "kaggle" / "asl-train" / "asl_train.py"
 STATUS = config.ROOT / "STATUS.md"
 KERNELS_HEADER = "## Kaggle kernels"
+AUGMENT_SHARDS = 3  # asl-augment-0..2, 5 versions each
+
+KERNELS = {
+    "asl-train": {"script": "asl_train.py", "param": r'^PRESET = "[\w-]+"', "fmt": 'PRESET = "{}"', "gpu": True},
+    "asl-augment": {"script": "asl_augment.py", "param": r"^SHARD = \d+", "fmt": "SHARD = {}", "gpu": False},
+}
 
 
 def log_kernel(slug: str, purpose: str, result: str) -> None:
@@ -34,28 +41,35 @@ def log_kernel(slug: str, purpose: str, result: str) -> None:
 
 def main():
     ap = argparse.ArgumentParser()
+    ap.add_argument("--kernel", default="asl-train", choices=sorted(KERNELS))
     ap.add_argument("--preset", required=True)
     ap.add_argument("--purpose", default="")
     args = ap.parse_args()
 
-    src = SOURCE.read_text(encoding="utf-8")
-    presets = re.findall(r'^    "([\w-]+)": dict\(', src, flags=re.M)
-    if args.preset not in presets:
-        raise SystemExit(f"unknown preset {args.preset}; known: {presets}")
-    src, n = re.subn(r'^PRESET = "[\w-]+"', f'PRESET = "{args.preset}"', src, count=1, flags=re.M)
-    assert n == 1
+    spec = KERNELS[args.kernel]
+    src = (config.ROOT / "kaggle" / args.kernel / spec["script"]).read_text(encoding="utf-8")
+    if args.kernel == "asl-train":
+        presets = re.findall(r'^    "([\w-]+)": dict\(', src, flags=re.M)
+        if args.preset not in presets:
+            raise SystemExit(f"unknown preset {args.preset}; known: {presets}")
+    src, n = re.subn(spec["param"], spec["fmt"].format(args.preset), src, count=1, flags=re.M)
+    assert n == 1, "parameter line not found"
 
-    name = f"asl-train-{args.preset}"
+    name = f"{args.kernel}-{args.preset}"
     slug = f"{config.KAGGLE_USER}/{name}"
+    sources = [f"{config.KAGGLE_USER}/asl-preprocess"]
+    if args.kernel == "asl-train" and args.preset == "main":
+        sources += [f"{config.KAGGLE_USER}/asl-augment-{k}" for k in range(AUGMENT_SHARDS)]
     folder = config.ROOT / "build" / "kernels" / name
     folder.mkdir(parents=True, exist_ok=True)
-    (folder / "asl_train.py").write_text(src, encoding="utf-8")
+    (folder / spec["script"]).write_text(src, encoding="utf-8")
     (folder / "kernel-metadata.json").write_text(json.dumps({
-        "id": slug, "title": name, "code_file": "asl_train.py", "language": "python", "kernel_type": "script",
-        "is_private": True, "enable_gpu": True, "enable_internet": True,  # internet: pip onnx/onnxruntime if missing
+        "id": slug, "title": name, "code_file": spec["script"], "language": "python", "kernel_type": "script",
+        "is_private": True, "enable_gpu": spec["gpu"],
+        "enable_internet": spec["gpu"],  # train kernel: pip onnx/onnxruntime if missing
         "dataset_sources": [f"{config.KAGGLE_USER}/{config.KAGGLE_SRC_DATASET}"],
         "competition_sources": [config.KAGGLE_COMPETITION],
-        "kernel_sources": [f"{config.KAGGLE_USER}/asl-preprocess"],
+        "kernel_sources": sources,
     }, indent=2), encoding="utf-8")
 
     res = run_kaggle("kernels", "push", "-p", str(folder))
@@ -64,7 +78,7 @@ def main():
     if res.returncode != 0 or "successfully pushed" not in out:
         return 1
     version = re.search(r"Kernel version (\d+)", out)
-    log_kernel(f"{slug} v{version.group(1) if version else '?'}", args.purpose or f"train, preset {args.preset}",
+    log_kernel(f"{slug} v{version.group(1) if version else '?'}", args.purpose or f"{args.kernel}, preset {args.preset}",
                "running")
     return 0
 
