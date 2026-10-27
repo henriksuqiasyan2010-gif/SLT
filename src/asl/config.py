@@ -106,3 +106,24 @@ AUGMENT = dict(p_fps=0.5, fps_range=(12.0, 15.0), p_warp=0.5, warp_speed=(0.6, 1
 # the model accuracy is always reported without merging.
 SYNONYM_GROUPS = (("awake", "wake"), ("give", "gift"), ("goose", "duck"), ("kitty", "cat"),
                   ("pencil", "pen"), ("mouth", "lips"), ("listen", "hear"))
+
+# --- App (asl.app) ----------------------------------------------------------------
+# Defaults of the user settings; the user's values live in settings.json (asl.app.settings).
+SETTINGS_JSON = ROOT / "settings.json"
+UI_LANGUAGES = ("hy", "ru", "en")  # interface languages (asl.app.strings); the first one is the default
+SINGLE_RECORD_SECONDS = 2.0  # Single word: recording length after the countdown (PHASES.md: 2 s)
+RECORD_SECONDS_RANGE = (1.0, 5.0)
+SINGLE_COUNTDOWN_S = 3  # 3-2-1 before the recording starts
+CONFIDENCE_THRESHOLD = 0.40  # below it the result is "not recognized"
+TOP_K = 3
+MIN_CLIP_FRAMES = 4  # fewer recorded frames than this -> "not recognized" without calling the model
+# A hand must be seen for at least this long in the recording, else "not recognized" without the model
+# (a hand seen in 1 frame of 44 gave noisy 60%). 0.2 s = 3 frames at 15 fps; the user's recordings: >= 13.
+MIN_HAND_S = 0.2
+HINT_MISSING_S = 1.0  # a "hands / shoulders not visible" hint appears after this long without them
+FPS_SMOOTHING = 0.1  # weight of the newest frame in the displayed FPS (exponential average)
+UI_FONT_CANDIDATES = ("Segoe UI", "Sylfaen", "Arial")  # first one with Armenian glyphs is used
+UI_STRINGS_CSV = REPORTS_DIR / "ui_strings.csv"
+PREDICTIONS_LOG = LOGS_DIR / "predictions.csv"
+ATTEMPTS_DIR = LOGS_DIR / "attempts"  # every recorded attempt (.npy + .meta.json) for later scoring
+APP_LOG = LOGS_DIR / "app.log"

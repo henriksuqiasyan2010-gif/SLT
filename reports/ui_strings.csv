@@ -1,0 +1,85 @@
+﻿key,en,hy,ru
+app_title,ASL Translator,ASL թարգմանիչ,Переводчик ASL
+tab_single,Single word,Մեկ բառ,Одно слово
+tab_sentence,Sentence,Նախադասություն,Предложение
+tab_learn,Learn,Ուսուցում,Обучение
+tab_coming_soon,This mode will be added in a later version.,Այս ռեժիմը կավելացվի հաջորդ տարբերակներում։,Этот режим появится в следующих версиях.
+menu_file,&File,&Ֆայլ,&Файл
+menu_exit,E&xit,&Ելք,&Выход
+menu_settings,&Settings,&Կարգավորումներ,&Настройки
+menu_settings_open,&Settings…,&Կարգավորումներ…,&Настройки…
+menu_help,&Help,&Օգնություն,&Справка
+menu_about,&About,&Ծրագրի մասին,&О программе
+about_title,About ASL Translator,ASL թարգմանչի մասին,О программе «Переводчик ASL»
+about_text,"Recognizes {n_signs} isolated signs of American Sign Language (ASL) from the webcam and shows them in English, Armenian and Russian.
+
+Model: {model}. Accuracy on people it has never seen: top-1 {top1}, top-3 {top3}.
+
+Data: Google — Isolated Sign Language Recognition (Kaggle).","Տեսախցիկի միջոցով ճանաչում է ամերիկյան ժեստերի լեզվի (ASL) {n_signs} առանձին ժեստ և ցույց է տալիս դրանք անգլերեն, հայերեն և ռուսերեն։
+
+Մոդել՝ {model}։ Ճշգրտությունը մարդկանց վրա, որոնց մոդելը չի տեսել՝ top-1 {top1}, top-3 {top3}։
+
+Տվյալներ՝ Google — Isolated Sign Language Recognition (Kaggle)։","Распознаёт {n_signs} отдельных жестов американского жестового языка (ASL) с веб-камеры и показывает их на английском, армянском и русском.
+
+Модель: {model}. Точность на людях, которых модель не видела: top-1 {top1}, top-3 {top3}.
+
+Данные: Google — Isolated Sign Language Recognition (Kaggle)."
+btn_record,Record sign  [Space],Տեսագրել ժեստը  [Բացատ],Записать жест  [Пробел]
+btn_speak,Speak,Արտասանել,Произнести
+hint_press_record,"Press Space or «Record sign», then show one sign after the countdown.","Սեղմեք Բացատ կամ «Տեսագրել ժեստը», ապա հետհաշվարկից հետո ցույց տվեք մեկ ժեստ։",Нажмите пробел или «Записать жест» и после отсчёта покажите один жест.
+overlay_get_ready,Get ready,Պատրաստվեք,Приготовьтесь
+overlay_recording,Recording {left:.1f} s,Տեսագրում՝ {left:.1f} վ,Запись: {left:.1f} с
+overlay_processing,Recognizing…,Ճանաչվում է…,Распознаю…
+overlay_fps,FPS {fps:.0f},FPS {fps:.0f},FPS {fps:.0f}
+result_empty,The result will appear here.,Արդյունքը կհայտնվի այստեղ։,Здесь появится результат.
+result_not_recognized,"Not recognized, try again","Չհաջողվեց ճանաչել, փորձեք նորից","Не распознано, попробуйте ещё раз"
+result_best_guess,Closest: {word} ({p}),Ամենամոտը՝ {word} ({p}),Ближе всего: {word} ({p})
+result_confidence,Confidence: {p},Վստահություն՝ {p},Уверенность: {p}
+result_other,Other guesses,Այլ տարբերակներ,Другие варианты
+hint_no_hands,Hands not visible,Ձեռքերը չեն երևում,Руки не видны
+hint_no_shoulders,Shoulders not visible — move back,"Ուսերը չեն երևում, մի փոքր հետ գնացեք",Плечи не видны — отодвиньтесь
+hint_camera_missing,Camera not found,Տեսախցիկը չի գտնվել,Камера не найдена
+hint_camera_starting,Starting the camera…,Տեսախցիկը միանում է…,Камера запускается…
+error_title,Error,Սխալ,Ошибка
+error_camera,"Camera {index} could not be opened or stopped working.
+Check that it is connected and not used by another program, or choose another camera in Settings.
+
+Details: {details}","Տեսախցիկ {index}-ը չհաջողվեց միացնել, կամ այն դադարեց աշխատել։
+Ստուգեք, որ այն միացված է և չի օգտագործվում այլ ծրագրի կողմից, կամ Կարգավորումներում ընտրեք այլ տեսախցիկ։
+
+Մանրամասներ՝ {details}","Не удалось открыть камеру {index}, или она перестала работать.
+Проверьте, что она подключена и не занята другой программой, или выберите другую камеру в настройках.
+
+Подробности: {details}"
+error_model,"The recognition model could not be loaded, so signs cannot be recognized.
+
+Details: {details}","Ճանաչման մոդելը չհաջողվեց բեռնել, ուստի ժեստերը չեն ճանաչվի։
+
+Մանրամասներ՝ {details}","Не удалось загрузить модель распознавания, поэтому жесты не распознаются.
+
+Подробности: {details}"
+error_vocab,"The word list (data/vocab.csv) could not be loaded.
+
+Details: {details}","Բառացանկը (data/vocab.csv) չհաջողվեց բեռնել։
+
+Մանրամասներ՝ {details}","Не удалось загрузить список слов (data/vocab.csv).
+
+Подробности: {details}"
+error_internal,"Something went wrong: {details}
+The details are in logs/app.log.","Ինչ-որ բան սխալ գնաց՝ {details}
+Մանրամասները logs/app.log ֆայլում են։","Что-то пошло не так: {details}
+Подробности в logs/app.log."
+error_speech,Speech is not available: {details},Արտասանությունը հասանելի չէ՝ {details},Озвучивание недоступно: {details}
+settings_title,Settings,Կարգավորումներ,Настройки
+settings_camera,Camera number,Տեսախցիկի համարը,Номер камеры
+settings_record_seconds,Recording length,Տեսագրման տևողությունը,Длительность записи
+settings_seconds_suffix, s, վ, с
+settings_threshold,Confidence threshold,Վստահության շեմը,Порог уверенности
+settings_sound,Speak the recognized word,Արտասանել ճանաչված բառը,Произносить распознанное слово
+settings_mirror,Mirror the video,Հայելային պատկեր,Зеркальное изображение
+settings_language,Interface language,Ինտերֆեյսի լեզուն,Язык интерфейса
+btn_ok,OK,Լավ,ОК
+btn_cancel,Cancel,Չեղարկել,Отмена
+lang_name_hy,Հայերեն,Հայերեն,Հայերեն
+lang_name_ru,Русский,Русский,Русский
+lang_name_en,English,English,English

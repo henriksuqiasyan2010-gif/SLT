@@ -8,7 +8,6 @@ Q or Esc quits. FPS is logged every 5 s to logs/fps.csv.
 """
 
 import argparse
-import csv
 import sys
 import time
 from datetime import datetime
@@ -19,12 +18,11 @@ import numpy as np
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 from asl import config, skeleton  # noqa: E402
 from asl.capture import CameraError, LiveSource, save_recording  # noqa: E402
+from asl.fpslog import FpsLog  # noqa: E402
 from asl.landmarks_io import LEFT_HAND, POSE, RIGHT_HAND  # noqa: E402
 
 WINDOW = "ASL live debug"
 GREEN, RED, WHITE, BLACK = (80, 200, 80), (60, 60, 230), (255, 255, 255), (0, 0, 0)
-FPS_FIELDS = ["time", "fps", "source", "width", "height", "model_complexity", "process_every_n",
-              "mirror_input", "hands_seen_share"]
 
 
 def status(landmarks):
@@ -34,45 +32,6 @@ def status(landmarks):
     return {"left_hand": not np.isnan(landmarks[LEFT_HAND, 0]).all(),
             "right_hand": not np.isnan(landmarks[RIGHT_HAND, 0]).all(),
             "shoulders": shoulders}
-
-
-class FpsLog:
-    def __init__(self, settings_fn, tag):
-        self.settings_fn, self.tag = settings_fn, tag
-        self.t0, self.frames, self.hand_frames = None, 0, 0
-        self.values = []
-        config.LOGS_DIR.mkdir(exist_ok=True)
-        new = not config.FPS_LOG.exists()
-        self.file = open(config.FPS_LOG, "a", newline="", encoding="utf-8")
-        self.writer = csv.DictWriter(self.file, FPS_FIELDS)
-        if new:
-            self.writer.writeheader()
-
-    def tick(self, hand_seen, image_shape):
-        if self.t0 is None:  # start counting at the first processed frame, not during model loading
-            self.t0 = time.perf_counter()
-            return
-        self.frames += 1
-        self.hand_frames += hand_seen
-        elapsed = time.perf_counter() - self.t0
-        if elapsed < config.FPS_LOG_INTERVAL_S:
-            return
-        fps = self.frames / elapsed
-        settings = self.settings_fn()  # after the first frame, so the camera backend is known
-        self.values.append(fps)
-        self.writer.writerow({
-            "time": datetime.now().isoformat(timespec="seconds"), "fps": round(fps, 2), "source": self.tag,
-            "width": image_shape[1], "height": image_shape[0],
-            "model_complexity": settings["model_complexity"],
-            "process_every_n": settings["process_every_n"],
-            "mirror_input": settings["mirror_input"],
-            "hands_seen_share": round(self.hand_frames / self.frames, 2),
-        })
-        self.file.flush()
-        self.t0, self.frames, self.hand_frames = time.perf_counter(), 0, 0
-
-    def close(self):
-        self.file.close()
 
 
 class Recorder:
