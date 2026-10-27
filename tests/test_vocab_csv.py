@@ -36,3 +36,11 @@ def test_vocab_matches_label_map(vocab):
         pytest.skip("label map not downloaded")
     label_map = json.loads(path.read_text())
     assert dict(zip(vocab["sign"], vocab["class_id"])) == label_map
+
+
+def test_synonym_groups_are_vocab_signs(vocab):
+    signs = set(vocab["sign"])
+    flat = [s for group in config.SYNONYM_GROUPS for s in group]
+    assert all(len(group) >= 2 for group in config.SYNONYM_GROUPS)
+    assert len(flat) == len(set(flat)), "a sign may belong to one group only"
+    assert set(flat) <= signs, set(flat) - signs

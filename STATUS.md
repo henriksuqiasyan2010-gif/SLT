@@ -26,3 +26,4 @@
 | 2026-10-27 | `henriksuqiasyan/asl-augment-1 v1` | augmented features T=32, versions 5-9 (CPU) | done 2026-10-27 12:15 |
 | 2026-10-27 | `henriksuqiasyan/asl-augment-2 v1` | augmented features T=32, versions 10-14 (CPU) | done 2026-10-27 12:15 |
 | 2026-10-27 | `henriksuqiasyan/asl-train-main v1` | main: Transformer T=32 on 15 precomputed augmented versions, early stopping (GPU) | done: stopped at epoch 30 (best 20), 40 s/epoch, GPU busy 78%; top-1 56.8% / top-3 72.9% (13 fps 54.9% / 71.3%) vs baseline T32 52.6% / 69.3%; train acc 92% (overfitting); ONNX parity 7e-7; `reports/main/`, copied to `models/` |
+| 2026-10-27 | `henriksuqiasyan/asl-train-main-reg v1` | main + regularisation: 100 epochs, cosine to the end (no early stopping, best val epoch kept), dropout 0.3/0.2/0.4, GPU frame-span + point-group masking, mixup; synonyms-merged metric for the presentation (GPU) | running |

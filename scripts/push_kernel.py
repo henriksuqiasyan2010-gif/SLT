@@ -5,7 +5,8 @@
 
 The kernel folder is generated in build/kernels/<name>/ from kaggle/<kernel>/<script>.py; only the
 parameter line (PRESET = "..." or SHARD = N) differs, so the outputs of different presets never
-overwrite each other. asl-train-main also mounts the outputs of the asl-augment-<shard> kernels.
+overwrite each other. asl-train presets with augment="precomputed" (main, main-reg) also mount the
+outputs of the asl-augment-<shard> kernels.
 """
 
 import argparse
@@ -39,6 +40,13 @@ def log_kernel(slug: str, purpose: str, result: str) -> None:
     STATUS.write_text(text, encoding="utf-8")
 
 
+def uses_augment_kernels(src: str, preset: str) -> bool:
+    """True if the preset trains on versions precomputed by the asl-augment kernels."""
+    block = re.search(rf'^    "{re.escape(preset)}": dict\((.*?)\),\n(?=    "|\}})', src, flags=re.M | re.S)
+    assert block, f"preset {preset} not found"
+    return 'augment="precomputed"' in block.group(1)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--kernel", default="asl-train", choices=sorted(KERNELS))
@@ -58,7 +66,7 @@ def main():
     name = f"{args.kernel}-{args.preset}"
     slug = f"{config.KAGGLE_USER}/{name}"
     sources = [f"{config.KAGGLE_USER}/asl-preprocess"]
-    if args.kernel == "asl-train" and args.preset == "main":
+    if args.kernel == "asl-train" and uses_augment_kernels(src, args.preset):
         sources += [f"{config.KAGGLE_USER}/asl-augment-{k}" for k in range(AUGMENT_SHARDS)]
     folder = config.ROOT / "build" / "kernels" / name
     folder.mkdir(parents=True, exist_ok=True)

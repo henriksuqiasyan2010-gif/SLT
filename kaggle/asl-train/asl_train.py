@@ -7,11 +7,17 @@ PRESET (set by scripts/push_kernel.py when the kernel is pushed):
   main        the same model, full training with early stopping, on augmented feature versions
               precomputed by the CPU kernels asl-augment-<shard> (one version per epoch, the next
               one loads in a background thread) - online augmentation left the GPU 85% idle
+  main-reg    main against overfitting: the cosine schedule runs to the end (no early stopping,
+              the best validation epoch is kept), stronger dropout, and on the GPU over the ready
+              features: masking of a span of frames and of point groups, mixup
 
 Every model is evaluated twice on the held-out participants: on the original clips and on the
 clips thinned to EVAL_FPS frames per second (the user's camera runs at 12-15 fps).
 Outputs per run in /kaggle/working/<preset>_T<T>/: model.onnx, labels.json, metrics.json,
-confusion_matrix.png, per_sign_accuracy.csv, top_confusions.csv, training_curves.png.
+confusion_matrix.png, per_sign_accuracy.csv, top_confusions.csv, training_curves.png,
+val_predictions.npz (top-5 class ids per validation clip, for metrics computed later).
+metrics.json also has a separate presentation-only accuracy with near-synonyms merged
+(config.SYNONYM_GROUPS); the model metrics are always the unmerged ones.
 """
 
 PRESET = "baseline"  # replaced by scripts/push_kernel.py
@@ -23,6 +29,11 @@ PRESETS = {
                        label_smoothing=0.1, augment="online", patience=0, warmup_epochs=1),
     "main": dict(model="transformer", t_values=[32], epochs=60, batch=256, lr=1e-3, wd=0.05,
                  label_smoothing=0.1, augment="precomputed", patience=10, warmup_epochs=2),
+    "main-reg": dict(model="transformer", t_values=[32], epochs=100, batch=256, lr=1e-3, wd=0.05,
+                     label_smoothing=0.1, augment="precomputed", patience=0, warmup_epochs=2,
+                     drop=0.3, conv_drop=0.2, head_drop=0.4,
+                     gpu_aug=dict(p_frames=0.5, frame_span=(0.1, 0.25), p_group=0.1,
+                                  p_mixup=0.5, mixup_alpha=0.4)),
 }
 SEED = 42
 N_FOLDS = 5
@@ -189,6 +200,79 @@ def device_batches(X, M, y, batch, gen):
         yield X[b].float(), M[b], y[b]
 
 
+def feature_groups():
+    """Feature columns of each point group that can go missing (positions, velocity and, for the
+    other hand, its presence flag and fingertip distances). Layout of features.extract():
+    positions 2 * N_POINTS | velocity 2 * N_POINTS | presence (dominant, other) | tips dominant | tips other.
+    The dominant hand is never masked: without it the sign is gone, not just harder."""
+    pos = 2 * F.N_POINTS
+    n_tips = len(F.TIP_PAIRS)
+
+    def cols(points):
+        c = [2 * p + k for p in points for k in range(2)]
+        return c + [pos + i for i in c]
+
+    pose0 = 2 * F.HAND_POINTS
+    lips0 = pose0 + len(F.POSE_POINTS)
+    face_rest0 = lips0 + len(F.LIPS)
+    return {
+        "other_hand": cols(range(F.SUB_LEFT_HAND.start, F.SUB_LEFT_HAND.stop))
+        + [2 * pos + 1] + list(range(2 * pos + 2 + n_tips, 2 * pos + 2 + 2 * n_tips)),
+        "pose": cols(range(pose0, lips0)),
+        "lips": cols(range(lips0, face_rest0)),
+        "nose_eyes": cols(range(face_rest0, F.N_POINTS)),
+    }
+
+
+class GpuFeatureAug:
+    """Training-only augmentation of ready feature batches on the GPU. Masked values are set to 0,
+    which is what extract() gives for points Holistic did not find (NaN -> 0); masked frames are
+    also removed from the attention/pooling mask."""
+
+    def __init__(self, p, n_feat, device):
+        if n_feat != F.feature_dim():
+            raise RuntimeError(f"feature groups assume F={F.feature_dim()}, data has {n_feat}")
+        self.p = p
+        groups = feature_groups()
+        self.group_names = list(groups)
+        self.cols = torch.zeros(len(groups), n_feat, device=device)
+        for g, c in enumerate(groups.values()):
+            self.cols[g, c] = 1.0
+        self.beta = torch.distributions.Beta(torch.tensor(p["mixup_alpha"]), torch.tensor(p["mixup_alpha"]))
+
+    def __call__(self, x, m, y):
+        """-> x, m, y, y_mix, lam (y_mix is None when the batch is not mixed)."""
+        b, t, _ = x.shape
+        dev = x.device
+        lo, hi = self.p["frame_span"]
+        length = ((torch.rand(b, device=dev) * (hi - lo) + lo) * t).long().clamp(min=1)
+        start = (torch.rand(b, device=dev) * (t - length + 1).float()).long()
+        ar = torch.arange(t, device=dev)
+        span = (ar >= start[:, None]) & (ar < (start + length)[:, None])
+        span &= (torch.rand(b, device=dev) < self.p["p_frames"])[:, None]
+        m = m & ~span
+        drop = (torch.rand(b, len(self.cols), device=dev) < self.p["p_group"]).float() @ self.cols > 0  # (B, F)
+        x = x.masked_fill(span[..., None] | drop[:, None, :], 0.0)
+        if torch.rand(()) < self.p["p_mixup"]:
+            lam = float(self.beta.sample())
+            lam = max(lam, 1.0 - lam)  # the first clip stays the main one
+            perm = torch.randperm(b, device=dev)
+            return lam * x + (1 - lam) * x[perm], m | m[perm], y, y[perm], lam
+        return x, m, y, None, 1.0
+
+
+def synonym_classes(signs):
+    """class id -> id of its near-synonym group (the smallest class id in the group)."""
+    ids = {s: i for i, s in signs.items()}
+    merged = np.arange(len(signs))
+    for group in config.SYNONYM_GROUPS:
+        missing = [s for s in group if s not in ids]
+        if missing:
+            raise RuntimeError(f"SYNONYM_GROUPS: unknown signs {missing}")
+        merged[[ids[s] for s in group]] = min(ids[s] for s in group)
+    return merged
+
+
 def tensor_batches(X, M, y, idx, batch, shuffle, rng):
     order = rng.permutation(idx) if shuffle else np.asarray(idx)
     for s in range(0, len(order), batch):
@@ -285,15 +369,16 @@ class EncoderLayer(nn.Module):
 
 
 class TransformerModel(nn.Module):
-    def __init__(self, n_feat, n_cls, mean, std, t, d=256, heads=4, ff=512, layers=3, convs=2, drop=0.2):
+    def __init__(self, n_feat, n_cls, mean, std, t, d=256, heads=4, ff=512, layers=3, convs=2, drop=0.2,
+                 conv_drop=0.1, head_drop=0.3):
         super().__init__()
         self.norm = Normalize(mean, std)
         self.inp = nn.Sequential(nn.Linear(n_feat, d), nn.LayerNorm(d))
         self.pos = nn.Parameter(torch.zeros(1, t, d))
-        self.convs = nn.ModuleList([ConvBlock(d) for _ in range(convs)])
+        self.convs = nn.ModuleList([ConvBlock(d, drop=conv_drop) for _ in range(convs)])
         self.layers = nn.ModuleList([EncoderLayer(d, heads, ff, drop) for _ in range(layers)])
         self.ln = nn.LayerNorm(d)
-        self.head = nn.Sequential(nn.Dropout(0.3), nn.Linear(d, n_cls))
+        self.head = nn.Sequential(nn.Dropout(head_drop), nn.Linear(d, n_cls))
 
     def forward(self, x, mask):
         mask = safe_mask(mask)
@@ -314,10 +399,11 @@ class WithSoftmax(nn.Module):
         return self.model(features, mask).softmax(-1)
 
 
-def build_model(kind, n_feat, n_cls, mean, std, t):
-    if kind == "cnn":
+def build_model(cfg, n_feat, n_cls, mean, std, t):
+    if cfg["model"] == "cnn":
         return CNN(n_feat, n_cls, mean, std)
-    return TransformerModel(n_feat, n_cls, mean, std, t)
+    drops = {k: cfg[k] for k in ("drop", "conv_drop", "head_drop") if k in cfg}
+    return TransformerModel(n_feat, n_cls, mean, std, t, **drops)
 
 
 # --- Training --------------------------------------------------------------------------------
@@ -380,7 +466,8 @@ def train_one(data, cfg, t, out_dir):
     X = np.array(X)
     print(f"X{t} loaded into RAM: {X.nbytes / 1e9:.2f} GB in {time.time() - tl:.0f}s", flush=True)
     mean, std = feature_stats(X, data.train_idx, rng)
-    model = build_model(cfg["model"], X.shape[-1], data.n_classes, mean, std, t).to(DEVICE)
+    model = build_model(cfg, X.shape[-1], data.n_classes, mean, std, t).to(DEVICE)
+    gpu_aug = GpuFeatureAug(cfg["gpu_aug"], X.shape[-1], DEVICE) if cfg.get("gpu_aug") else None
     n_params = sum(p.numel() for p in model.parameters())
     print(f"[{out_dir.name}] model={cfg['model']} params={n_params:,} train={len(data.train_idx)} "
           f"val={len(data.val_idx)} val participants={data.val_participants}", flush=True)
@@ -408,7 +495,7 @@ def train_one(data, cfg, t, out_dir):
         gen = torch.Generator(device=DEVICE)
         gen.manual_seed(SEED)
     gpu = GpuMonitor()
-    history, best, best_state, bad = [], -1.0, None, 0
+    history, best, best_epoch, best_state, bad = [], -1.0, 0, None, 0
     for epoch in range(cfg["epochs"]):
         model.train()
         te, wait, n, correct, loss_sum, version = time.time(), 0.0, 0, 0, 0.0, None
@@ -426,9 +513,14 @@ def train_one(data, cfg, t, out_dir):
         for x, m, y in batches:
             wait += time.time() - tw
             x, m, y = x.to(DEVICE, non_blocking=True), m.to(DEVICE, non_blocking=True), y.to(DEVICE, non_blocking=True)
+            y_mix, lam = None, 1.0
+            if gpu_aug is not None:
+                x, m, y, y_mix, lam = gpu_aug(x, m, y)
             with torch.autocast(DEVICE.type, enabled=DEVICE.type == "cuda"):
                 logits = model(x, m)
                 loss = loss_fn(logits.float(), y)
+                if y_mix is not None:
+                    loss = lam * loss + (1 - lam) * loss_fn(logits.float(), y_mix)
             opt.zero_grad(set_to_none=True)
             scaler.scale(loss).backward()
             scaler.unscale_(opt)
@@ -453,7 +545,7 @@ def train_one(data, cfg, t, out_dir):
         history.append(row)
         print(json.dumps(row), flush=True)
         if row["val_top1"] > best:
-            best, bad = row["val_top1"], 0
+            best, best_epoch, bad = row["val_top1"], epoch + 1, 0
             best_state = {k: v.detach().cpu().clone() for k, v in model.state_dict().items()}
         else:
             bad += 1
@@ -468,13 +560,27 @@ def train_one(data, cfg, t, out_dir):
     p13, _ = evaluate(model, tensor_batches(Xv13, Mv13, yv13, np.arange(len(Xv13)), 512, False, rng))
     results = {"orig": {"top1": topk(pv, yv, 1), "top3": topk(pv, yv, 3)},
                f"thinned_{EVAL_FPS:g}fps": {"top1": topk(p13, yv13, 1), "top3": topk(p13, yv13, 3)}}
-    print(f"[{out_dir.name}] {json.dumps(results)}", flush=True)
+    merged = synonym_classes(data.signs)
+    synonyms = {
+        "note": "PRESENTATION ONLY, not a model metric: a prediction counts as correct if it is the true "
+                "sign or its near-synonym from config.SYNONYM_GROUPS; the model metrics are 'orig' and "
+                f"'thinned_{EVAL_FPS:g}fps'",
+        "groups": [list(g) for g in config.SYNONYM_GROUPS],
+        "orig_top1": float((merged[pv.argmax(1)] == merged[yv]).mean()),
+        f"thinned_{EVAL_FPS:g}fps_top1": float((merged[p13.argmax(1)] == merged[yv13]).mean()),
+    }
+    print(f"[{out_dir.name}] best epoch {best_epoch}; {json.dumps(results)}; "
+          f"synonyms merged (presentation only): {synonyms['orig_top1']:.4f}", flush=True)
+    np.savez_compressed(out_dir / "val_predictions.npz", y=yv.astype(np.int16), clip_index=data.val_idx,
+                        top5=np.argsort(-pv, axis=1)[:, :5].astype(np.int16),
+                        top5_thinned=np.argsort(-p13, axis=1)[:, :5].astype(np.int16))
 
     parity = export_onnx(model, t, X.shape[-1], Xv13[:ONNX_PARITY_SAMPLES], Mv13[:ONNX_PARITY_SAMPLES], out_dir)
     write_reports(data, pv, yv, p13, yv13, history, out_dir)
     metrics = {
         "preset": PRESET, "model": cfg["model"], "T_FIX": t, "F": int(X.shape[-1]),
-        "FEATURES_VERSION": F.FEATURES_VERSION, "params": n_params, **results,
+        "FEATURES_VERSION": F.FEATURES_VERSION, "params": n_params, **results, "best_epoch": best_epoch,
+        "presentation_synonyms_merged": synonyms,
         "val_participants": data.val_participants, "n_train": int(len(data.train_idx)),
         "n_val": int(len(data.val_idx)), "split": f"GroupKFold({N_FOLDS}) by participant, fold {VAL_FOLD}",
         "config": cfg, "augmentation": config.AUGMENT if cfg["augment"] else None, "eval_fps": EVAL_FPS,
@@ -568,6 +674,8 @@ def main():
     for t in cfg["t_values"]:
         m = train_one(data, cfg, t, OUT_ROOT / f"{PRESET}_T{t}")
         summary[f"T{t}"] = {k: m[k] for k in m if k.startswith(("orig", "thinned"))}
+        summary[f"T{t}"]["presentation_synonyms_merged"] = m["presentation_synonyms_merged"]
+        summary[f"T{t}"]["best_epoch"] = m["best_epoch"]
         summary[f"T{t}"]["epochs_run"] = len(m["history"])
         summary[f"T{t}"]["mean_epoch_s"] = float(np.mean([r["epoch_s"] for r in m["history"]]))
         summary[f"T{t}"]["gpu_util_mean"] = m["history"][-1]["gpu_util_mean"]
