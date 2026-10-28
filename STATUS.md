@@ -10,7 +10,7 @@
 | 5 | Sentence mode | done | 2026-10-29 | segmenter by wrist height: 3 sessions 5/5 segments each, 15/15 words (main-reg30); 135/144 threshold sets also 15/15 (`reports/segmenter/tuning.csv`); manual (button) mode separate from the segmenter; replace the last word from its top-3 (logged); 134 tests pass; new UI strings (63) to be reviewed by the user |
 | 6 | Learn mode | done | 2026-10-29 | 250 references (asl-references: 242 top-1, median p 0.97) in assets/reference; Learn tab: list/search/filter, player 0.5x/1x, Try + score, side by side; progress.json persists (seeded from earlier tests: 9 signs); user's test: 5 new signs learned in 35 attempts (dad 3/4 after the side-by-side, after, book, can, because), feedback: all works; defense_set.csv 15 signs; 144 tests pass |
 | 7 | Translations and Armenian audio | done | 2026-10-29 | vocab check at start-up; audio.py (Armenian file or English pyttsx3, non-blocking, sentence gaps 0.3 s); record_audio.py + audio_script.csv + check_audio.py prepared, no audio recorded (user: decide later; 0/250 files, English fallback accepted); Armenian text renders (glyph + drawing tests); offline run confirmed by the user (3 modes + speech, FPS 17.3, no errors); 150 tests pass |
-| 7.5 | Interface design | in progress | 2026-10-29 | "Фиолетовый вечер": theme (palette, QSS, shadows flag), Rubik + Noto Sans Armenian bundled (OFL), SLT logo / icon, header, three modes and dialogs restyled; FPS like for like 24.4 -> 24.6 (UI 5.5 vs 6.3-6.9 ms per frame); 152 tests pass; screenshots hy/ru in reports/design; WAITING for the user: approve the design, review 42 new / changed strings in reports/ui_strings.csv |
+| 7.5 | Interface design | done | 2026-10-29 | "Фиолетовый вечер": theme (palette, QSS, shadows flag), Rubik + Noto Sans Armenian bundled (OFL), SLT logo / icon (assets/branding), header, three modes and dialogs restyled; FPS like for like 24.4 -> 24.6 (UI 5.5 vs 6.3-6.9 ms per frame); 152 tests pass; screenshots hy/ru in reports/design; approved by the user |
 | 8 | Packaging and defense kit | not started | | |
 
 ## Kaggle kernels
@@ -48,7 +48,7 @@
 
 ## Current state (2026-10-29, for the next session)
 
-- Phases 0-7 done; Phase 7.5 (Interface design) waits for the user's approval; then Phase 8 (packaging). Armenian audio: not recorded, the team decides later (`scripts/record_audio.py` is ready).
+- Phases 0-7.5 done. **Next: Phase 8 (packaging and defense kit)**: PyInstaller one-folder build with assets/branding/slt.ico, models/, assets/ (fonts, reference, branding), data/vocab.csv and the MediaPipe model files; demo mode; team kit. Armenian audio: not recorded, the team decides later (`scripts/record_audio.py` is ready).
 - `models/` = **main-reg30** (FEATURES_VERSION 1); the live path adds `keep_moving_hand`. Val 65.1% with the live rule.
 - Sentence mode: segmenter defaults in `config.SEG_*`; sessions in `recordings/sessions/` (+ `reports/user_tests/phase5_sessions.json`).
 - **Kaggle: nothing is running.** The latest outputs of `asl-preprocess` and `asl-augment-0..2` are FEATURES_VERSION 2 — rerun them before training a FEATURES_VERSION 1 model. `asl-src` holds version 1 code.
