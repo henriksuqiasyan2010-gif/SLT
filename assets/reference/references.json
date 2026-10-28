@@ -1,0 +1,9356 @@
+{
+ "TV": {
+  "source": "train_landmark_files/28656/8568427.parquet",
+  "participant_id": 28656,
+  "frames": 21,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 1.0,
+  "sign_median_frames": 22.0,
+  "length_gap": 1.0,
+  "candidates": 6,
+  "model": "main-reg30_T32",
+  "p": 0.9684,
+  "rank": 1,
+  "top3": [
+   [
+    "TV",
+    0.9684
+   ],
+   [
+    "potty",
+    0.001
+   ],
+   [
+    "if",
+    0.0007
+   ]
+  ],
+  "candidate_p": [
+   0.9177,
+   0.0688,
+   0.9684,
+   0.917,
+   0.9454,
+   0.8715
+  ]
+ },
+ "after": {
+  "source": "train_landmark_files/28656/3187265361.parquet",
+  "participant_id": 28656,
+  "frames": 16,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.812,
+  "sign_median_frames": 16.0,
+  "length_gap": 0.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.9634,
+  "rank": 1,
+  "top3": [
+   [
+    "after",
+    0.9634
+   ],
+   [
+    "there",
+    0.0024
+   ],
+   [
+    "helicopter",
+    0.0023
+   ]
+  ],
+  "candidate_p": [
+   0.9634,
+   0.7436,
+   0.007
+  ]
+ },
+ "airplane": {
+  "source": "train_landmark_files/49445/2679918077.parquet",
+  "participant_id": 49445,
+  "frames": 27,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.667,
+  "sign_median_frames": 27.0,
+  "length_gap": 0.0,
+  "candidates": 9,
+  "model": "main-reg30_T32",
+  "p": 0.9704,
+  "rank": 1,
+  "top3": [
+   [
+    "airplane",
+    0.9704
+   ],
+   [
+    "kitty",
+    0.0013
+   ],
+   [
+    "moon",
+    0.0008
+   ]
+  ],
+  "candidate_p": [
+   0.959,
+   0.9704,
+   0.9043,
+   0.9434,
+   0.2413,
+   0.9223,
+   0.9637,
+   0.8987,
+   0.9474
+  ]
+ },
+ "all": {
+  "source": "train_landmark_files/28656/2841564563.parquet",
+  "participant_id": 28656,
+  "frames": 17,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.882,
+  "sign_median_frames": 21.0,
+  "length_gap": 4.0,
+  "candidates": 4,
+  "model": "main-reg30_T32",
+  "p": 0.9865,
+  "rank": 1,
+  "top3": [
+   [
+    "all",
+    0.9865
+   ],
+   [
+    "closet",
+    0.002
+   ],
+   [
+    "go",
+    0.0005
+   ]
+  ],
+  "candidate_p": [
+   0.9818,
+   0.9452,
+   0.8648,
+   0.9865
+  ]
+ },
+ "alligator": {
+  "source": "train_landmark_files/28656/1848034629.parquet",
+  "participant_id": 28656,
+  "frames": 23,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.565,
+  "sign_median_frames": 27.0,
+  "length_gap": 4.0,
+  "candidates": 4,
+  "model": "main-reg30_T32",
+  "p": 0.9815,
+  "rank": 1,
+  "top3": [
+   [
+    "alligator",
+    0.9815
+   ],
+   [
+    "table",
+    0.0013
+   ],
+   [
+    "cloud",
+    0.0003
+   ]
+  ],
+  "candidate_p": [
+   0.9505,
+   0.9743,
+   0.9815,
+   0.9683
+  ]
+ },
+ "animal": {
+  "source": "train_landmark_files/29302/2920865540.parquet",
+  "participant_id": 29302,
+  "frames": 33,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.667,
+  "sign_median_frames": 27.0,
+  "length_gap": 6.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.9558,
+  "rank": 1,
+  "top3": [
+   [
+    "animal",
+    0.9558
+   ],
+   [
+    "zebra",
+    0.0183
+   ],
+   [
+    "have",
+    0.0048
+   ]
+  ],
+  "candidate_p": [
+   0.2833,
+   0.6501,
+   0.9558
+  ]
+ },
+ "another": {
+  "source": "train_landmark_files/28656/2861115516.parquet",
+  "participant_id": 28656,
+  "frames": 17,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.647,
+  "sign_median_frames": 20.0,
+  "length_gap": 3.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.9141,
+  "rank": 1,
+  "top3": [
+   [
+    "another",
+    0.9141
+   ],
+   [
+    "any",
+    0.0248
+   ],
+   [
+    "cut",
+    0.0038
+   ]
+  ],
+  "candidate_p": [
+   0.3957,
+   0.9141,
+   0.0863
+  ]
+ },
+ "any": {
+  "source": "train_landmark_files/49445/4141994800.parquet",
+  "participant_id": 49445,
+  "frames": 16,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.562,
+  "sign_median_frames": 16.0,
+  "length_gap": 0.0,
+  "candidates": 5,
+  "model": "main-reg30_T32",
+  "p": 0.9044,
+  "rank": 1,
+  "top3": [
+   [
+    "any",
+    0.9044
+   ],
+   [
+    "napkin",
+    0.0041
+   ],
+   [
+    "eye",
+    0.004
+   ]
+  ],
+  "candidate_p": [
+   0.0751,
+   0.0003,
+   0.9044,
+   0.0241,
+   0.0141
+  ]
+ },
+ "apple": {
+  "source": "train_landmark_files/49445/2876808330.parquet",
+  "participant_id": 49445,
+  "frames": 30,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.833,
+  "sign_median_frames": 26.0,
+  "length_gap": 4.0,
+  "candidates": 6,
+  "model": "main-reg30_T32",
+  "p": 0.9626,
+  "rank": 1,
+  "top3": [
+   [
+    "apple",
+    0.9626
+   ],
+   [
+    "aunt",
+    0.0024
+   ],
+   [
+    "dance",
+    0.0007
+   ]
+  ],
+  "candidate_p": [
+   0.9146,
+   0.9086,
+   0.8677,
+   0.8505,
+   0.9626,
+   0.9321
+  ]
+ },
+ "arm": {
+  "source": "train_landmark_files/29302/4154992575.parquet",
+  "participant_id": 29302,
+  "frames": 18,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.611,
+  "sign_median_frames": 24.0,
+  "length_gap": 6.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.9744,
+  "rank": 1,
+  "top3": [
+   [
+    "arm",
+    0.9744
+   ],
+   [
+    "touch",
+    0.0034
+   ],
+   [
+    "yucky",
+    0.001
+   ]
+  ],
+  "candidate_p": [
+   0.0001,
+   0.9744,
+   0.0135
+  ]
+ },
+ "aunt": {
+  "source": "train_landmark_files/29302/3012088118.parquet",
+  "participant_id": 29302,
+  "frames": 32,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.844,
+  "sign_median_frames": 27.0,
+  "length_gap": 5.0,
+  "candidates": 5,
+  "model": "main-reg30_T32",
+  "p": 0.0046,
+  "rank": 18,
+  "top3": [
+   [
+    "another",
+    0.4414
+   ],
+   [
+    "girl",
+    0.0658
+   ],
+   [
+    "hide",
+    0.0496
+   ]
+  ],
+  "candidate_p": [
+   0.0045,
+   0.0004,
+   0.0017,
+   0.0002,
+   0.0046
+  ]
+ },
+ "awake": {
+  "source": "train_landmark_files/29302/2654470310.parquet",
+  "participant_id": 29302,
+  "frames": 20,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.85,
+  "sign_median_frames": 24.0,
+  "length_gap": 4.0,
+  "candidates": 7,
+  "model": "main-reg30_T32",
+  "p": 0.5792,
+  "rank": 1,
+  "top3": [
+   [
+    "awake",
+    0.5792
+   ],
+   [
+    "wake",
+    0.3799
+   ],
+   [
+    "up",
+    0.0029
+   ]
+  ],
+  "candidate_p": [
+   0.1771,
+   0.5002,
+   0.282,
+   0.5792,
+   0.3659,
+   0.2862,
+   0.2939
+  ]
+ },
+ "backyard": {
+  "source": "train_landmark_files/29302/3065706609.parquet",
+  "participant_id": 29302,
+  "frames": 25,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.68,
+  "sign_median_frames": 30.5,
+  "length_gap": 5.5,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.2919,
+  "rank": 1,
+  "top3": [
+   [
+    "backyard",
+    0.2919
+   ],
+   [
+    "store",
+    0.1224
+   ],
+   [
+    "jacket",
+    0.0354
+   ]
+  ],
+  "candidate_p": [
+   0.0621,
+   0.2919,
+   0.0042
+  ]
+ },
+ "bad": {
+  "source": "train_landmark_files/49445/1333032298.parquet",
+  "participant_id": 49445,
+  "frames": 15,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.667,
+  "sign_median_frames": 16.0,
+  "length_gap": 1.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.9474,
+  "rank": 1,
+  "top3": [
+   [
+    "bad",
+    0.9474
+   ],
+   [
+    "bee",
+    0.0037
+   ],
+   [
+    "hot",
+    0.0024
+   ]
+  ],
+  "candidate_p": [
+   0.0222,
+   0.8934,
+   0.9474
+  ]
+ },
+ "balloon": {
+  "source": "train_landmark_files/49445/950525792.parquet",
+  "participant_id": 49445,
+  "frames": 27,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.741,
+  "sign_median_frames": 24.0,
+  "length_gap": 3.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.9767,
+  "rank": 1,
+  "top3": [
+   [
+    "balloon",
+    0.9767
+   ],
+   [
+    "lamp",
+    0.0026
+   ],
+   [
+    "blow",
+    0.0005
+   ]
+  ],
+  "candidate_p": [
+   0.9649,
+   0.8717,
+   0.9767
+  ]
+ },
+ "bath": {
+  "source": "train_landmark_files/29302/2535028532.parquet",
+  "participant_id": 29302,
+  "frames": 17,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.647,
+  "sign_median_frames": 23.0,
+  "length_gap": 6.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.9804,
+  "rank": 1,
+  "top3": [
+   [
+    "bath",
+    0.9804
+   ],
+   [
+    "animal",
+    0.0007
+   ],
+   [
+    "penny",
+    0.0005
+   ]
+  ],
+  "candidate_p": [
+   0.7963,
+   0.9804,
+   0.9299
+  ]
+ },
+ "because": {
+  "source": "train_landmark_files/28656/207673498.parquet",
+  "participant_id": 28656,
+  "frames": 19,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.737,
+  "sign_median_frames": 22.0,
+  "length_gap": 3.0,
+  "candidates": 5,
+  "model": "main-reg30_T32",
+  "p": 0.9837,
+  "rank": 1,
+  "top3": [
+   [
+    "because",
+    0.9837
+   ],
+   [
+    "fast",
+    0.0008
+   ],
+   [
+    "mad",
+    0.0007
+   ]
+  ],
+  "candidate_p": [
+   0.9695,
+   0.005,
+   0.9143,
+   0.9837,
+   0.1039
+  ]
+ },
+ "bed": {
+  "source": "train_landmark_files/49445/760250858.parquet",
+  "participant_id": 49445,
+  "frames": 22,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.818,
+  "sign_median_frames": 21.0,
+  "length_gap": 1.0,
+  "candidates": 7,
+  "model": "main-reg30_T32",
+  "p": 0.9889,
+  "rank": 1,
+  "top3": [
+   [
+    "bed",
+    0.9889
+   ],
+   [
+    "nap",
+    0.0015
+   ],
+   [
+    "bedroom",
+    0.0006
+   ]
+  ],
+  "candidate_p": [
+   0.9889,
+   0.9458,
+   0.9543,
+   0.9385,
+   0.9198,
+   0.9718,
+   0.9764
+  ]
+ },
+ "bedroom": {
+  "source": "train_landmark_files/49445/635270841.parquet",
+  "participant_id": 49445,
+  "frames": 23,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.87,
+  "sign_median_frames": 23.0,
+  "length_gap": 0.0,
+  "candidates": 5,
+  "model": "main-reg30_T32",
+  "p": 0.9628,
+  "rank": 1,
+  "top3": [
+   [
+    "bedroom",
+    0.9628
+   ],
+   [
+    "room",
+    0.0037
+   ],
+   [
+    "balloon",
+    0.0011
+   ]
+  ],
+  "candidate_p": [
+   0.9628,
+   0.902,
+   0.2345,
+   0.8755,
+   0.8964
+  ]
+ },
+ "bee": {
+  "source": "train_landmark_files/28656/2756998421.parquet",
+  "participant_id": 28656,
+  "frames": 26,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.577,
+  "sign_median_frames": 22.0,
+  "length_gap": 4.0,
+  "candidates": 10,
+  "model": "main-reg30_T32",
+  "p": 0.994,
+  "rank": 1,
+  "top3": [
+   [
+    "bee",
+    0.994
+   ],
+   [
+    "feet",
+    0.0007
+   ],
+   [
+    "cat",
+    0.0004
+   ]
+  ],
+  "candidate_p": [
+   0.9912,
+   0.0383,
+   0.7653,
+   0.8843,
+   0.9848,
+   0.6961,
+   0.9696,
+   0.9937,
+   0.994,
+   0.9175
+  ]
+ },
+ "before": {
+  "source": "train_landmark_files/29302/1932752289.parquet",
+  "participant_id": 29302,
+  "frames": 19,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.842,
+  "sign_median_frames": 17.0,
+  "length_gap": 2.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.9118,
+  "rank": 1,
+  "top3": [
+   [
+    "before",
+    0.9118
+   ],
+   [
+    "underwear",
+    0.0025
+   ],
+   [
+    "lips",
+    0.002
+   ]
+  ],
+  "candidate_p": [
+   0.0006,
+   0.9118,
+   0.7935
+  ]
+ },
+ "beside": {
+  "source": "train_landmark_files/49445/344507695.parquet",
+  "participant_id": 49445,
+  "frames": 9,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 1.0,
+  "sign_median_frames": 13.0,
+  "length_gap": 4.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.9369,
+  "rank": 1,
+  "top3": [
+   [
+    "beside",
+    0.9369
+   ],
+   [
+    "bad",
+    0.0153
+   ],
+   [
+    "child",
+    0.0065
+   ]
+  ],
+  "candidate_p": [
+   0.024,
+   0.9369,
+   0.4602
+  ]
+ },
+ "better": {
+  "source": "train_landmark_files/28656/1329498687.parquet",
+  "participant_id": 28656,
+  "frames": 21,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.81,
+  "sign_median_frames": 19.0,
+  "length_gap": 2.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.912,
+  "rank": 1,
+  "top3": [
+   [
+    "better",
+    0.912
+   ],
+   [
+    "fast",
+    0.004
+   ],
+   [
+    "beside",
+    0.0024
+   ]
+  ],
+  "candidate_p": [
+   0.912,
+   0.08,
+   0.0398
+  ]
+ },
+ "bird": {
+  "source": "train_landmark_files/28656/2558636446.parquet",
+  "participant_id": 28656,
+  "frames": 23,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 1.0,
+  "sign_median_frames": 25.5,
+  "length_gap": 2.5,
+  "candidates": 6,
+  "model": "main-reg30_T32",
+  "p": 0.9575,
+  "rank": 1,
+  "top3": [
+   [
+    "bird",
+    0.9575
+   ],
+   [
+    "goose",
+    0.0099
+   ],
+   [
+    "duck",
+    0.0008
+   ]
+  ],
+  "candidate_p": [
+   0.9417,
+   0.7744,
+   0.9575,
+   0.936,
+   0.9195,
+   0.9022
+  ]
+ },
+ "black": {
+  "source": "train_landmark_files/29302/2709127666.parquet",
+  "participant_id": 29302,
+  "frames": 19,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.632,
+  "sign_median_frames": 20.0,
+  "length_gap": 1.0,
+  "candidates": 5,
+  "model": "main-reg30_T32",
+  "p": 0.954,
+  "rank": 1,
+  "top3": [
+   [
+    "black",
+    0.954
+   ],
+   [
+    "because",
+    0.0029
+   ],
+   [
+    "room",
+    0.0008
+   ]
+  ],
+  "candidate_p": [
+   0.9533,
+   0.954,
+   0.9499,
+   0.942,
+   0.717
+  ]
+ },
+ "blow": {
+  "source": "train_landmark_files/28656/1291504580.parquet",
+  "participant_id": 28656,
+  "frames": 12,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 1.0,
+  "sign_median_frames": 18.0,
+  "length_gap": 6.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.9458,
+  "rank": 1,
+  "top3": [
+   [
+    "blow",
+    0.9458
+   ],
+   [
+    "owl",
+    0.0013
+   ],
+   [
+    "food",
+    0.0013
+   ]
+  ],
+  "candidate_p": [
+   0.9266,
+   0.9458,
+   0.8376
+  ]
+ },
+ "blue": {
+  "source": "train_landmark_files/28656/345065314.parquet",
+  "participant_id": 28656,
+  "frames": 18,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.667,
+  "sign_median_frames": 22.0,
+  "length_gap": 4.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.991,
+  "rank": 1,
+  "top3": [
+   [
+    "blue",
+    0.991
+   ],
+   [
+    "close",
+    0.0005
+   ],
+   [
+    "fall",
+    0.0003
+   ]
+  ],
+  "candidate_p": [
+   0.9868,
+   0.991,
+   0.974
+  ]
+ },
+ "boat": {
+  "source": "train_landmark_files/28656/2848401382.parquet",
+  "participant_id": 28656,
+  "frames": 21,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 1.0,
+  "sign_median_frames": 20.0,
+  "length_gap": 1.0,
+  "candidates": 7,
+  "model": "main-reg30_T32",
+  "p": 0.9804,
+  "rank": 1,
+  "top3": [
+   [
+    "boat",
+    0.9804
+   ],
+   [
+    "after",
+    0.0005
+   ],
+   [
+    "yourself",
+    0.0005
+   ]
+  ],
+  "candidate_p": [
+   0.9804,
+   0.9632,
+   0.9649,
+   0.4382,
+   0.9272,
+   0.9546,
+   0.9382
+  ]
+ },
+ "book": {
+  "source": "train_landmark_files/28656/3231736510.parquet",
+  "participant_id": 28656,
+  "frames": 20,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 1.0,
+  "sign_median_frames": 20.0,
+  "length_gap": 0.0,
+  "candidates": 5,
+  "model": "main-reg30_T32",
+  "p": 0.6438,
+  "rank": 1,
+  "top3": [
+   [
+    "book",
+    0.6438
+   ],
+   [
+    "open",
+    0.1292
+   ],
+   [
+    "first",
+    0.0063
+   ]
+  ],
+  "candidate_p": [
+   0.6438,
+   0.6201,
+   0.4862,
+   0.059,
+   0.2267
+  ]
+ },
+ "boy": {
+  "source": "train_landmark_files/28656/2030882147.parquet",
+  "participant_id": 28656,
+  "frames": 20,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.65,
+  "sign_median_frames": 21.0,
+  "length_gap": 1.0,
+  "candidates": 9,
+  "model": "main-reg30_T32",
+  "p": 0.9819,
+  "rank": 1,
+  "top3": [
+   [
+    "boy",
+    0.9819
+   ],
+   [
+    "brother",
+    0.0014
+   ],
+   [
+    "cowboy",
+    0.0011
+   ]
+  ],
+  "candidate_p": [
+   0.8983,
+   0.7404,
+   0.9819,
+   0.9348,
+   0.9397,
+   0.933,
+   0.8518,
+   0.6166,
+   0.8787
+  ]
+ },
+ "brother": {
+  "source": "train_landmark_files/49445/2415405547.parquet",
+  "participant_id": 49445,
+  "frames": 22,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.545,
+  "sign_median_frames": 19.0,
+  "length_gap": 3.0,
+  "candidates": 4,
+  "model": "main-reg30_T32",
+  "p": 0.973,
+  "rank": 1,
+  "top3": [
+   [
+    "brother",
+    0.973
+   ],
+   [
+    "hen",
+    0.0014
+   ],
+   [
+    "later",
+    0.0007
+   ]
+  ],
+  "candidate_p": [
+   0.2734,
+   0.7292,
+   0.9725,
+   0.973
+  ]
+ },
+ "brown": {
+  "source": "train_landmark_files/27610/473820931.parquet",
+  "participant_id": 27610,
+  "frames": 26,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 1.0,
+  "sign_median_frames": 25.0,
+  "length_gap": 1.0,
+  "candidates": 13,
+  "model": "main-reg30_T32",
+  "p": 0.9692,
+  "rank": 1,
+  "top3": [
+   [
+    "brown",
+    0.9692
+   ],
+   [
+    "bee",
+    0.0007
+   ],
+   [
+    "mom",
+    0.0005
+   ]
+  ],
+  "candidate_p": [
+   0.9213,
+   0.8926,
+   0.9692,
+   0.9201,
+   0.9466,
+   0.8708,
+   0.8858,
+   0.9327,
+   0.9475,
+   0.9065,
+   0.9595,
+   0.9474,
+   0.9336
+  ]
+ },
+ "bug": {
+  "source": "train_landmark_files/27610/3227825773.parquet",
+  "participant_id": 27610,
+  "frames": 21,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.905,
+  "sign_median_frames": 21.0,
+  "length_gap": 0.0,
+  "candidates": 9,
+  "model": "main-reg30_T32",
+  "p": 0.9975,
+  "rank": 1,
+  "top3": [
+   [
+    "bug",
+    0.9975
+   ],
+   [
+    "duck",
+    0.0001
+   ],
+   [
+    "room",
+    0.0001
+   ]
+  ],
+  "candidate_p": [
+   0.8686,
+   0.96,
+   0.9975,
+   0.8773,
+   0.9533,
+   0.9512,
+   0.9775,
+   0.9327,
+   0.8287
+  ]
+ },
+ "bye": {
+  "source": "train_landmark_files/49445/4084671409.parquet",
+  "participant_id": 49445,
+  "frames": 23,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 1.0,
+  "sign_median_frames": 23.0,
+  "length_gap": 0.0,
+  "candidates": 6,
+  "model": "main-reg30_T32",
+  "p": 0.988,
+  "rank": 1,
+  "top3": [
+   [
+    "bye",
+    0.988
+   ],
+   [
+    "brown",
+    0.0007
+   ],
+   [
+    "goose",
+    0.0003
+   ]
+  ],
+  "candidate_p": [
+   0.988,
+   0.4192,
+   0.977,
+   0.9802,
+   0.9619,
+   0.9008
+  ]
+ },
+ "callonphone": {
+  "source": "train_landmark_files/28656/741623543.parquet",
+  "participant_id": 28656,
+  "frames": 16,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.75,
+  "sign_median_frames": 20.0,
+  "length_gap": 4.0,
+  "candidates": 8,
+  "model": "main-reg30_T32",
+  "p": 0.9731,
+  "rank": 1,
+  "top3": [
+   [
+    "callonphone",
+    0.9731
+   ],
+   [
+    "taste",
+    0.0009
+   ],
+   [
+    "better",
+    0.0008
+   ]
+  ],
+  "candidate_p": [
+   0.35,
+   0.968,
+   0.9615,
+   0.8164,
+   0.7662,
+   0.756,
+   0.9677,
+   0.9731
+  ]
+ },
+ "can": {
+  "source": "train_landmark_files/27610/3022349292.parquet",
+  "participant_id": 27610,
+  "frames": 18,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.833,
+  "sign_median_frames": 16.0,
+  "length_gap": 2.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.9915,
+  "rank": 1,
+  "top3": [
+   [
+    "can",
+    0.9915
+   ],
+   [
+    "haveto",
+    0.0016
+   ],
+   [
+    "that",
+    0.0005
+   ]
+  ],
+  "candidate_p": [
+   0.9915,
+   0.5872,
+   0.979
+  ]
+ },
+ "car": {
+  "source": "train_landmark_files/28656/3151580756.parquet",
+  "participant_id": 28656,
+  "frames": 24,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.792,
+  "sign_median_frames": 26.0,
+  "length_gap": 2.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.9759,
+  "rank": 1,
+  "top3": [
+   [
+    "car",
+    0.9759
+   ],
+   [
+    "shower",
+    0.001
+   ],
+   [
+    "on",
+    0.0009
+   ]
+  ],
+  "candidate_p": [
+   0.9759,
+   0.9386,
+   0.2774
+  ]
+ },
+ "carrot": {
+  "source": "train_landmark_files/49445/1182058116.parquet",
+  "participant_id": 49445,
+  "frames": 20,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.7,
+  "sign_median_frames": 24.0,
+  "length_gap": 4.0,
+  "candidates": 4,
+  "model": "main-reg30_T32",
+  "p": 0.951,
+  "rank": 1,
+  "top3": [
+   [
+    "carrot",
+    0.951
+   ],
+   [
+    "bird",
+    0.0091
+   ],
+   [
+    "owl",
+    0.0052
+   ]
+  ],
+  "candidate_p": [
+   0.041,
+   0.4464,
+   0.2212,
+   0.951
+  ]
+ },
+ "cat": {
+  "source": "train_landmark_files/29302/4044950244.parquet",
+  "participant_id": 29302,
+  "frames": 20,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.65,
+  "sign_median_frames": 23.0,
+  "length_gap": 3.0,
+  "candidates": 10,
+  "model": "main-reg30_T32",
+  "p": 0.987,
+  "rank": 1,
+  "top3": [
+   [
+    "cat",
+    0.987
+   ],
+   [
+    "kitty",
+    0.0031
+   ],
+   [
+    "outside",
+    0.0018
+   ]
+  ],
+  "candidate_p": [
+   0.8495,
+   0.9804,
+   0.6567,
+   0.7599,
+   0.0012,
+   0.9667,
+   0.9354,
+   0.4361,
+   0.7497,
+   0.987
+  ]
+ },
+ "cereal": {
+  "source": "train_landmark_files/28656/3466619213.parquet",
+  "participant_id": 28656,
+  "frames": 25,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.52,
+  "sign_median_frames": 27.0,
+  "length_gap": 2.0,
+  "candidates": 4,
+  "model": "main-reg30_T32",
+  "p": 0.9561,
+  "rank": 1,
+  "top3": [
+   [
+    "cereal",
+    0.9561
+   ],
+   [
+    "pizza",
+    0.0052
+   ],
+   [
+    "puppy",
+    0.0018
+   ]
+  ],
+  "candidate_p": [
+   0.9561,
+   0.614,
+   0.0025,
+   0.0002
+  ]
+ },
+ "chair": {
+  "source": "train_landmark_files/28656/675000147.parquet",
+  "participant_id": 28656,
+  "frames": 18,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 1.0,
+  "sign_median_frames": 19.5,
+  "length_gap": 1.5,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.9837,
+  "rank": 1,
+  "top3": [
+   [
+    "chair",
+    0.9837
+   ],
+   [
+    "sad",
+    0.0009
+   ],
+   [
+    "into",
+    0.0007
+   ]
+  ],
+  "candidate_p": [
+   0.9837,
+   0.9538,
+   0.7574
+  ]
+ },
+ "cheek": {
+  "source": "train_landmark_files/28656/3762429200.parquet",
+  "participant_id": 28656,
+  "frames": 29,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.897,
+  "sign_median_frames": 29.0,
+  "length_gap": 0.0,
+  "candidates": 6,
+  "model": "main-reg30_T32",
+  "p": 0.8297,
+  "rank": 1,
+  "top3": [
+   [
+    "cheek",
+    0.8297
+   ],
+   [
+    "smile",
+    0.0696
+   ],
+   [
+    "tooth",
+    0.0141
+   ]
+  ],
+  "candidate_p": [
+   0.8297,
+   0.0315,
+   0.1721,
+   0.1091,
+   0.7863,
+   0.3168
+  ]
+ },
+ "child": {
+  "source": "train_landmark_files/49445/684926081.parquet",
+  "participant_id": 49445,
+  "frames": 15,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.867,
+  "sign_median_frames": 20.0,
+  "length_gap": 5.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.9848,
+  "rank": 1,
+  "top3": [
+   [
+    "child",
+    0.9848
+   ],
+   [
+    "lion",
+    0.0012
+   ],
+   [
+    "boy",
+    0.0008
+   ]
+  ],
+  "candidate_p": [
+   0.9842,
+   0.8668,
+   0.9848
+  ]
+ },
+ "chin": {
+  "source": "train_landmark_files/27610/1535488011.parquet",
+  "participant_id": 27610,
+  "frames": 23,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.913,
+  "sign_median_frames": 27.0,
+  "length_gap": 4.0,
+  "candidates": 8,
+  "model": "main-reg30_T32",
+  "p": 0.9623,
+  "rank": 1,
+  "top3": [
+   [
+    "chin",
+    0.9623
+   ],
+   [
+    "say",
+    0.0043
+   ],
+   [
+    "lips",
+    0.0036
+   ]
+  ],
+  "candidate_p": [
+   0.4476,
+   0.0045,
+   0.2648,
+   0.0109,
+   0.0965,
+   0.8972,
+   0.9623,
+   0.0004
+  ]
+ },
+ "chocolate": {
+  "source": "train_landmark_files/28656/325680067.parquet",
+  "participant_id": 28656,
+  "frames": 27,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.704,
+  "sign_median_frames": 27.0,
+  "length_gap": 0.0,
+  "candidates": 8,
+  "model": "main-reg30_T32",
+  "p": 0.9955,
+  "rank": 1,
+  "top3": [
+   [
+    "chocolate",
+    0.9955
+   ],
+   [
+    "car",
+    0.0003
+   ],
+   [
+    "look",
+    0.0002
+   ]
+  ],
+  "candidate_p": [
+   0.9955,
+   0.9826,
+   0.8756,
+   0.1864,
+   0.9621,
+   0.6245,
+   0.1618,
+   0.9746
+  ]
+ },
+ "clean": {
+  "source": "train_landmark_files/49445/3798642108.parquet",
+  "participant_id": 49445,
+  "frames": 27,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.593,
+  "sign_median_frames": 21.0,
+  "length_gap": 6.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.9922,
+  "rank": 1,
+  "top3": [
+   [
+    "clean",
+    0.9922
+   ],
+   [
+    "backyard",
+    0.0008
+   ],
+   [
+    "fine",
+    0.0003
+   ]
+  ],
+  "candidate_p": [
+   0.9884,
+   0.9569,
+   0.9922
+  ]
+ },
+ "close": {
+  "source": "train_landmark_files/28656/1526084569.parquet",
+  "participant_id": 28656,
+  "frames": 22,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.909,
+  "sign_median_frames": 19.0,
+  "length_gap": 3.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.9284,
+  "rank": 1,
+  "top3": [
+   [
+    "close",
+    0.9284
+   ],
+   [
+    "glasswindow",
+    0.0214
+   ],
+   [
+    "before",
+    0.0171
+   ]
+  ],
+  "candidate_p": [
+   0.8243,
+   0.0004,
+   0.9284
+  ]
+ },
+ "closet": {
+  "source": "train_landmark_files/28656/2368307936.parquet",
+  "participant_id": 28656,
+  "frames": 26,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.769,
+  "sign_median_frames": 30.0,
+  "length_gap": 4.0,
+  "candidates": 5,
+  "model": "main-reg30_T32",
+  "p": 0.9784,
+  "rank": 1,
+  "top3": [
+   [
+    "closet",
+    0.9784
+   ],
+   [
+    "haveto",
+    0.001
+   ],
+   [
+    "doll",
+    0.0008
+   ]
+  ],
+  "candidate_p": [
+   0.951,
+   0.9181,
+   0.9784,
+   0.0814,
+   0.3294
+  ]
+ },
+ "cloud": {
+  "source": "train_landmark_files/28656/1341693550.parquet",
+  "participant_id": 28656,
+  "frames": 29,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.793,
+  "sign_median_frames": 27.5,
+  "length_gap": 1.5,
+  "candidates": 6,
+  "model": "main-reg30_T32",
+  "p": 0.8939,
+  "rank": 1,
+  "top3": [
+   [
+    "cloud",
+    0.8939
+   ],
+   [
+    "alligator",
+    0.0186
+   ],
+   [
+    "rain",
+    0.0122
+   ]
+  ],
+  "candidate_p": [
+   0.8939,
+   0.8086,
+   0.0079,
+   0.0112,
+   0.4947,
+   0.7083
+  ]
+ },
+ "clown": {
+  "source": "train_landmark_files/49445/3624973218.parquet",
+  "participant_id": 49445,
+  "frames": 21,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 1.0,
+  "sign_median_frames": 23.0,
+  "length_gap": 2.0,
+  "candidates": 4,
+  "model": "main-reg30_T32",
+  "p": 0.9953,
+  "rank": 1,
+  "top3": [
+   [
+    "clown",
+    0.9953
+   ],
+   [
+    "owl",
+    0.0003
+   ],
+   [
+    "shower",
+    0.0001
+   ]
+  ],
+  "candidate_p": [
+   0.9361,
+   0.9779,
+   0.9953,
+   0.5139
+  ]
+ },
+ "cow": {
+  "source": "train_landmark_files/49445/3492882352.parquet",
+  "participant_id": 49445,
+  "frames": 28,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 1.0,
+  "sign_median_frames": 24.0,
+  "length_gap": 4.0,
+  "candidates": 6,
+  "model": "main-reg30_T32",
+  "p": 0.9328,
+  "rank": 1,
+  "top3": [
+   [
+    "cow",
+    0.9328
+   ],
+   [
+    "cowboy",
+    0.0079
+   ],
+   [
+    "gift",
+    0.0028
+   ]
+  ],
+  "candidate_p": [
+   0.9284,
+   0.8809,
+   0.1088,
+   0.7638,
+   0.9328,
+   0.8225
+  ]
+ },
+ "cowboy": {
+  "source": "train_landmark_files/49445/2231208460.parquet",
+  "participant_id": 49445,
+  "frames": 33,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.606,
+  "sign_median_frames": 30.0,
+  "length_gap": 3.0,
+  "candidates": 5,
+  "model": "main-reg30_T32",
+  "p": 0.9407,
+  "rank": 1,
+  "top3": [
+   [
+    "cowboy",
+    0.9407
+   ],
+   [
+    "yellow",
+    0.0115
+   ],
+   [
+    "fireman",
+    0.0053
+   ]
+  ],
+  "candidate_p": [
+   0.2878,
+   0.9224,
+   0.9407,
+   0.9223,
+   0.9353
+  ]
+ },
+ "cry": {
+  "source": "train_landmark_files/28656/2759186435.parquet",
+  "participant_id": 28656,
+  "frames": 28,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.607,
+  "sign_median_frames": 25.0,
+  "length_gap": 3.0,
+  "candidates": 7,
+  "model": "main-reg30_T32",
+  "p": 0.9812,
+  "rank": 1,
+  "top3": [
+   [
+    "cry",
+    0.9812
+   ],
+   [
+    "eye",
+    0.0015
+   ],
+   [
+    "wait",
+    0.0014
+   ]
+  ],
+  "candidate_p": [
+   0.6474,
+   0.9133,
+   0.9089,
+   0.8074,
+   0.9591,
+   0.9812,
+   0.9678
+  ]
+ },
+ "cut": {
+  "source": "train_landmark_files/28656/2260139071.parquet",
+  "participant_id": 28656,
+  "frames": 18,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.556,
+  "sign_median_frames": 17.0,
+  "length_gap": 1.0,
+  "candidates": 4,
+  "model": "main-reg30_T32",
+  "p": 0.9936,
+  "rank": 1,
+  "top3": [
+   [
+    "cut",
+    0.9936
+   ],
+   [
+    "hen",
+    0.0006
+   ],
+   [
+    "hat",
+    0.0003
+   ]
+  ],
+  "candidate_p": [
+   0.9936,
+   0.0336,
+   0.0222,
+   0.4043
+  ]
+ },
+ "cute": {
+  "source": "train_landmark_files/28656/1250314700.parquet",
+  "participant_id": 28656,
+  "frames": 19,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.737,
+  "sign_median_frames": 20.0,
+  "length_gap": 1.0,
+  "candidates": 4,
+  "model": "main-reg30_T32",
+  "p": 0.9885,
+  "rank": 1,
+  "top3": [
+   [
+    "cute",
+    0.9885
+   ],
+   [
+    "napkin",
+    0.0004
+   ],
+   [
+    "pizza",
+    0.0003
+   ]
+  ],
+  "candidate_p": [
+   0.9885,
+   0.9488,
+   0.9183,
+   0.964
+  ]
+ },
+ "dad": {
+  "source": "train_landmark_files/28656/3241623800.parquet",
+  "participant_id": 28656,
+  "frames": 19,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.579,
+  "sign_median_frames": 22.0,
+  "length_gap": 3.0,
+  "candidates": 9,
+  "model": "main-reg30_T32",
+  "p": 0.973,
+  "rank": 1,
+  "top3": [
+   [
+    "dad",
+    0.973
+   ],
+   [
+    "mom",
+    0.0006
+   ],
+   [
+    "give",
+    0.0006
+   ]
+  ],
+  "candidate_p": [
+   0.9261,
+   0.9078,
+   0.9387,
+   0.2396,
+   0.9426,
+   0.8378,
+   0.973,
+   0.9196,
+   0.9682
+  ]
+ },
+ "dance": {
+  "source": "train_landmark_files/28656/2268551457.parquet",
+  "participant_id": 28656,
+  "frames": 21,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.905,
+  "sign_median_frames": 17.0,
+  "length_gap": 4.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.9624,
+  "rank": 1,
+  "top3": [
+   [
+    "dance",
+    0.9624
+   ],
+   [
+    "high",
+    0.0032
+   ],
+   [
+    "stuck",
+    0.0027
+   ]
+  ],
+  "candidate_p": [
+   0.0072,
+   0.9624,
+   0.9345
+  ]
+ },
+ "dirty": {
+  "source": "train_landmark_files/49445/143476198.parquet",
+  "participant_id": 49445,
+  "frames": 25,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.6,
+  "sign_median_frames": 23.0,
+  "length_gap": 2.0,
+  "candidates": 6,
+  "model": "main-reg30_T32",
+  "p": 0.9942,
+  "rank": 1,
+  "top3": [
+   [
+    "dirty",
+    0.9942
+   ],
+   [
+    "pig",
+    0.0006
+   ],
+   [
+    "goose",
+    0.0003
+   ]
+  ],
+  "candidate_p": [
+   0.8975,
+   0.7913,
+   0.9002,
+   0.9942,
+   0.9831,
+   0.9617
+  ]
+ },
+ "dog": {
+  "source": "train_landmark_files/49445/3220581967.parquet",
+  "participant_id": 49445,
+  "frames": 25,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.92,
+  "sign_median_frames": 23.0,
+  "length_gap": 2.0,
+  "candidates": 8,
+  "model": "main-reg30_T32",
+  "p": 0.9774,
+  "rank": 1,
+  "top3": [
+   [
+    "dog",
+    0.9774
+   ],
+   [
+    "puppy",
+    0.0018
+   ],
+   [
+    "first",
+    0.0008
+   ]
+  ],
+  "candidate_p": [
+   0.0015,
+   0.0011,
+   0.9774,
+   0.5938,
+   0.1084,
+   0.6625,
+   0.0283,
+   0.9762
+  ]
+ },
+ "doll": {
+  "source": "train_landmark_files/28656/3000689041.parquet",
+  "participant_id": 28656,
+  "frames": 21,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.762,
+  "sign_median_frames": 24.0,
+  "length_gap": 3.0,
+  "candidates": 10,
+  "model": "main-reg30_T32",
+  "p": 0.9862,
+  "rank": 1,
+  "top3": [
+   [
+    "doll",
+    0.9862
+   ],
+   [
+    "mouse",
+    0.0006
+   ],
+   [
+    "frog",
+    0.0003
+   ]
+  ],
+  "candidate_p": [
+   0.9822,
+   0.9582,
+   0.9746,
+   0.9745,
+   0.9682,
+   0.9684,
+   0.9714,
+   0.9862,
+   0.0039,
+   0.8687
+  ]
+ },
+ "donkey": {
+  "source": "train_landmark_files/28656/491358624.parquet",
+  "participant_id": 28656,
+  "frames": 21,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.857,
+  "sign_median_frames": 25.0,
+  "length_gap": 4.0,
+  "candidates": 9,
+  "model": "main-reg30_T32",
+  "p": 0.9925,
+  "rank": 1,
+  "top3": [
+   [
+    "donkey",
+    0.9925
+   ],
+   [
+    "horse",
+    0.0003
+   ],
+   [
+    "night",
+    0.0002
+   ]
+  ],
+  "candidate_p": [
+   0.9494,
+   0.9355,
+   0.9593,
+   0.9244,
+   0.9639,
+   0.9588,
+   0.9925,
+   0.9174,
+   0.9662
+  ]
+ },
+ "down": {
+  "source": "train_landmark_files/28656/884749845.parquet",
+  "participant_id": 28656,
+  "frames": 14,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.643,
+  "sign_median_frames": 12.0,
+  "length_gap": 2.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.9661,
+  "rank": 1,
+  "top3": [
+   [
+    "down",
+    0.9661
+   ],
+   [
+    "time",
+    0.0019
+   ],
+   [
+    "napkin",
+    0.0012
+   ]
+  ],
+  "candidate_p": [
+   0.0002,
+   0.9661,
+   0.7892
+  ]
+ },
+ "drawer": {
+  "source": "train_landmark_files/28656/1409135035.parquet",
+  "participant_id": 28656,
+  "frames": 24,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.542,
+  "sign_median_frames": 23.0,
+  "length_gap": 1.0,
+  "candidates": 4,
+  "model": "main-reg30_T32",
+  "p": 0.9686,
+  "rank": 1,
+  "top3": [
+   [
+    "drawer",
+    0.9686
+   ],
+   [
+    "wet",
+    0.0045
+   ],
+   [
+    "many",
+    0.0008
+   ]
+  ],
+  "candidate_p": [
+   0.9062,
+   0.9686,
+   0.8129,
+   0.6935
+  ]
+ },
+ "drink": {
+  "source": "train_landmark_files/28656/3479082702.parquet",
+  "participant_id": 28656,
+  "frames": 24,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.708,
+  "sign_median_frames": 20.0,
+  "length_gap": 4.0,
+  "candidates": 9,
+  "model": "main-reg30_T32",
+  "p": 0.9955,
+  "rank": 1,
+  "top3": [
+   [
+    "drink",
+    0.9955
+   ],
+   [
+    "owl",
+    0.0001
+   ],
+   [
+    "sticky",
+    0.0001
+   ]
+  ],
+  "candidate_p": [
+   0.001,
+   0.6387,
+   0.6673,
+   0.8753,
+   0.8875,
+   0.9497,
+   0.9782,
+   0.9134,
+   0.9955
+  ]
+ },
+ "drop": {
+  "source": "train_landmark_files/49445/2878767101.parquet",
+  "participant_id": 49445,
+  "frames": 12,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.667,
+  "sign_median_frames": 12.5,
+  "length_gap": 0.5,
+  "candidates": 6,
+  "model": "main-reg30_T32",
+  "p": 0.8564,
+  "rank": 1,
+  "top3": [
+   [
+    "drop",
+    0.8564
+   ],
+   [
+    "down",
+    0.0957
+   ],
+   [
+    "can",
+    0.0181
+   ]
+  ],
+  "candidate_p": [
+   0.2294,
+   0.0032,
+   0.8564,
+   0.6312,
+   0.2443,
+   0.0055
+  ]
+ },
+ "dry": {
+  "source": "train_landmark_files/28656/1000862366.parquet",
+  "participant_id": 28656,
+  "frames": 23,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 1.0,
+  "sign_median_frames": 22.0,
+  "length_gap": 1.0,
+  "candidates": 8,
+  "model": "main-reg30_T32",
+  "p": 0.8876,
+  "rank": 1,
+  "top3": [
+   [
+    "dry",
+    0.8876
+   ],
+   [
+    "dryer",
+    0.0108
+   ],
+   [
+    "because",
+    0.0027
+   ]
+  ],
+  "candidate_p": [
+   0.8876,
+   0.6675,
+   0.4676,
+   0.8853,
+   0.005,
+   0.882,
+   0.6362,
+   0.7401
+  ]
+ },
+ "dryer": {
+  "source": "train_landmark_files/28656/2348288872.parquet",
+  "participant_id": 28656,
+  "frames": 24,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 1.0,
+  "sign_median_frames": 28.0,
+  "length_gap": 4.0,
+  "candidates": 4,
+  "model": "main-reg30_T32",
+  "p": 0.9087,
+  "rank": 1,
+  "top3": [
+   [
+    "dryer",
+    0.9087
+   ],
+   [
+    "balloon",
+    0.0344
+   ],
+   [
+    "dry",
+    0.0045
+   ]
+  ],
+  "candidate_p": [
+   0.9011,
+   0.7242,
+   0.5734,
+   0.9087
+  ]
+ },
+ "duck": {
+  "source": "train_landmark_files/28656/3737787225.parquet",
+  "participant_id": 28656,
+  "frames": 26,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.923,
+  "sign_median_frames": 25.0,
+  "length_gap": 1.0,
+  "candidates": 7,
+  "model": "main-reg30_T32",
+  "p": 0.9739,
+  "rank": 1,
+  "top3": [
+   [
+    "duck",
+    0.9739
+   ],
+   [
+    "goose",
+    0.007
+   ],
+   [
+    "tongue",
+    0.0017
+   ]
+  ],
+  "candidate_p": [
+   0.9117,
+   0.9739,
+   0.9647,
+   0.6435,
+   0.0846,
+   0.9173,
+   0.9235
+  ]
+ },
+ "ear": {
+  "source": "train_landmark_files/27610/2510504863.parquet",
+  "participant_id": 27610,
+  "frames": 25,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.92,
+  "sign_median_frames": 25.0,
+  "length_gap": 0.0,
+  "candidates": 9,
+  "model": "main-reg30_T32",
+  "p": 0.939,
+  "rank": 1,
+  "top3": [
+   [
+    "ear",
+    0.939
+   ],
+   [
+    "cheek",
+    0.0033
+   ],
+   [
+    "if",
+    0.0019
+   ]
+  ],
+  "candidate_p": [
+   0.939,
+   0.0394,
+   0.5678,
+   0.7041,
+   0.522,
+   0.5388,
+   0.1281,
+   0.7482,
+   0.004
+  ]
+ },
+ "elephant": {
+  "source": "train_landmark_files/29302/2365921499.parquet",
+  "participant_id": 29302,
+  "frames": 20,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 1.0,
+  "sign_median_frames": 17.0,
+  "length_gap": 3.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.9875,
+  "rank": 1,
+  "top3": [
+   [
+    "elephant",
+    0.9875
+   ],
+   [
+    "all",
+    0.0012
+   ],
+   [
+    "callonphone",
+    0.0004
+   ]
+  ],
+  "candidate_p": [
+   0.9862,
+   0.9875,
+   0.7792
+  ]
+ },
+ "empty": {
+  "source": "train_landmark_files/49445/2418073204.parquet",
+  "participant_id": 49445,
+  "frames": 24,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.75,
+  "sign_median_frames": 18.0,
+  "length_gap": 6.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.9619,
+  "rank": 1,
+  "top3": [
+   [
+    "empty",
+    0.9619
+   ],
+   [
+    "finish",
+    0.0018
+   ],
+   [
+    "hot",
+    0.0013
+   ]
+  ],
+  "candidate_p": [
+   0.9469,
+   0.9611,
+   0.9619
+  ]
+ },
+ "every": {
+  "source": "train_landmark_files/28656/4051782037.parquet",
+  "participant_id": 28656,
+  "frames": 17,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.529,
+  "sign_median_frames": 20.0,
+  "length_gap": 3.0,
+  "candidates": 6,
+  "model": "main-reg30_T32",
+  "p": 0.9951,
+  "rank": 1,
+  "top3": [
+   [
+    "every",
+    0.9951
+   ],
+   [
+    "puppy",
+    0.002
+   ],
+   [
+    "giraffe",
+    0.0001
+   ]
+  ],
+  "candidate_p": [
+   0.8898,
+   0.7168,
+   0.9837,
+   0.9661,
+   0.9514,
+   0.9951
+  ]
+ },
+ "eye": {
+  "source": "train_landmark_files/28656/2613799367.parquet",
+  "participant_id": 28656,
+  "frames": 22,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.591,
+  "sign_median_frames": 22.0,
+  "length_gap": 0.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.7159,
+  "rank": 1,
+  "top3": [
+   [
+    "eye",
+    0.7159
+   ],
+   [
+    "nose",
+    0.0759
+   ],
+   [
+    "tongue",
+    0.0344
+   ]
+  ],
+  "candidate_p": [
+   0.7159,
+   0.0102,
+   0.5721
+  ]
+ },
+ "face": {
+  "source": "train_landmark_files/28656/1562936100.parquet",
+  "participant_id": 28656,
+  "frames": 20,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.75,
+  "sign_median_frames": 24.0,
+  "length_gap": 4.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.988,
+  "rank": 1,
+  "top3": [
+   [
+    "face",
+    0.988
+   ],
+   [
+    "look",
+    0.0018
+   ],
+   [
+    "mouth",
+    0.0005
+   ]
+  ],
+  "candidate_p": [
+   0.9207,
+   0.988,
+   0.8346
+  ]
+ },
+ "fall": {
+  "source": "train_landmark_files/49445/985505199.parquet",
+  "participant_id": 49445,
+  "frames": 17,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.647,
+  "sign_median_frames": 14.5,
+  "length_gap": 2.5,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.8888,
+  "rank": 1,
+  "top3": [
+   [
+    "fall",
+    0.8888
+   ],
+   [
+    "pajamas",
+    0.0031
+   ],
+   [
+    "nap",
+    0.003
+   ]
+  ],
+  "candidate_p": [
+   0.0017,
+   0.0021,
+   0.8888
+  ]
+ },
+ "farm": {
+  "source": "train_landmark_files/28656/805896702.parquet",
+  "participant_id": 28656,
+  "frames": 22,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.727,
+  "sign_median_frames": 24.0,
+  "length_gap": 2.0,
+  "candidates": 7,
+  "model": "main-reg30_T32",
+  "p": 0.8894,
+  "rank": 1,
+  "top3": [
+   [
+    "farm",
+    0.8894
+   ],
+   [
+    "underwear",
+    0.0067
+   ],
+   [
+    "mom",
+    0.0055
+   ]
+  ],
+  "candidate_p": [
+   0.8285,
+   0.5608,
+   0.7046,
+   0.5759,
+   0.8894,
+   0.2172,
+   0.4294
+  ]
+ },
+ "fast": {
+  "source": "train_landmark_files/28656/4183672483.parquet",
+  "participant_id": 28656,
+  "frames": 24,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.75,
+  "sign_median_frames": 20.0,
+  "length_gap": 4.0,
+  "candidates": 6,
+  "model": "main-reg30_T32",
+  "p": 0.8901,
+  "rank": 1,
+  "top3": [
+   [
+    "fast",
+    0.8901
+   ],
+   [
+    "milk",
+    0.0055
+   ],
+   [
+    "tiger",
+    0.0053
+   ]
+  ],
+  "candidate_p": [
+   0.7335,
+   0.6179,
+   0.4788,
+   0.1418,
+   0.8451,
+   0.8901
+  ]
+ },
+ "feet": {
+  "source": "train_landmark_files/28656/3377368670.parquet",
+  "participant_id": 28656,
+  "frames": 33,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.667,
+  "sign_median_frames": 28.0,
+  "length_gap": 5.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.9451,
+  "rank": 1,
+  "top3": [
+   [
+    "feet",
+    0.9451
+   ],
+   [
+    "frenchfries",
+    0.0075
+   ],
+   [
+    "find",
+    0.0009
+   ]
+  ],
+  "candidate_p": [
+   0.9408,
+   0.8962,
+   0.9451
+  ]
+ },
+ "find": {
+  "source": "train_landmark_files/49445/2012893179.parquet",
+  "participant_id": 49445,
+  "frames": 16,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 1.0,
+  "sign_median_frames": 18.0,
+  "length_gap": 2.0,
+  "candidates": 6,
+  "model": "main-reg30_T32",
+  "p": 0.9892,
+  "rank": 1,
+  "top3": [
+   [
+    "find",
+    0.9892
+   ],
+   [
+    "up",
+    0.0009
+   ],
+   [
+    "touch",
+    0.0005
+   ]
+  ],
+  "candidate_p": [
+   0.9718,
+   0.9422,
+   0.9457,
+   0.9475,
+   0.9892,
+   0.9247
+  ]
+ },
+ "fine": {
+  "source": "train_landmark_files/27610/3782506833.parquet",
+  "participant_id": 27610,
+  "frames": 16,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.625,
+  "sign_median_frames": 19.0,
+  "length_gap": 3.0,
+  "candidates": 5,
+  "model": "main-reg30_T32",
+  "p": 0.9947,
+  "rank": 1,
+  "top3": [
+   [
+    "fine",
+    0.9947
+   ],
+   [
+    "fish",
+    0.0004
+   ],
+   [
+    "fall",
+    0.0003
+   ]
+  ],
+  "candidate_p": [
+   0.9217,
+   0.0004,
+   0.9209,
+   0.9248,
+   0.9947
+  ]
+ },
+ "finger": {
+  "source": "train_landmark_files/28656/3829883644.parquet",
+  "participant_id": 28656,
+  "frames": 30,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 1.0,
+  "sign_median_frames": 26.0,
+  "length_gap": 4.0,
+  "candidates": 9,
+  "model": "main-reg30_T32",
+  "p": 0.7197,
+  "rank": 1,
+  "top3": [
+   [
+    "finger",
+    0.7197
+   ],
+   [
+    "fish",
+    0.0422
+   ],
+   [
+    "finish",
+    0.0313
+   ]
+  ],
+  "candidate_p": [
+   0.0001,
+   0.0986,
+   0.0549,
+   0.0258,
+   0.0132,
+   0.3781,
+   0.7197,
+   0.0,
+   0.0571
+  ]
+ },
+ "finish": {
+  "source": "train_landmark_files/49445/1170893743.parquet",
+  "participant_id": 49445,
+  "frames": 20,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.85,
+  "sign_median_frames": 23.0,
+  "length_gap": 3.0,
+  "candidates": 4,
+  "model": "main-reg30_T32",
+  "p": 0.9588,
+  "rank": 1,
+  "top3": [
+   [
+    "finish",
+    0.9588
+   ],
+   [
+    "hot",
+    0.0042
+   ],
+   [
+    "yucky",
+    0.002
+   ]
+  ],
+  "candidate_p": [
+   0.0262,
+   0.9588,
+   0.0998,
+   0.038
+  ]
+ },
+ "fireman": {
+  "source": "train_landmark_files/28656/498995269.parquet",
+  "participant_id": 28656,
+  "frames": 21,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.81,
+  "sign_median_frames": 25.0,
+  "length_gap": 4.0,
+  "candidates": 9,
+  "model": "main-reg30_T32",
+  "p": 0.9615,
+  "rank": 1,
+  "top3": [
+   [
+    "fireman",
+    0.9615
+   ],
+   [
+    "pretend",
+    0.0041
+   ],
+   [
+    "man",
+    0.0009
+   ]
+  ],
+  "candidate_p": [
+   0.9424,
+   0.9322,
+   0.9498,
+   0.8568,
+   0.8945,
+   0.95,
+   0.9615,
+   0.9129,
+   0.9257
+  ]
+ },
+ "first": {
+  "source": "train_landmark_files/28656/542794926.parquet",
+  "participant_id": 28656,
+  "frames": 22,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.727,
+  "sign_median_frames": 21.0,
+  "length_gap": 1.0,
+  "candidates": 5,
+  "model": "main-reg30_T32",
+  "p": 0.9654,
+  "rank": 1,
+  "top3": [
+   [
+    "first",
+    0.9654
+   ],
+   [
+    "dog",
+    0.0016
+   ],
+   [
+    "chocolate",
+    0.0005
+   ]
+  ],
+  "candidate_p": [
+   0.7803,
+   0.9654,
+   0.8996,
+   0.9288,
+   0.9188
+  ]
+ },
+ "fish": {
+  "source": "train_landmark_files/49445/3944018163.parquet",
+  "participant_id": 49445,
+  "frames": 18,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.611,
+  "sign_median_frames": 20.0,
+  "length_gap": 2.0,
+  "candidates": 5,
+  "model": "main-reg30_T32",
+  "p": 0.9595,
+  "rank": 1,
+  "top3": [
+   [
+    "fish",
+    0.9595
+   ],
+   [
+    "milk",
+    0.0062
+   ],
+   [
+    "vacuum",
+    0.0016
+   ]
+  ],
+  "candidate_p": [
+   0.8272,
+   0.914,
+   0.9268,
+   0.9595,
+   0.9219
+  ]
+ },
+ "flag": {
+  "source": "train_landmark_files/28656/71147558.parquet",
+  "participant_id": 28656,
+  "frames": 32,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.625,
+  "sign_median_frames": 27.0,
+  "length_gap": 5.0,
+  "candidates": 9,
+  "model": "main-reg30_T32",
+  "p": 0.9853,
+  "rank": 1,
+  "top3": [
+   [
+    "flag",
+    0.9853
+   ],
+   [
+    "cloud",
+    0.0039
+   ],
+   [
+    "tiger",
+    0.0004
+   ]
+  ],
+  "candidate_p": [
+   0.4235,
+   0.8006,
+   0.8253,
+   0.8451,
+   0.9266,
+   0.8556,
+   0.9674,
+   0.7575,
+   0.9853
+  ]
+ },
+ "flower": {
+  "source": "train_landmark_files/49445/1666574402.parquet",
+  "participant_id": 49445,
+  "frames": 29,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.517,
+  "sign_median_frames": 25.0,
+  "length_gap": 4.0,
+  "candidates": 10,
+  "model": "main-reg30_T32",
+  "p": 0.9905,
+  "rank": 1,
+  "top3": [
+   [
+    "flower",
+    0.9905
+   ],
+   [
+    "food",
+    0.0009
+   ],
+   [
+    "pajamas",
+    0.0009
+   ]
+  ],
+  "candidate_p": [
+   0.9272,
+   0.9273,
+   0.0301,
+   0.9609,
+   0.9395,
+   0.9446,
+   0.9905,
+   0.9554,
+   0.014,
+   0.9694
+  ]
+ },
+ "food": {
+  "source": "train_landmark_files/28656/2831518100.parquet",
+  "participant_id": 28656,
+  "frames": 24,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.958,
+  "sign_median_frames": 23.0,
+  "length_gap": 1.0,
+  "candidates": 7,
+  "model": "main-reg30_T32",
+  "p": 0.983,
+  "rank": 1,
+  "top3": [
+   [
+    "food",
+    0.983
+   ],
+   [
+    "clown",
+    0.0005
+   ],
+   [
+    "underwear",
+    0.0004
+   ]
+  ],
+  "candidate_p": [
+   0.936,
+   0.9617,
+   0.8678,
+   0.983,
+   0.9605,
+   0.4879,
+   0.8588
+  ]
+ },
+ "for": {
+  "source": "train_landmark_files/29302/3454595383.parquet",
+  "participant_id": 29302,
+  "frames": 19,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.842,
+  "sign_median_frames": 21.0,
+  "length_gap": 2.0,
+  "candidates": 5,
+  "model": "main-reg30_T32",
+  "p": 0.9546,
+  "rank": 1,
+  "top3": [
+   [
+    "for",
+    0.9546
+   ],
+   [
+    "moon",
+    0.0026
+   ],
+   [
+    "pool",
+    0.0018
+   ]
+  ],
+  "candidate_p": [
+   0.8158,
+   0.9119,
+   0.9231,
+   0.9546,
+   0.8824
+  ]
+ },
+ "frenchfries": {
+  "source": "train_landmark_files/49445/1886093286.parquet",
+  "participant_id": 49445,
+  "frames": 30,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.833,
+  "sign_median_frames": 27.0,
+  "length_gap": 3.0,
+  "candidates": 4,
+  "model": "main-reg30_T32",
+  "p": 0.9722,
+  "rank": 1,
+  "top3": [
+   [
+    "frenchfries",
+    0.9722
+   ],
+   [
+    "feet",
+    0.0018
+   ],
+   [
+    "face",
+    0.0007
+   ]
+  ],
+  "candidate_p": [
+   0.7794,
+   0.9651,
+   0.9722,
+   0.853
+  ]
+ },
+ "frog": {
+  "source": "train_landmark_files/28656/3861933093.parquet",
+  "participant_id": 28656,
+  "frames": 25,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.8,
+  "sign_median_frames": 26.0,
+  "length_gap": 1.0,
+  "candidates": 10,
+  "model": "main-reg30_T32",
+  "p": 0.9743,
+  "rank": 1,
+  "top3": [
+   [
+    "frog",
+    0.9743
+   ],
+   [
+    "chair",
+    0.0035
+   ],
+   [
+    "dirty",
+    0.0008
+   ]
+  ],
+  "candidate_p": [
+   0.9021,
+   0.9743,
+   0.672,
+   0.7501,
+   0.9691,
+   0.9293,
+   0.4796,
+   0.952,
+   0.9214,
+   0.6257
+  ]
+ },
+ "garbage": {
+  "source": "train_landmark_files/28656/1186973664.parquet",
+  "participant_id": 28656,
+  "frames": 24,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 1.0,
+  "sign_median_frames": 22.0,
+  "length_gap": 2.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.9695,
+  "rank": 1,
+  "top3": [
+   [
+    "garbage",
+    0.9695
+   ],
+   [
+    "thirsty",
+    0.0022
+   ],
+   [
+    "grass",
+    0.0009
+   ]
+  ],
+  "candidate_p": [
+   0.5667,
+   0.9695,
+   0.9656
+  ]
+ },
+ "gift": {
+  "source": "train_landmark_files/28656/2298671467.parquet",
+  "participant_id": 28656,
+  "frames": 20,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.6,
+  "sign_median_frames": 20.0,
+  "length_gap": 0.0,
+  "candidates": 7,
+  "model": "main-reg30_T32",
+  "p": 0.9399,
+  "rank": 1,
+  "top3": [
+   [
+    "gift",
+    0.9399
+   ],
+   [
+    "give",
+    0.0446
+   ],
+   [
+    "garbage",
+    0.0017
+   ]
+  ],
+  "candidate_p": [
+   0.9399,
+   0.8565,
+   0.3795,
+   0.8161,
+   0.5336,
+   0.709,
+   0.8538
+  ]
+ },
+ "giraffe": {
+  "source": "train_landmark_files/28656/18246586.parquet",
+  "participant_id": 28656,
+  "frames": 19,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.632,
+  "sign_median_frames": 23.0,
+  "length_gap": 4.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.9713,
+  "rank": 1,
+  "top3": [
+   [
+    "giraffe",
+    0.9713
+   ],
+   [
+    "food",
+    0.0011
+   ],
+   [
+    "high",
+    0.0009
+   ]
+  ],
+  "candidate_p": [
+   0.2836,
+   0.7881,
+   0.9713
+  ]
+ },
+ "girl": {
+  "source": "train_landmark_files/29302/1748022199.parquet",
+  "participant_id": 29302,
+  "frames": 19,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 1.0,
+  "sign_median_frames": 18.5,
+  "length_gap": 0.5,
+  "candidates": 7,
+  "model": "main-reg30_T32",
+  "p": 0.814,
+  "rank": 1,
+  "top3": [
+   [
+    "girl",
+    0.814
+   ],
+   [
+    "jacket",
+    0.0103
+   ],
+   [
+    "for",
+    0.0062
+   ]
+  ],
+  "candidate_p": [
+   0.814,
+   0.5567,
+   0.7731,
+   0.1861,
+   0.5809,
+   0.1424,
+   0.1931
+  ]
+ },
+ "give": {
+  "source": "train_landmark_files/29302/2918786337.parquet",
+  "participant_id": 29302,
+  "frames": 17,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 1.0,
+  "sign_median_frames": 15.0,
+  "length_gap": 2.0,
+  "candidates": 4,
+  "model": "main-reg30_T32",
+  "p": 0.3937,
+  "rank": 2,
+  "top3": [
+   [
+    "gift",
+    0.5153
+   ],
+   [
+    "give",
+    0.3937
+   ],
+   [
+    "puppy",
+    0.0152
+   ]
+  ],
+  "candidate_p": [
+   0.0142,
+   0.0722,
+   0.3937,
+   0.0489
+  ]
+ },
+ "glasswindow": {
+  "source": "train_landmark_files/28656/2984630573.parquet",
+  "participant_id": 28656,
+  "frames": 28,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.821,
+  "sign_median_frames": 29.0,
+  "length_gap": 1.0,
+  "candidates": 6,
+  "model": "main-reg30_T32",
+  "p": 0.9776,
+  "rank": 1,
+  "top3": [
+   [
+    "glasswindow",
+    0.9776
+   ],
+   [
+    "giraffe",
+    0.0011
+   ],
+   [
+    "after",
+    0.0008
+   ]
+  ],
+  "candidate_p": [
+   0.9776,
+   0.0073,
+   0.8393,
+   0.2411,
+   0.9591,
+   0.116
+  ]
+ },
+ "go": {
+  "source": "train_landmark_files/28656/434299378.parquet",
+  "participant_id": 28656,
+  "frames": 19,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.684,
+  "sign_median_frames": 15.0,
+  "length_gap": 4.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.9988,
+  "rank": 1,
+  "top3": [
+   [
+    "go",
+    0.9988
+   ],
+   [
+    "loud",
+    0.0001
+   ],
+   [
+    "later",
+    0.0001
+   ]
+  ],
+  "candidate_p": [
+   0.9915,
+   0.9988,
+   0.2675
+  ]
+ },
+ "goose": {
+  "source": "train_landmark_files/28656/2765072787.parquet",
+  "participant_id": 28656,
+  "frames": 25,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.84,
+  "sign_median_frames": 28.0,
+  "length_gap": 3.0,
+  "candidates": 5,
+  "model": "main-reg30_T32",
+  "p": 0.7187,
+  "rank": 1,
+  "top3": [
+   [
+    "goose",
+    0.7187
+   ],
+   [
+    "duck",
+    0.2156
+   ],
+   [
+    "owie",
+    0.0055
+   ]
+  ],
+  "candidate_p": [
+   0.1185,
+   0.7187,
+   0.0251,
+   0.0171,
+   0.1459
+  ]
+ },
+ "grandma": {
+  "source": "train_landmark_files/28656/3073558803.parquet",
+  "participant_id": 28656,
+  "frames": 15,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 1.0,
+  "sign_median_frames": 17.0,
+  "length_gap": 2.0,
+  "candidates": 6,
+  "model": "main-reg30_T32",
+  "p": 0.9007,
+  "rank": 1,
+  "top3": [
+   [
+    "grandma",
+    0.9007
+   ],
+   [
+    "grandpa",
+    0.0105
+   ],
+   [
+    "mom",
+    0.0024
+   ]
+  ],
+  "candidate_p": [
+   0.0008,
+   0.5358,
+   0.4982,
+   0.9007,
+   0.2457,
+   0.0001
+  ]
+ },
+ "grandpa": {
+  "source": "train_landmark_files/28656/3420142686.parquet",
+  "participant_id": 28656,
+  "frames": 21,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.619,
+  "sign_median_frames": 20.0,
+  "length_gap": 1.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.9636,
+  "rank": 1,
+  "top3": [
+   [
+    "grandpa",
+    0.9636
+   ],
+   [
+    "grandma",
+    0.0065
+   ],
+   [
+    "yourself",
+    0.0009
+   ]
+  ],
+  "candidate_p": [
+   0.9636,
+   0.9053,
+   0.9632
+  ]
+ },
+ "grass": {
+  "source": "train_landmark_files/49445/1065585247.parquet",
+  "participant_id": 49445,
+  "frames": 28,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.607,
+  "sign_median_frames": 24.0,
+  "length_gap": 4.0,
+  "candidates": 9,
+  "model": "main-reg30_T32",
+  "p": 0.9761,
+  "rank": 1,
+  "top3": [
+   [
+    "grass",
+    0.9761
+   ],
+   [
+    "taste",
+    0.0017
+   ],
+   [
+    "cereal",
+    0.0014
+   ]
+  ],
+  "candidate_p": [
+   0.9584,
+   0.7398,
+   0.0001,
+   0.8394,
+   0.5619,
+   0.8322,
+   0.944,
+   0.9664,
+   0.9761
+  ]
+ },
+ "green": {
+  "source": "train_landmark_files/28656/2110559411.parquet",
+  "participant_id": 28656,
+  "frames": 21,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.762,
+  "sign_median_frames": 21.0,
+  "length_gap": 0.0,
+  "candidates": 5,
+  "model": "main-reg30_T32",
+  "p": 0.8989,
+  "rank": 1,
+  "top3": [
+   [
+    "green",
+    0.8989
+   ],
+   [
+    "pen",
+    0.0058
+   ],
+   [
+    "for",
+    0.0038
+   ]
+  ],
+  "candidate_p": [
+   0.8989,
+   0.5649,
+   0.6142,
+   0.6921,
+   0.2988
+  ]
+ },
+ "gum": {
+  "source": "train_landmark_files/28656/1208926724.parquet",
+  "participant_id": 28656,
+  "frames": 30,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.8,
+  "sign_median_frames": 28.0,
+  "length_gap": 2.0,
+  "candidates": 8,
+  "model": "main-reg30_T32",
+  "p": 0.9822,
+  "rank": 1,
+  "top3": [
+   [
+    "gum",
+    0.9822
+   ],
+   [
+    "tiger",
+    0.0009
+   ],
+   [
+    "chin",
+    0.0008
+   ]
+  ],
+  "candidate_p": [
+   0.9358,
+   0.9625,
+   0.9656,
+   0.8911,
+   0.9822,
+   0.9628,
+   0.9615,
+   0.9592
+  ]
+ },
+ "hair": {
+  "source": "train_landmark_files/28656/750622019.parquet",
+  "participant_id": 28656,
+  "frames": 24,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.917,
+  "sign_median_frames": 25.0,
+  "length_gap": 1.0,
+  "candidates": 12,
+  "model": "main-reg30_T32",
+  "p": 0.9733,
+  "rank": 1,
+  "top3": [
+   [
+    "hair",
+    0.9733
+   ],
+   [
+    "cat",
+    0.0054
+   ],
+   [
+    "bee",
+    0.0016
+   ]
+  ],
+  "candidate_p": [
+   0.9548,
+   0.9733,
+   0.9134,
+   0.9377,
+   0.9471,
+   0.8896,
+   0.7684,
+   0.9501,
+   0.9383,
+   0.9303,
+   0.9416,
+   0.8751
+  ]
+ },
+ "happy": {
+  "source": "train_landmark_files/28656/2190342315.parquet",
+  "participant_id": 28656,
+  "frames": 23,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.87,
+  "sign_median_frames": 23.0,
+  "length_gap": 0.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.9229,
+  "rank": 1,
+  "top3": [
+   [
+    "happy",
+    0.9229
+   ],
+   [
+    "kitty",
+    0.0054
+   ],
+   [
+    "puppy",
+    0.0043
+   ]
+  ],
+  "candidate_p": [
+   0.9229,
+   0.8057,
+   0.8963
+  ]
+ },
+ "hat": {
+  "source": "train_landmark_files/29302/2751323227.parquet",
+  "participant_id": 29302,
+  "frames": 14,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.643,
+  "sign_median_frames": 19.5,
+  "length_gap": 5.5,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.9705,
+  "rank": 1,
+  "top3": [
+   [
+    "hat",
+    0.9705
+   ],
+   [
+    "apple",
+    0.0014
+   ],
+   [
+    "garbage",
+    0.0011
+   ]
+  ],
+  "candidate_p": [
+   0.9705,
+   0.9256,
+   0.9421
+  ]
+ },
+ "hate": {
+  "source": "train_landmark_files/49445/3483183977.parquet",
+  "participant_id": 49445,
+  "frames": 17,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.765,
+  "sign_median_frames": 15.0,
+  "length_gap": 2.0,
+  "candidates": 4,
+  "model": "main-reg30_T32",
+  "p": 0.9679,
+  "rank": 1,
+  "top3": [
+   [
+    "hate",
+    0.9679
+   ],
+   [
+    "yucky",
+    0.0112
+   ],
+   [
+    "mom",
+    0.002
+   ]
+  ],
+  "candidate_p": [
+   0.8629,
+   0.9131,
+   0.0014,
+   0.9679
+  ]
+ },
+ "have": {
+  "source": "train_landmark_files/49445/1725131938.parquet",
+  "participant_id": 49445,
+  "frames": 17,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.941,
+  "sign_median_frames": 18.0,
+  "length_gap": 1.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.9795,
+  "rank": 1,
+  "top3": [
+   [
+    "have",
+    0.9795
+   ],
+   [
+    "animal",
+    0.0018
+   ],
+   [
+    "sleep",
+    0.0017
+   ]
+  ],
+  "candidate_p": [
+   0.9795,
+   0.7399,
+   0.0437
+  ]
+ },
+ "haveto": {
+  "source": "train_landmark_files/49445/2578963360.parquet",
+  "participant_id": 49445,
+  "frames": 14,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.571,
+  "sign_median_frames": 17.0,
+  "length_gap": 3.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.6183,
+  "rank": 1,
+  "top3": [
+   [
+    "haveto",
+    0.6183
+   ],
+   [
+    "go",
+    0.0885
+   ],
+   [
+    "closet",
+    0.0881
+   ]
+  ],
+  "candidate_p": [
+   0.0024,
+   0.2347,
+   0.6183
+  ]
+ },
+ "head": {
+  "source": "train_landmark_files/28656/1739054681.parquet",
+  "participant_id": 28656,
+  "frames": 27,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.852,
+  "sign_median_frames": 21.5,
+  "length_gap": 5.5,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.945,
+  "rank": 1,
+  "top3": [
+   [
+    "head",
+    0.945
+   ],
+   [
+    "before",
+    0.0021
+   ],
+   [
+    "have",
+    0.0013
+   ]
+  ],
+  "candidate_p": [
+   0.0413,
+   0.8883,
+   0.945
+  ]
+ },
+ "hear": {
+  "source": "train_landmark_files/28656/2618792212.parquet",
+  "participant_id": 28656,
+  "frames": 26,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.923,
+  "sign_median_frames": 22.0,
+  "length_gap": 4.0,
+  "candidates": 7,
+  "model": "main-reg30_T32",
+  "p": 0.9207,
+  "rank": 1,
+  "top3": [
+   [
+    "hear",
+    0.9207
+   ],
+   [
+    "bug",
+    0.015
+   ],
+   [
+    "horse",
+    0.0046
+   ]
+  ],
+  "candidate_p": [
+   0.8295,
+   0.6069,
+   0.6811,
+   0.5105,
+   0.6742,
+   0.9207,
+   0.6039
+  ]
+ },
+ "helicopter": {
+  "source": "train_landmark_files/28656/3936062888.parquet",
+  "participant_id": 28656,
+  "frames": 19,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.842,
+  "sign_median_frames": 27.0,
+  "length_gap": 8.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.9662,
+  "rank": 1,
+  "top3": [
+   [
+    "helicopter",
+    0.9662
+   ],
+   [
+    "stairs",
+    0.001
+   ],
+   [
+    "hen",
+    0.0008
+   ]
+  ],
+  "candidate_p": [
+   0.5445,
+   0.404,
+   0.9662
+  ]
+ },
+ "hello": {
+  "source": "train_landmark_files/28656/2586511572.parquet",
+  "participant_id": 28656,
+  "frames": 23,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.957,
+  "sign_median_frames": 20.0,
+  "length_gap": 3.0,
+  "candidates": 7,
+  "model": "main-reg30_T32",
+  "p": 0.9609,
+  "rank": 1,
+  "top3": [
+   [
+    "hello",
+    0.9609
+   ],
+   [
+    "bye",
+    0.0025
+   ],
+   [
+    "bedroom",
+    0.0011
+   ]
+  ],
+  "candidate_p": [
+   0.852,
+   0.8368,
+   0.8323,
+   0.574,
+   0.9609,
+   0.8289,
+   0.9412
+  ]
+ },
+ "hen": {
+  "source": "train_landmark_files/28656/337147726.parquet",
+  "participant_id": 28656,
+  "frames": 24,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 1.0,
+  "sign_median_frames": 27.0,
+  "length_gap": 3.0,
+  "candidates": 7,
+  "model": "main-reg30_T32",
+  "p": 0.9275,
+  "rank": 1,
+  "top3": [
+   [
+    "hen",
+    0.9275
+   ],
+   [
+    "listen",
+    0.0028
+   ],
+   [
+    "uncle",
+    0.0024
+   ]
+  ],
+  "candidate_p": [
+   0.0171,
+   0.9275,
+   0.7678,
+   0.5467,
+   0.8417,
+   0.3857,
+   0.1868
+  ]
+ },
+ "hesheit": {
+  "source": "train_landmark_files/28656/2035273485.parquet",
+  "participant_id": 28656,
+  "frames": 16,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.75,
+  "sign_median_frames": 20.0,
+  "length_gap": 4.0,
+  "candidates": 7,
+  "model": "main-reg30_T32",
+  "p": 0.9979,
+  "rank": 1,
+  "top3": [
+   [
+    "hesheit",
+    0.9979
+   ],
+   [
+    "there",
+    0.0009
+   ],
+   [
+    "say",
+    0.0001
+   ]
+  ],
+  "candidate_p": [
+   0.9814,
+   0.2605,
+   0.9836,
+   0.9894,
+   0.2976,
+   0.9822,
+   0.9979
+  ]
+ },
+ "hide": {
+  "source": "train_landmark_files/29302/440968588.parquet",
+  "participant_id": 29302,
+  "frames": 20,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.95,
+  "sign_median_frames": 20.0,
+  "length_gap": 0.0,
+  "candidates": 5,
+  "model": "main-reg30_T32",
+  "p": 0.8574,
+  "rank": 1,
+  "top3": [
+   [
+    "hide",
+    0.8574
+   ],
+   [
+    "beside",
+    0.0125
+   ],
+   [
+    "man",
+    0.0069
+   ]
+  ],
+  "candidate_p": [
+   0.3231,
+   0.8574,
+   0.0016,
+   0.0021,
+   0.8043
+  ]
+ },
+ "high": {
+  "source": "train_landmark_files/49445/1292547347.parquet",
+  "participant_id": 49445,
+  "frames": 14,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 1.0,
+  "sign_median_frames": 16.0,
+  "length_gap": 2.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.9845,
+  "rank": 1,
+  "top3": [
+   [
+    "high",
+    0.9845
+   ],
+   [
+    "fall",
+    0.0011
+   ],
+   [
+    "because",
+    0.0008
+   ]
+  ],
+  "candidate_p": [
+   0.9291,
+   0.9845,
+   0.9738
+  ]
+ },
+ "home": {
+  "source": "train_landmark_files/29302/4187070576.parquet",
+  "participant_id": 29302,
+  "frames": 25,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.56,
+  "sign_median_frames": 22.0,
+  "length_gap": 3.0,
+  "candidates": 7,
+  "model": "main-reg30_T32",
+  "p": 0.9602,
+  "rank": 1,
+  "top3": [
+   [
+    "home",
+    0.9602
+   ],
+   [
+    "head",
+    0.0017
+   ],
+   [
+    "kiss",
+    0.0015
+   ]
+  ],
+  "candidate_p": [
+   0.9376,
+   0.5283,
+   0.9536,
+   0.0001,
+   0.291,
+   0.8269,
+   0.9602
+  ]
+ },
+ "horse": {
+  "source": "train_landmark_files/29302/1243725817.parquet",
+  "participant_id": 29302,
+  "frames": 31,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.548,
+  "sign_median_frames": 26.0,
+  "length_gap": 5.0,
+  "candidates": 11,
+  "model": "main-reg30_T32",
+  "p": 0.9699,
+  "rank": 1,
+  "top3": [
+   [
+    "horse",
+    0.9699
+   ],
+   [
+    "zebra",
+    0.0042
+   ],
+   [
+    "donkey",
+    0.0038
+   ]
+  ],
+  "candidate_p": [
+   0.9599,
+   0.9559,
+   0.7585,
+   0.9236,
+   0.9113,
+   0.9359,
+   0.913,
+   0.9105,
+   0.8821,
+   0.9178,
+   0.9699
+  ]
+ },
+ "hot": {
+  "source": "train_landmark_files/49445/3526141322.parquet",
+  "participant_id": 49445,
+  "frames": 19,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.579,
+  "sign_median_frames": 16.0,
+  "length_gap": 3.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.9914,
+  "rank": 1,
+  "top3": [
+   [
+    "hot",
+    0.9914
+   ],
+   [
+    "bad",
+    0.0008
+   ],
+   [
+    "finish",
+    0.0002
+   ]
+  ],
+  "candidate_p": [
+   0.8319,
+   0.9632,
+   0.9914
+  ]
+ },
+ "hungry": {
+  "source": "train_landmark_files/28656/1874844492.parquet",
+  "participant_id": 28656,
+  "frames": 19,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.526,
+  "sign_median_frames": 16.0,
+  "length_gap": 3.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.986,
+  "rank": 1,
+  "top3": [
+   [
+    "hungry",
+    0.986
+   ],
+   [
+    "giraffe",
+    0.0009
+   ],
+   [
+    "yucky",
+    0.0009
+   ]
+  ],
+  "candidate_p": [
+   0.2163,
+   0.986,
+   0.4675
+  ]
+ },
+ "icecream": {
+  "source": "train_landmark_files/27610/673564329.parquet",
+  "participant_id": 27610,
+  "frames": 21,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.857,
+  "sign_median_frames": 23.0,
+  "length_gap": 2.0,
+  "candidates": 9,
+  "model": "main-reg30_T32",
+  "p": 0.9774,
+  "rank": 1,
+  "top3": [
+   [
+    "icecream",
+    0.9774
+   ],
+   [
+    "doll",
+    0.0043
+   ],
+   [
+    "mouse",
+    0.0004
+   ]
+  ],
+  "candidate_p": [
+   0.9382,
+   0.9266,
+   0.9539,
+   0.9629,
+   0.9774,
+   0.9188,
+   0.9678,
+   0.9412,
+   0.5767
+  ]
+ },
+ "if": {
+  "source": "train_landmark_files/28656/1388894136.parquet",
+  "participant_id": 28656,
+  "frames": 20,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.7,
+  "sign_median_frames": 22.0,
+  "length_gap": 2.0,
+  "candidates": 4,
+  "model": "main-reg30_T32",
+  "p": 0.9839,
+  "rank": 1,
+  "top3": [
+   [
+    "if",
+    0.9839
+   ],
+   [
+    "now",
+    0.0012
+   ],
+   [
+    "sick",
+    0.0006
+   ]
+  ],
+  "candidate_p": [
+   0.9148,
+   0.9839,
+   0.9765,
+   0.9622
+  ]
+ },
+ "into": {
+  "source": "train_landmark_files/28656/594817847.parquet",
+  "participant_id": 28656,
+  "frames": 19,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.579,
+  "sign_median_frames": 17.0,
+  "length_gap": 2.0,
+  "candidates": 6,
+  "model": "main-reg30_T32",
+  "p": 0.7935,
+  "rank": 1,
+  "top3": [
+   [
+    "into",
+    0.7935
+   ],
+   [
+    "close",
+    0.0203
+   ],
+   [
+    "night",
+    0.0193
+   ]
+  ],
+  "candidate_p": [
+   0.7874,
+   0.0049,
+   0.7935,
+   0.0001,
+   0.017,
+   0.0086
+  ]
+ },
+ "jacket": {
+  "source": "train_landmark_files/49445/1185755209.parquet",
+  "participant_id": 49445,
+  "frames": 16,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.812,
+  "sign_median_frames": 16.0,
+  "length_gap": 0.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.0227,
+  "rank": 12,
+  "top3": [
+   [
+    "where",
+    0.1728
+   ],
+   [
+    "pen",
+    0.1072
+   ],
+   [
+    "gift",
+    0.0698
+   ]
+  ],
+  "candidate_p": [
+   0.0227,
+   0.0014,
+   0.0035
+  ]
+ },
+ "jeans": {
+  "source": "train_landmark_files/49445/2785594792.parquet",
+  "participant_id": 49445,
+  "frames": 30,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.633,
+  "sign_median_frames": 30.0,
+  "length_gap": 0.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.9896,
+  "rank": 1,
+  "top3": [
+   [
+    "jeans",
+    0.9896
+   ],
+   [
+    "toy",
+    0.0006
+   ],
+   [
+    "mitten",
+    0.0005
+   ]
+  ],
+  "candidate_p": [
+   0.9896,
+   0.9085,
+   0.8541
+  ]
+ },
+ "jump": {
+  "source": "train_landmark_files/28656/2490345633.parquet",
+  "participant_id": 28656,
+  "frames": 14,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 1.0,
+  "sign_median_frames": 18.0,
+  "length_gap": 4.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.8387,
+  "rank": 1,
+  "top3": [
+   [
+    "jump",
+    0.8387
+   ],
+   [
+    "look",
+    0.0184
+   ],
+   [
+    "TV",
+    0.0061
+   ]
+  ],
+  "candidate_p": [
+   0.3382,
+   0.1059,
+   0.8387
+  ]
+ },
+ "kiss": {
+  "source": "train_landmark_files/49445/493851015.parquet",
+  "participant_id": 49445,
+  "frames": 21,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.667,
+  "sign_median_frames": 21.0,
+  "length_gap": 0.0,
+  "candidates": 12,
+  "model": "main-reg30_T32",
+  "p": 0.9877,
+  "rank": 1,
+  "top3": [
+   [
+    "kiss",
+    0.9877
+   ],
+   [
+    "flower",
+    0.0015
+   ],
+   [
+    "home",
+    0.0012
+   ]
+  ],
+  "candidate_p": [
+   0.9672,
+   0.9877,
+   0.0392,
+   0.0131,
+   0.0007,
+   0.0026,
+   0.0512,
+   0.6645,
+   0.0028,
+   0.2053,
+   0.0015,
+   0.9862
+  ]
+ },
+ "kitty": {
+  "source": "train_landmark_files/49445/446764729.parquet",
+  "participant_id": 49445,
+  "frames": 36,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.583,
+  "sign_median_frames": 30.0,
+  "length_gap": 6.0,
+  "candidates": 11,
+  "model": "main-reg30_T32",
+  "p": 0.9954,
+  "rank": 1,
+  "top3": [
+   [
+    "kitty",
+    0.9954
+   ],
+   [
+    "cat",
+    0.0005
+   ],
+   [
+    "mad",
+    0.0003
+   ]
+  ],
+  "candidate_p": [
+   0.9741,
+   0.9946,
+   0.7769,
+   0.92,
+   0.5163,
+   0.9309,
+   0.9871,
+   0.6186,
+   0.2693,
+   0.9876,
+   0.9954
+  ]
+ },
+ "lamp": {
+  "source": "train_landmark_files/49445/1273740009.parquet",
+  "participant_id": 49445,
+  "frames": 30,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.567,
+  "sign_median_frames": 27.0,
+  "length_gap": 3.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.9951,
+  "rank": 1,
+  "top3": [
+   [
+    "lamp",
+    0.9951
+   ],
+   [
+    "lips",
+    0.0004
+   ],
+   [
+    "wet",
+    0.0002
+   ]
+  ],
+  "candidate_p": [
+   0.9847,
+   0.9951,
+   0.5944
+  ]
+ },
+ "later": {
+  "source": "train_landmark_files/49445/117616962.parquet",
+  "participant_id": 49445,
+  "frames": 25,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.76,
+  "sign_median_frames": 20.0,
+  "length_gap": 5.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.9068,
+  "rank": 1,
+  "top3": [
+   [
+    "later",
+    0.9068
+   ],
+   [
+    "dog",
+    0.0189
+   ],
+   [
+    "puppy",
+    0.0082
+   ]
+  ],
+  "candidate_p": [
+   0.0004,
+   0.8544,
+   0.9068
+  ]
+ },
+ "like": {
+  "source": "train_landmark_files/29302/432149531.parquet",
+  "participant_id": 29302,
+  "frames": 13,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 1.0,
+  "sign_median_frames": 14.0,
+  "length_gap": 1.0,
+  "candidates": 4,
+  "model": "main-reg30_T32",
+  "p": 0.9616,
+  "rank": 1,
+  "top3": [
+   [
+    "like",
+    0.9616
+   ],
+   [
+    "white",
+    0.0012
+   ],
+   [
+    "arm",
+    0.0007
+   ]
+  ],
+  "candidate_p": [
+   0.0014,
+   0.0015,
+   0.9616,
+   0.3112
+  ]
+ },
+ "lion": {
+  "source": "train_landmark_files/49445/2485899754.parquet",
+  "participant_id": 49445,
+  "frames": 22,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.591,
+  "sign_median_frames": 24.0,
+  "length_gap": 2.0,
+  "candidates": 5,
+  "model": "main-reg30_T32",
+  "p": 0.9768,
+  "rank": 1,
+  "top3": [
+   [
+    "lion",
+    0.9768
+   ],
+   [
+    "read",
+    0.0005
+   ],
+   [
+    "old",
+    0.0004
+   ]
+  ],
+  "candidate_p": [
+   0.9112,
+   0.9768,
+   0.9401,
+   0.0138,
+   0.9693
+  ]
+ },
+ "lips": {
+  "source": "train_landmark_files/28656/4267741233.parquet",
+  "participant_id": 28656,
+  "frames": 26,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.846,
+  "sign_median_frames": 28.0,
+  "length_gap": 2.0,
+  "candidates": 6,
+  "model": "main-reg30_T32",
+  "p": 0.9698,
+  "rank": 1,
+  "top3": [
+   [
+    "lips",
+    0.9698
+   ],
+   [
+    "mouth",
+    0.0128
+   ],
+   [
+    "tooth",
+    0.0016
+   ]
+  ],
+  "candidate_p": [
+   0.7778,
+   0.8638,
+   0.6356,
+   0.9698,
+   0.9583,
+   0.107
+  ]
+ },
+ "listen": {
+  "source": "train_landmark_files/49445/554465684.parquet",
+  "participant_id": 49445,
+  "frames": 21,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.81,
+  "sign_median_frames": 22.0,
+  "length_gap": 1.0,
+  "candidates": 7,
+  "model": "main-reg30_T32",
+  "p": 0.8901,
+  "rank": 1,
+  "top3": [
+   [
+    "listen",
+    0.8901
+   ],
+   [
+    "hear",
+    0.062
+   ],
+   [
+    "horse",
+    0.0018
+   ]
+  ],
+  "candidate_p": [
+   0.6722,
+   0.8901,
+   0.679,
+   0.649,
+   0.8599,
+   0.8511,
+   0.7034
+  ]
+ },
+ "look": {
+  "source": "train_landmark_files/49445/1151124777.parquet",
+  "participant_id": 49445,
+  "frames": 19,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.579,
+  "sign_median_frames": 21.0,
+  "length_gap": 2.0,
+  "candidates": 8,
+  "model": "main-reg30_T32",
+  "p": 0.9898,
+  "rank": 1,
+  "top3": [
+   [
+    "look",
+    0.9898
+   ],
+   [
+    "see",
+    0.0014
+   ],
+   [
+    "touch",
+    0.0003
+   ]
+  ],
+  "candidate_p": [
+   0.516,
+   0.9868,
+   0.9898,
+   0.9862,
+   0.1014,
+   0.3308,
+   0.0007,
+   0.1252
+  ]
+ },
+ "loud": {
+  "source": "train_landmark_files/29302/3871275331.parquet",
+  "participant_id": 29302,
+  "frames": 21,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.524,
+  "sign_median_frames": 22.0,
+  "length_gap": 1.0,
+  "candidates": 4,
+  "model": "main-reg30_T32",
+  "p": 0.997,
+  "rank": 1,
+  "top3": [
+   [
+    "loud",
+    0.997
+   ],
+   [
+    "go",
+    0.0002
+   ],
+   [
+    "tiger",
+    0.0001
+   ]
+  ],
+  "candidate_p": [
+   0.9912,
+   0.997,
+   0.9788,
+   0.9347
+  ]
+ },
+ "mad": {
+  "source": "train_landmark_files/28656/1658501073.parquet",
+  "participant_id": 28656,
+  "frames": 18,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 1.0,
+  "sign_median_frames": 19.0,
+  "length_gap": 1.0,
+  "candidates": 5,
+  "model": "main-reg30_T32",
+  "p": 0.9798,
+  "rank": 1,
+  "top3": [
+   [
+    "mad",
+    0.9798
+   ],
+   [
+    "sad",
+    0.0014
+   ],
+   [
+    "finger",
+    0.0006
+   ]
+  ],
+  "candidate_p": [
+   0.9798,
+   0.9533,
+   0.9691,
+   0.0002,
+   0.9788
+  ]
+ },
+ "make": {
+  "source": "train_landmark_files/28656/2068524572.parquet",
+  "participant_id": 28656,
+  "frames": 21,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.857,
+  "sign_median_frames": 22.0,
+  "length_gap": 1.0,
+  "candidates": 7,
+  "model": "main-reg30_T32",
+  "p": 0.9575,
+  "rank": 1,
+  "top3": [
+   [
+    "make",
+    0.9575
+   ],
+   [
+    "milk",
+    0.0013
+   ],
+   [
+    "pencil",
+    0.0012
+   ]
+  ],
+  "candidate_p": [
+   0.9575,
+   0.9404,
+   0.9492,
+   0.4408,
+   0.9308,
+   0.0286,
+   0.2908
+  ]
+ },
+ "man": {
+  "source": "train_landmark_files/28656/2864577147.parquet",
+  "participant_id": 28656,
+  "frames": 24,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.958,
+  "sign_median_frames": 21.0,
+  "length_gap": 3.0,
+  "candidates": 6,
+  "model": "main-reg30_T32",
+  "p": 0.9725,
+  "rank": 1,
+  "top3": [
+   [
+    "man",
+    0.9725
+   ],
+   [
+    "dad",
+    0.0022
+   ],
+   [
+    "owie",
+    0.0017
+   ]
+  ],
+  "candidate_p": [
+   0.9647,
+   0.9725,
+   0.961,
+   0.8978,
+   0.1729,
+   0.9575
+  ]
+ },
+ "many": {
+  "source": "train_landmark_files/28656/849033860.parquet",
+  "participant_id": 28656,
+  "frames": 19,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.684,
+  "sign_median_frames": 18.0,
+  "length_gap": 1.0,
+  "candidates": 4,
+  "model": "main-reg30_T32",
+  "p": 0.9672,
+  "rank": 1,
+  "top3": [
+   [
+    "many",
+    0.9672
+   ],
+   [
+    "blow",
+    0.0059
+   ],
+   [
+    "all",
+    0.0006
+   ]
+  ],
+  "candidate_p": [
+   0.9459,
+   0.9672,
+   0.962,
+   0.9236
+  ]
+ },
+ "milk": {
+  "source": "train_landmark_files/28656/4035069296.parquet",
+  "participant_id": 28656,
+  "frames": 22,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 1.0,
+  "sign_median_frames": 24.0,
+  "length_gap": 2.0,
+  "candidates": 5,
+  "model": "main-reg30_T32",
+  "p": 0.9327,
+  "rank": 1,
+  "top3": [
+   [
+    "milk",
+    0.9327
+   ],
+   [
+    "make",
+    0.0042
+   ],
+   [
+    "fish",
+    0.0032
+   ]
+  ],
+  "candidate_p": [
+   0.9065,
+   0.9327,
+   0.8912,
+   0.1959,
+   0.0239
+  ]
+ },
+ "minemy": {
+  "source": "train_landmark_files/28656/1989069578.parquet",
+  "participant_id": 28656,
+  "frames": 20,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.9,
+  "sign_median_frames": 21.0,
+  "length_gap": 1.0,
+  "candidates": 4,
+  "model": "main-reg30_T32",
+  "p": 0.9789,
+  "rank": 1,
+  "top3": [
+   [
+    "minemy",
+    0.9789
+   ],
+   [
+    "closet",
+    0.0009
+   ],
+   [
+    "please",
+    0.0008
+   ]
+  ],
+  "candidate_p": [
+   0.9168,
+   0.9789,
+   0.0425,
+   0.8667
+  ]
+ },
+ "mitten": {
+  "source": "train_landmark_files/28656/1394303195.parquet",
+  "participant_id": 28656,
+  "frames": 37,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.514,
+  "sign_median_frames": 36.0,
+  "length_gap": 1.0,
+  "candidates": 16,
+  "model": "main-reg30_T32",
+  "p": 0.9876,
+  "rank": 1,
+  "top3": [
+   [
+    "mitten",
+    0.9876
+   ],
+   [
+    "alligator",
+    0.0008
+   ],
+   [
+    "finger",
+    0.0006
+   ]
+  ],
+  "candidate_p": [
+   0.058,
+   0.9697,
+   0.0057,
+   0.9876,
+   0.0009,
+   0.9574,
+   0.8412,
+   0.9802,
+   0.9696,
+   0.2211,
+   0.7949,
+   0.925,
+   0.0134,
+   0.1083,
+   0.518,
+   0.0027
+  ]
+ },
+ "mom": {
+  "source": "train_landmark_files/28656/3569360651.parquet",
+  "participant_id": 28656,
+  "frames": 22,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.864,
+  "sign_median_frames": 21.0,
+  "length_gap": 1.0,
+  "candidates": 6,
+  "model": "main-reg30_T32",
+  "p": 0.8615,
+  "rank": 1,
+  "top3": [
+   [
+    "mom",
+    0.8615
+   ],
+   [
+    "dad",
+    0.0095
+   ],
+   [
+    "fish",
+    0.0085
+   ]
+  ],
+  "candidate_p": [
+   0.7534,
+   0.8242,
+   0.8615,
+   0.859,
+   0.0504,
+   0.7775
+  ]
+ },
+ "moon": {
+  "source": "train_landmark_files/49445/3468657417.parquet",
+  "participant_id": 49445,
+  "frames": 17,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 1.0,
+  "sign_median_frames": 23.0,
+  "length_gap": 6.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.9387,
+  "rank": 1,
+  "top3": [
+   [
+    "moon",
+    0.9387
+   ],
+   [
+    "penny",
+    0.0031
+   ],
+   [
+    "airplane",
+    0.0017
+   ]
+  ],
+  "candidate_p": [
+   0.9387,
+   0.8517,
+   0.8536
+  ]
+ },
+ "morning": {
+  "source": "train_landmark_files/28656/1634241563.parquet",
+  "participant_id": 28656,
+  "frames": 19,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.684,
+  "sign_median_frames": 21.0,
+  "length_gap": 2.0,
+  "candidates": 7,
+  "model": "main-reg30_T32",
+  "p": 0.989,
+  "rank": 1,
+  "top3": [
+   [
+    "morning",
+    0.989
+   ],
+   [
+    "why",
+    0.0009
+   ],
+   [
+    "before",
+    0.0008
+   ]
+  ],
+  "candidate_p": [
+   0.5182,
+   0.989,
+   0.0157,
+   0.8887,
+   0.6007,
+   0.9352,
+   0.4975
+  ]
+ },
+ "mouse": {
+  "source": "train_landmark_files/28656/1364748456.parquet",
+  "participant_id": 28656,
+  "frames": 26,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.808,
+  "sign_median_frames": 24.0,
+  "length_gap": 2.0,
+  "candidates": 12,
+  "model": "main-reg30_T32",
+  "p": 0.9888,
+  "rank": 1,
+  "top3": [
+   [
+    "mouse",
+    0.9888
+   ],
+   [
+    "lips",
+    0.0005
+   ],
+   [
+    "pretend",
+    0.0004
+   ]
+  ],
+  "candidate_p": [
+   0.8216,
+   0.9593,
+   0.8359,
+   0.5702,
+   0.9854,
+   0.8324,
+   0.9219,
+   0.5923,
+   0.9888,
+   0.9778,
+   0.8068,
+   0.9745
+  ]
+ },
+ "mouth": {
+  "source": "train_landmark_files/28656/1815611962.parquet",
+  "participant_id": 28656,
+  "frames": 22,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.545,
+  "sign_median_frames": 27.0,
+  "length_gap": 5.0,
+  "candidates": 12,
+  "model": "main-reg30_T32",
+  "p": 0.9926,
+  "rank": 1,
+  "top3": [
+   [
+    "mouth",
+    0.9926
+   ],
+   [
+    "face",
+    0.0004
+   ],
+   [
+    "lips",
+    0.0002
+   ]
+  ],
+  "candidate_p": [
+   0.962,
+   0.9841,
+   0.9614,
+   0.9846,
+   0.9575,
+   0.9405,
+   0.9617,
+   0.8377,
+   0.0301,
+   0.8756,
+   0.9582,
+   0.9926
+  ]
+ },
+ "nap": {
+  "source": "train_landmark_files/49445/2350889343.parquet",
+  "participant_id": 49445,
+  "frames": 28,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.75,
+  "sign_median_frames": 31.0,
+  "length_gap": 3.0,
+  "candidates": 8,
+  "model": "main-reg30_T32",
+  "p": 0.9976,
+  "rank": 1,
+  "top3": [
+   [
+    "nap",
+    0.9976
+   ],
+   [
+    "up",
+    0.0001
+   ],
+   [
+    "pajamas",
+    0.0001
+   ]
+  ],
+  "candidate_p": [
+   0.9338,
+   0.2305,
+   0.8315,
+   0.9976,
+   0.5211,
+   0.0016,
+   0.9823,
+   0.1739
+  ]
+ },
+ "napkin": {
+  "source": "train_landmark_files/29302/1857721533.parquet",
+  "participant_id": 29302,
+  "frames": 22,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.955,
+  "sign_median_frames": 23.5,
+  "length_gap": 1.5,
+  "candidates": 6,
+  "model": "main-reg30_T32",
+  "p": 0.0346,
+  "rank": 2,
+  "top3": [
+   [
+    "cute",
+    0.7655
+   ],
+   [
+    "napkin",
+    0.0346
+   ],
+   [
+    "chin",
+    0.006
+   ]
+  ],
+  "candidate_p": [
+   0.0034,
+   0.0346,
+   0.0005,
+   0.0026,
+   0.0252,
+   0.0107
+  ]
+ },
+ "night": {
+  "source": "train_landmark_files/28656/1850740782.parquet",
+  "participant_id": 28656,
+  "frames": 6,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.833,
+  "sign_median_frames": 19.0,
+  "length_gap": 13.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.9976,
+  "rank": 1,
+  "top3": [
+   [
+    "night",
+    0.9976
+   ],
+   [
+    "after",
+    0.0002
+   ],
+   [
+    "that",
+    0.0002
+   ]
+  ],
+  "candidate_p": [
+   0.9283,
+   0.9976,
+   0.8523
+  ]
+ },
+ "no": {
+  "source": "train_landmark_files/28656/2561270569.parquet",
+  "participant_id": 28656,
+  "frames": 19,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.842,
+  "sign_median_frames": 19.0,
+  "length_gap": 0.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.6204,
+  "rank": 1,
+  "top3": [
+   [
+    "no",
+    0.6204
+   ],
+   [
+    "dog",
+    0.069
+   ],
+   [
+    "chair",
+    0.0297
+   ]
+  ],
+  "candidate_p": [
+   0.6204,
+   0.3339,
+   0.1638
+  ]
+ },
+ "noisy": {
+  "source": "train_landmark_files/49445/1649392221.parquet",
+  "participant_id": 49445,
+  "frames": 14,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.929,
+  "sign_median_frames": 20.0,
+  "length_gap": 6.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.9945,
+  "rank": 1,
+  "top3": [
+   [
+    "noisy",
+    0.9945
+   ],
+   [
+    "loud",
+    0.001
+   ],
+   [
+    "shirt",
+    0.0003
+   ]
+  ],
+  "candidate_p": [
+   0.9615,
+   0.003,
+   0.9945
+  ]
+ },
+ "nose": {
+  "source": "train_landmark_files/28656/2877274625.parquet",
+  "participant_id": 28656,
+  "frames": 23,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.522,
+  "sign_median_frames": 21.0,
+  "length_gap": 2.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.9892,
+  "rank": 1,
+  "top3": [
+   [
+    "nose",
+    0.9892
+   ],
+   [
+    "noisy",
+    0.001
+   ],
+   [
+    "wolf",
+    0.0008
+   ]
+  ],
+  "candidate_p": [
+   0.9664,
+   0.041,
+   0.9892
+  ]
+ },
+ "not": {
+  "source": "train_landmark_files/27610/2476790602.parquet",
+  "participant_id": 27610,
+  "frames": 16,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 1.0,
+  "sign_median_frames": 13.0,
+  "length_gap": 3.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.9007,
+  "rank": 1,
+  "top3": [
+   [
+    "not",
+    0.9007
+   ],
+   [
+    "nuts",
+    0.0328
+   ],
+   [
+    "lamp",
+    0.002
+   ]
+  ],
+  "candidate_p": [
+   0.2974,
+   0.0056,
+   0.9007
+  ]
+ },
+ "now": {
+  "source": "train_landmark_files/29302/1026739773.parquet",
+  "participant_id": 29302,
+  "frames": 19,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.632,
+  "sign_median_frames": 17.0,
+  "length_gap": 2.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.9732,
+  "rank": 1,
+  "top3": [
+   [
+    "now",
+    0.9732
+   ],
+   [
+    "pajamas",
+    0.0036
+   ],
+   [
+    "yellow",
+    0.0008
+   ]
+  ],
+  "candidate_p": [
+   0.9515,
+   0.9732,
+   0.9541
+  ]
+ },
+ "nuts": {
+  "source": "train_landmark_files/28656/3952876888.parquet",
+  "participant_id": 28656,
+  "frames": 16,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 1.0,
+  "sign_median_frames": 19.0,
+  "length_gap": 3.0,
+  "candidates": 7,
+  "model": "main-reg30_T32",
+  "p": 0.9842,
+  "rank": 1,
+  "top3": [
+   [
+    "nuts",
+    0.9842
+   ],
+   [
+    "apple",
+    0.0007
+   ],
+   [
+    "owl",
+    0.0003
+   ]
+  ],
+  "candidate_p": [
+   0.3166,
+   0.0441,
+   0.9593,
+   0.9395,
+   0.296,
+   0.959,
+   0.9842
+  ]
+ },
+ "old": {
+  "source": "train_landmark_files/28656/1050328104.parquet",
+  "participant_id": 28656,
+  "frames": 21,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.81,
+  "sign_median_frames": 18.0,
+  "length_gap": 3.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.9851,
+  "rank": 1,
+  "top3": [
+   [
+    "old",
+    0.9851
+   ],
+   [
+    "drawer",
+    0.0006
+   ],
+   [
+    "lion",
+    0.0004
+   ]
+  ],
+  "candidate_p": [
+   0.9851,
+   0.0042,
+   0.4495
+  ]
+ },
+ "on": {
+  "source": "train_landmark_files/28656/3098107562.parquet",
+  "participant_id": 28656,
+  "frames": 19,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.947,
+  "sign_median_frames": 17.0,
+  "length_gap": 2.0,
+  "candidates": 8,
+  "model": "main-reg30_T32",
+  "p": 0.7876,
+  "rank": 1,
+  "top3": [
+   [
+    "on",
+    0.7876
+   ],
+   [
+    "no",
+    0.1617
+   ],
+   [
+    "nap",
+    0.0207
+   ]
+  ],
+  "candidate_p": [
+   0.0367,
+   0.1078,
+   0.4566,
+   0.7876,
+   0.2271,
+   0.0079,
+   0.78,
+   0.6791
+  ]
+ },
+ "open": {
+  "source": "train_landmark_files/28656/957468409.parquet",
+  "participant_id": 28656,
+  "frames": 17,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.647,
+  "sign_median_frames": 20.0,
+  "length_gap": 3.0,
+  "candidates": 9,
+  "model": "main-reg30_T32",
+  "p": 0.9939,
+  "rank": 1,
+  "top3": [
+   [
+    "open",
+    0.9939
+   ],
+   [
+    "close",
+    0.0002
+   ],
+   [
+    "lips",
+    0.0002
+   ]
+  ],
+  "candidate_p": [
+   0.9129,
+   0.9603,
+   0.9902,
+   0.981,
+   0.0002,
+   0.9939,
+   0.9687,
+   0.9091,
+   0.0038
+  ]
+ },
+ "orange": {
+  "source": "train_landmark_files/28656/3626012536.parquet",
+  "participant_id": 28656,
+  "frames": 25,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 1.0,
+  "sign_median_frames": 25.0,
+  "length_gap": 0.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.9309,
+  "rank": 1,
+  "top3": [
+   [
+    "orange",
+    0.9309
+   ],
+   [
+    "old",
+    0.0029
+   ],
+   [
+    "pig",
+    0.0013
+   ]
+  ],
+  "candidate_p": [
+   0.9309,
+   0.8735,
+   0.9249
+  ]
+ },
+ "outside": {
+  "source": "train_landmark_files/49445/3951223055.parquet",
+  "participant_id": 49445,
+  "frames": 20,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.55,
+  "sign_median_frames": 20.0,
+  "length_gap": 0.0,
+  "candidates": 4,
+  "model": "main-reg30_T32",
+  "p": 0.9924,
+  "rank": 1,
+  "top3": [
+   [
+    "outside",
+    0.9924
+   ],
+   [
+    "many",
+    0.0006
+   ],
+   [
+    "refrigerator",
+    0.0005
+   ]
+  ],
+  "candidate_p": [
+   0.9924,
+   0.989,
+   0.9739,
+   0.8955
+  ]
+ },
+ "owie": {
+  "source": "train_landmark_files/49445/1729694608.parquet",
+  "participant_id": 49445,
+  "frames": 19,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.895,
+  "sign_median_frames": 22.0,
+  "length_gap": 3.0,
+  "candidates": 5,
+  "model": "main-reg30_T32",
+  "p": 0.8946,
+  "rank": 1,
+  "top3": [
+   [
+    "owie",
+    0.8946
+   ],
+   [
+    "cat",
+    0.0333
+   ],
+   [
+    "outside",
+    0.0038
+   ]
+  ],
+  "candidate_p": [
+   0.7483,
+   0.8946,
+   0.7075,
+   0.0026,
+   0.1925
+  ]
+ },
+ "owl": {
+  "source": "train_landmark_files/28656/1383008060.parquet",
+  "participant_id": 28656,
+  "frames": 26,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 1.0,
+  "sign_median_frames": 26.0,
+  "length_gap": 0.0,
+  "candidates": 6,
+  "model": "main-reg30_T32",
+  "p": 0.9486,
+  "rank": 1,
+  "top3": [
+   [
+    "owl",
+    0.9486
+   ],
+   [
+    "clown",
+    0.0028
+   ],
+   [
+    "drink",
+    0.0015
+   ]
+  ],
+  "candidate_p": [
+   0.9486,
+   0.9456,
+   0.8783,
+   0.9456,
+   0.9213,
+   0.7095
+  ]
+ },
+ "pajamas": {
+  "source": "train_landmark_files/28656/409024057.parquet",
+  "participant_id": 28656,
+  "frames": 28,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.821,
+  "sign_median_frames": 25.0,
+  "length_gap": 3.0,
+  "candidates": 10,
+  "model": "main-reg30_T32",
+  "p": 0.9822,
+  "rank": 1,
+  "top3": [
+   [
+    "pajamas",
+    0.9822
+   ],
+   [
+    "puppy",
+    0.0018
+   ],
+   [
+    "jeans",
+    0.0007
+   ]
+  ],
+  "candidate_p": [
+   0.9706,
+   0.8357,
+   0.9608,
+   0.9425,
+   0.9462,
+   0.9822,
+   0.9723,
+   0.9727,
+   0.9707,
+   0.9055
+  ]
+ },
+ "pen": {
+  "source": "train_landmark_files/28656/798696102.parquet",
+  "participant_id": 28656,
+  "frames": 24,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.75,
+  "sign_median_frames": 23.0,
+  "length_gap": 1.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.9507,
+  "rank": 1,
+  "top3": [
+   [
+    "pen",
+    0.9507
+   ],
+   [
+    "potty",
+    0.0121
+   ],
+   [
+    "pencil",
+    0.0114
+   ]
+  ],
+  "candidate_p": [
+   0.9003,
+   0.9507,
+   0.2453
+  ]
+ },
+ "pencil": {
+  "source": "train_landmark_files/28656/80071249.parquet",
+  "participant_id": 28656,
+  "frames": 19,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 1.0,
+  "sign_median_frames": 19.0,
+  "length_gap": 0.0,
+  "candidates": 4,
+  "model": "main-reg30_T32",
+  "p": 0.9674,
+  "rank": 1,
+  "top3": [
+   [
+    "pencil",
+    0.9674
+   ],
+   [
+    "pen",
+    0.0242
+   ],
+   [
+    "haveto",
+    0.0003
+   ]
+  ],
+  "candidate_p": [
+   0.9674,
+   0.0009,
+   0.4649,
+   0.0006
+  ]
+ },
+ "penny": {
+  "source": "train_landmark_files/28656/1802525966.parquet",
+  "participant_id": 28656,
+  "frames": 16,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.688,
+  "sign_median_frames": 20.0,
+  "length_gap": 4.0,
+  "candidates": 5,
+  "model": "main-reg30_T32",
+  "p": 0.8959,
+  "rank": 1,
+  "top3": [
+   [
+    "penny",
+    0.8959
+   ],
+   [
+    "moon",
+    0.03
+   ],
+   [
+    "for",
+    0.0034
+   ]
+  ],
+  "candidate_p": [
+   0.8492,
+   0.0146,
+   0.2604,
+   0.8959,
+   0.8853
+  ]
+ },
+ "person": {
+  "source": "train_landmark_files/28656/2683342019.parquet",
+  "participant_id": 28656,
+  "frames": 15,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.533,
+  "sign_median_frames": 15.5,
+  "length_gap": 0.5,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.9537,
+  "rank": 1,
+  "top3": [
+   [
+    "person",
+    0.9537
+   ],
+   [
+    "beside",
+    0.0038
+   ],
+   [
+    "man",
+    0.0036
+   ]
+  ],
+  "candidate_p": [
+   0.9537,
+   0.223,
+   0.0018
+  ]
+ },
+ "pig": {
+  "source": "train_landmark_files/49445/1206564960.parquet",
+  "participant_id": 49445,
+  "frames": 20,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.75,
+  "sign_median_frames": 23.0,
+  "length_gap": 3.0,
+  "candidates": 8,
+  "model": "main-reg30_T32",
+  "p": 0.9509,
+  "rank": 1,
+  "top3": [
+   [
+    "pig",
+    0.9509
+   ],
+   [
+    "dirty",
+    0.0269
+   ],
+   [
+    "duck",
+    0.0023
+   ]
+  ],
+  "candidate_p": [
+   0.6725,
+   0.4277,
+   0.6268,
+   0.9508,
+   0.6577,
+   0.8329,
+   0.9509,
+   0.8032
+  ]
+ },
+ "pizza": {
+  "source": "train_landmark_files/27610/1022982616.parquet",
+  "participant_id": 27610,
+  "frames": 19,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.737,
+  "sign_median_frames": 21.5,
+  "length_gap": 2.5,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.6657,
+  "rank": 1,
+  "top3": [
+   [
+    "pizza",
+    0.6657
+   ],
+   [
+    "bee",
+    0.035
+   ],
+   [
+    "stairs",
+    0.0267
+   ]
+  ],
+  "candidate_p": [
+   0.0725,
+   0.1506,
+   0.6657
+  ]
+ },
+ "please": {
+  "source": "train_landmark_files/29302/3749269246.parquet",
+  "participant_id": 29302,
+  "frames": 32,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.562,
+  "sign_median_frames": 30.0,
+  "length_gap": 2.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.9863,
+  "rank": 1,
+  "top3": [
+   [
+    "please",
+    0.9863
+   ],
+   [
+    "chin",
+    0.0006
+   ],
+   [
+    "happy",
+    0.0005
+   ]
+  ],
+  "candidate_p": [
+   0.9863,
+   0.8318,
+   0.8856
+  ]
+ },
+ "police": {
+  "source": "train_landmark_files/29302/3123061066.parquet",
+  "participant_id": 29302,
+  "frames": 28,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.536,
+  "sign_median_frames": 25.0,
+  "length_gap": 3.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.1047,
+  "rank": 2,
+  "top3": [
+   [
+    "chocolate",
+    0.2043
+   ],
+   [
+    "police",
+    0.1047
+   ],
+   [
+    "alligator",
+    0.0952
+   ]
+  ],
+  "candidate_p": [
+   0.1047,
+   0.0011,
+   0.0005
+  ]
+ },
+ "pool": {
+  "source": "train_landmark_files/27610/1134930812.parquet",
+  "participant_id": 27610,
+  "frames": 17,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.588,
+  "sign_median_frames": 26.0,
+  "length_gap": 9.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.9546,
+  "rank": 1,
+  "top3": [
+   [
+    "pool",
+    0.9546
+   ],
+   [
+    "all",
+    0.0151
+   ],
+   [
+    "dirty",
+    0.0021
+   ]
+  ],
+  "candidate_p": [
+   0.0084,
+   0.9546,
+   0.0094
+  ]
+ },
+ "potty": {
+  "source": "train_landmark_files/28656/1388394016.parquet",
+  "participant_id": 28656,
+  "frames": 26,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.654,
+  "sign_median_frames": 25.0,
+  "length_gap": 1.0,
+  "candidates": 8,
+  "model": "main-reg30_T32",
+  "p": 0.9903,
+  "rank": 1,
+  "top3": [
+   [
+    "potty",
+    0.9903
+   ],
+   [
+    "fast",
+    0.0008
+   ],
+   [
+    "feet",
+    0.0004
+   ]
+  ],
+  "candidate_p": [
+   0.7024,
+   0.0001,
+   0.9903,
+   0.9868,
+   0.3504,
+   0.9764,
+   0.1885,
+   0.9491
+  ]
+ },
+ "pretend": {
+  "source": "train_landmark_files/28656/3621746627.parquet",
+  "participant_id": 28656,
+  "frames": 24,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.625,
+  "sign_median_frames": 22.0,
+  "length_gap": 2.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.9565,
+  "rank": 1,
+  "top3": [
+   [
+    "pretend",
+    0.9565
+   ],
+   [
+    "read",
+    0.0022
+   ],
+   [
+    "rain",
+    0.001
+   ]
+  ],
+  "candidate_p": [
+   0.9473,
+   0.9534,
+   0.9565
+  ]
+ },
+ "pretty": {
+  "source": "train_landmark_files/49445/2339315744.parquet",
+  "participant_id": 49445,
+  "frames": 22,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.773,
+  "sign_median_frames": 21.0,
+  "length_gap": 1.0,
+  "candidates": 4,
+  "model": "main-reg30_T32",
+  "p": 0.977,
+  "rank": 1,
+  "top3": [
+   [
+    "pretty",
+    0.977
+   ],
+   [
+    "pizza",
+    0.0015
+   ],
+   [
+    "sleep",
+    0.0006
+   ]
+  ],
+  "candidate_p": [
+   0.6797,
+   0.977,
+   0.9206,
+   0.9709
+  ]
+ },
+ "puppy": {
+  "source": "train_landmark_files/49445/942670661.parquet",
+  "participant_id": 49445,
+  "frames": 28,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.536,
+  "sign_median_frames": 31.0,
+  "length_gap": 3.0,
+  "candidates": 7,
+  "model": "main-reg30_T32",
+  "p": 0.9936,
+  "rank": 1,
+  "top3": [
+   [
+    "puppy",
+    0.9936
+   ],
+   [
+    "kitty",
+    0.0024
+   ],
+   [
+    "before",
+    0.0002
+   ]
+  ],
+  "candidate_p": [
+   0.0028,
+   0.0047,
+   0.4373,
+   0.9936,
+   0.0007,
+   0.887,
+   0.0009
+  ]
+ },
+ "puzzle": {
+  "source": "train_landmark_files/28656/2891787459.parquet",
+  "participant_id": 28656,
+  "frames": 22,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.636,
+  "sign_median_frames": 23.0,
+  "length_gap": 1.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.8024,
+  "rank": 1,
+  "top3": [
+   [
+    "puzzle",
+    0.8024
+   ],
+   [
+    "closet",
+    0.0987
+   ],
+   [
+    "all",
+    0.0112
+   ]
+  ],
+  "candidate_p": [
+   0.8024,
+   0.0305,
+   0.4044
+  ]
+ },
+ "quiet": {
+  "source": "train_landmark_files/28656/3890472823.parquet",
+  "participant_id": 28656,
+  "frames": 10,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 1.0,
+  "sign_median_frames": 12.5,
+  "length_gap": 2.5,
+  "candidates": 4,
+  "model": "main-reg30_T32",
+  "p": 0.9919,
+  "rank": 1,
+  "top3": [
+   [
+    "quiet",
+    0.9919
+   ],
+   [
+    "talk",
+    0.0011
+   ],
+   [
+    "read",
+    0.0003
+   ]
+  ],
+  "candidate_p": [
+   0.9659,
+   0.9919,
+   0.0032,
+   0.9876
+  ]
+ },
+ "radio": {
+  "source": "train_landmark_files/28656/428300264.parquet",
+  "participant_id": 28656,
+  "frames": 24,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 1.0,
+  "sign_median_frames": 24.0,
+  "length_gap": 0.0,
+  "candidates": 7,
+  "model": "main-reg30_T32",
+  "p": 0.9898,
+  "rank": 1,
+  "top3": [
+   [
+    "radio",
+    0.9898
+   ],
+   [
+    "water",
+    0.0012
+   ],
+   [
+    "balloon",
+    0.0002
+   ]
+  ],
+  "candidate_p": [
+   0.9898,
+   0.7787,
+   0.9866,
+   0.9613,
+   0.9198,
+   0.9442,
+   0.9755
+  ]
+ },
+ "rain": {
+  "source": "train_landmark_files/49445/2352371043.parquet",
+  "participant_id": 49445,
+  "frames": 28,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.75,
+  "sign_median_frames": 23.0,
+  "length_gap": 5.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.9845,
+  "rank": 1,
+  "top3": [
+   [
+    "rain",
+    0.9845
+   ],
+   [
+    "donkey",
+    0.0011
+   ],
+   [
+    "bye",
+    0.001
+   ]
+  ],
+  "candidate_p": [
+   0.9845,
+   0.7887,
+   0.9721
+  ]
+ },
+ "read": {
+  "source": "train_landmark_files/28656/3393782846.parquet",
+  "participant_id": 28656,
+  "frames": 19,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.579,
+  "sign_median_frames": 21.0,
+  "length_gap": 2.0,
+  "candidates": 4,
+  "model": "main-reg30_T32",
+  "p": 0.99,
+  "rank": 1,
+  "top3": [
+   [
+    "read",
+    0.99
+   ],
+   [
+    "rain",
+    0.0006
+   ],
+   [
+    "dance",
+    0.0004
+   ]
+  ],
+  "candidate_p": [
+   0.9727,
+   0.99,
+   0.975,
+   0.8342
+  ]
+ },
+ "red": {
+  "source": "train_landmark_files/28656/3531194599.parquet",
+  "participant_id": 28656,
+  "frames": 16,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 1.0,
+  "sign_median_frames": 20.0,
+  "length_gap": 4.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.984,
+  "rank": 1,
+  "top3": [
+   [
+    "red",
+    0.984
+   ],
+   [
+    "wet",
+    0.0008
+   ],
+   [
+    "read",
+    0.0008
+   ]
+  ],
+  "candidate_p": [
+   0.931,
+   0.984,
+   0.9315
+  ]
+ },
+ "refrigerator": {
+  "source": "train_landmark_files/28656/400418163.parquet",
+  "participant_id": 28656,
+  "frames": 31,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 1.0,
+  "sign_median_frames": 33.0,
+  "length_gap": 2.0,
+  "candidates": 7,
+  "model": "main-reg30_T32",
+  "p": 0.9904,
+  "rank": 1,
+  "top3": [
+   [
+    "refrigerator",
+    0.9904
+   ],
+   [
+    "uncle",
+    0.0037
+   ],
+   [
+    "underwear",
+    0.0009
+   ]
+  ],
+  "candidate_p": [
+   0.9842,
+   0.3004,
+   0.9904,
+   0.6508,
+   0.9812,
+   0.0079,
+   0.0038
+  ]
+ },
+ "ride": {
+  "source": "train_landmark_files/28656/50256433.parquet",
+  "participant_id": 28656,
+  "frames": 18,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.944,
+  "sign_median_frames": 18.0,
+  "length_gap": 0.0,
+  "candidates": 4,
+  "model": "main-reg30_T32",
+  "p": 0.8131,
+  "rank": 1,
+  "top3": [
+   [
+    "ride",
+    0.8131
+   ],
+   [
+    "jump",
+    0.0664
+   ],
+   [
+    "chair",
+    0.0149
+   ]
+  ],
+  "candidate_p": [
+   0.8131,
+   0.625,
+   0.0031,
+   0.1097
+  ]
+ },
+ "room": {
+  "source": "train_landmark_files/49445/3327491475.parquet",
+  "participant_id": 49445,
+  "frames": 21,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.762,
+  "sign_median_frames": 19.0,
+  "length_gap": 2.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.7259,
+  "rank": 1,
+  "top3": [
+   [
+    "room",
+    0.7259
+   ],
+   [
+    "bedroom",
+    0.0896
+   ],
+   [
+    "puppy",
+    0.0128
+   ]
+  ],
+  "candidate_p": [
+   0.7259,
+   0.0075,
+   0.0174
+  ]
+ },
+ "sad": {
+  "source": "train_landmark_files/28656/2592329080.parquet",
+  "participant_id": 28656,
+  "frames": 20,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.95,
+  "sign_median_frames": 24.0,
+  "length_gap": 4.0,
+  "candidates": 8,
+  "model": "main-reg30_T32",
+  "p": 0.9625,
+  "rank": 1,
+  "top3": [
+   [
+    "sad",
+    0.9625
+   ],
+   [
+    "dryer",
+    0.0008
+   ],
+   [
+    "snow",
+    0.0008
+   ]
+  ],
+  "candidate_p": [
+   0.7134,
+   0.0007,
+   0.8322,
+   0.8703,
+   0.7885,
+   0.9558,
+   0.9294,
+   0.9625
+  ]
+ },
+ "same": {
+  "source": "train_landmark_files/28656/4017586239.parquet",
+  "participant_id": 28656,
+  "frames": 20,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 1.0,
+  "sign_median_frames": 22.0,
+  "length_gap": 2.0,
+  "candidates": 7,
+  "model": "main-reg30_T32",
+  "p": 0.9776,
+  "rank": 1,
+  "top3": [
+   [
+    "same",
+    0.9776
+   ],
+   [
+    "closet",
+    0.001
+   ],
+   [
+    "shoe",
+    0.0009
+   ]
+  ],
+  "candidate_p": [
+   0.8511,
+   0.9756,
+   0.9776,
+   0.9624,
+   0.8915,
+   0.9424,
+   0.9559
+  ]
+ },
+ "say": {
+  "source": "train_landmark_files/28656/3171133897.parquet",
+  "participant_id": 28656,
+  "frames": 17,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 1.0,
+  "sign_median_frames": 19.0,
+  "length_gap": 2.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.9222,
+  "rank": 1,
+  "top3": [
+   [
+    "say",
+    0.9222
+   ],
+   [
+    "red",
+    0.0224
+   ],
+   [
+    "glasswindow",
+    0.0057
+   ]
+  ],
+  "candidate_p": [
+   0.9222,
+   0.0402,
+   0.0129
+  ]
+ },
+ "scissors": {
+  "source": "train_landmark_files/28656/2450357180.parquet",
+  "participant_id": 28656,
+  "frames": 23,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.522,
+  "sign_median_frames": 20.0,
+  "length_gap": 3.0,
+  "candidates": 4,
+  "model": "main-reg30_T32",
+  "p": 0.9663,
+  "rank": 1,
+  "top3": [
+   [
+    "scissors",
+    0.9663
+   ],
+   [
+    "dirty",
+    0.0013
+   ],
+   [
+    "cut",
+    0.0011
+   ]
+  ],
+  "candidate_p": [
+   0.4419,
+   0.7336,
+   0.9663,
+   0.9495
+  ]
+ },
+ "see": {
+  "source": "train_landmark_files/28656/2158784779.parquet",
+  "participant_id": 28656,
+  "frames": 22,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.682,
+  "sign_median_frames": 19.0,
+  "length_gap": 3.0,
+  "candidates": 4,
+  "model": "main-reg30_T32",
+  "p": 0.9621,
+  "rank": 1,
+  "top3": [
+   [
+    "see",
+    0.9621
+   ],
+   [
+    "kiss",
+    0.0013
+   ],
+   [
+    "touch",
+    0.0012
+   ]
+  ],
+  "candidate_p": [
+   0.0031,
+   0.2295,
+   0.9591,
+   0.9621
+  ]
+ },
+ "shhh": {
+  "source": "train_landmark_files/28656/854097944.parquet",
+  "participant_id": 28656,
+  "frames": 25,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.96,
+  "sign_median_frames": 23.0,
+  "length_gap": 2.0,
+  "candidates": 11,
+  "model": "main-reg30_T32",
+  "p": 0.9901,
+  "rank": 1,
+  "top3": [
+   [
+    "shhh",
+    0.9901
+   ],
+   [
+    "doll",
+    0.0007
+   ],
+   [
+    "quiet",
+    0.0007
+   ]
+  ],
+  "candidate_p": [
+   0.8255,
+   0.9751,
+   0.5909,
+   0.8441,
+   0.9901,
+   0.9459,
+   0.9281,
+   0.9451,
+   0.8751,
+   0.8755,
+   0.9049
+  ]
+ },
+ "shirt": {
+  "source": "train_landmark_files/29302/2865592697.parquet",
+  "participant_id": 29302,
+  "frames": 12,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.75,
+  "sign_median_frames": 21.0,
+  "length_gap": 9.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.9929,
+  "rank": 1,
+  "top3": [
+   [
+    "shirt",
+    0.9929
+   ],
+   [
+    "hair",
+    0.0002
+   ],
+   [
+    "garbage",
+    0.0002
+   ]
+  ],
+  "candidate_p": [
+   0.9631,
+   0.9755,
+   0.9929
+  ]
+ },
+ "shoe": {
+  "source": "train_landmark_files/27610/3772163694.parquet",
+  "participant_id": 27610,
+  "frames": 20,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.55,
+  "sign_median_frames": 19.5,
+  "length_gap": 0.5,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.9336,
+  "rank": 1,
+  "top3": [
+   [
+    "shoe",
+    0.9336
+   ],
+   [
+    "store",
+    0.0021
+   ],
+   [
+    "car",
+    0.0019
+   ]
+  ],
+  "candidate_p": [
+   0.9336,
+   0.9186,
+   0.8886
+  ]
+ },
+ "shower": {
+  "source": "train_landmark_files/49445/2634641229.parquet",
+  "participant_id": 49445,
+  "frames": 23,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.565,
+  "sign_median_frames": 22.0,
+  "length_gap": 1.0,
+  "candidates": 5,
+  "model": "main-reg30_T32",
+  "p": 0.9755,
+  "rank": 1,
+  "top3": [
+   [
+    "shower",
+    0.9755
+   ],
+   [
+    "frog",
+    0.0009
+   ],
+   [
+    "fast",
+    0.0008
+   ]
+  ],
+  "candidate_p": [
+   0.8511,
+   0.9755,
+   0.9602,
+   0.9672,
+   0.3842
+  ]
+ },
+ "sick": {
+  "source": "train_landmark_files/29302/234455547.parquet",
+  "participant_id": 29302,
+  "frames": 17,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.941,
+  "sign_median_frames": 20.0,
+  "length_gap": 3.0,
+  "candidates": 5,
+  "model": "main-reg30_T32",
+  "p": 0.983,
+  "rank": 1,
+  "top3": [
+   [
+    "sick",
+    0.983
+   ],
+   [
+    "thirsty",
+    0.0006
+   ],
+   [
+    "taste",
+    0.0006
+   ]
+  ],
+  "candidate_p": [
+   0.9707,
+   0.983,
+   0.8173,
+   0.3629,
+   0.9764
+  ]
+ },
+ "sleep": {
+  "source": "train_landmark_files/49445/3104102364.parquet",
+  "participant_id": 49445,
+  "frames": 22,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.773,
+  "sign_median_frames": 21.0,
+  "length_gap": 1.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.9428,
+  "rank": 1,
+  "top3": [
+   [
+    "sleep",
+    0.9428
+   ],
+   [
+    "sleepy",
+    0.0197
+   ],
+   [
+    "head",
+    0.0083
+   ]
+  ],
+  "candidate_p": [
+   0.7937,
+   0.9428,
+   0.8364
+  ]
+ },
+ "sleepy": {
+  "source": "train_landmark_files/27610/1999450228.parquet",
+  "participant_id": 27610,
+  "frames": 21,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.857,
+  "sign_median_frames": 26.0,
+  "length_gap": 5.0,
+  "candidates": 4,
+  "model": "main-reg30_T32",
+  "p": 0.8521,
+  "rank": 1,
+  "top3": [
+   [
+    "sleepy",
+    0.8521
+   ],
+   [
+    "nap",
+    0.0647
+   ],
+   [
+    "wolf",
+    0.0036
+   ]
+  ],
+  "candidate_p": [
+   0.0018,
+   0.8473,
+   0.0002,
+   0.8521
+  ]
+ },
+ "smile": {
+  "source": "train_landmark_files/28656/4106905841.parquet",
+  "participant_id": 28656,
+  "frames": 19,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.842,
+  "sign_median_frames": 21.0,
+  "length_gap": 2.0,
+  "candidates": 4,
+  "model": "main-reg30_T32",
+  "p": 0.9824,
+  "rank": 1,
+  "top3": [
+   [
+    "smile",
+    0.9824
+   ],
+   [
+    "better",
+    0.0057
+   ],
+   [
+    "tiger",
+    0.0005
+   ]
+  ],
+  "candidate_p": [
+   0.9522,
+   0.8558,
+   0.9824,
+   0.9565
+  ]
+ },
+ "snack": {
+  "source": "train_landmark_files/49445/2601951593.parquet",
+  "participant_id": 49445,
+  "frames": 29,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.897,
+  "sign_median_frames": 26.0,
+  "length_gap": 3.0,
+  "candidates": 8,
+  "model": "main-reg30_T32",
+  "p": 0.9169,
+  "rank": 1,
+  "top3": [
+   [
+    "snack",
+    0.9169
+   ],
+   [
+    "pizza",
+    0.0409
+   ],
+   [
+    "pretty",
+    0.0067
+   ]
+  ],
+  "candidate_p": [
+   0.0026,
+   0.0025,
+   0.0024,
+   0.9169,
+   0.0026,
+   0.3512,
+   0.0005,
+   0.0003
+  ]
+ },
+ "snow": {
+  "source": "train_landmark_files/49445/747777598.parquet",
+  "participant_id": 49445,
+  "frames": 24,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.958,
+  "sign_median_frames": 23.0,
+  "length_gap": 1.0,
+  "candidates": 6,
+  "model": "main-reg30_T32",
+  "p": 0.9809,
+  "rank": 1,
+  "top3": [
+   [
+    "snow",
+    0.9809
+   ],
+   [
+    "man",
+    0.001
+   ],
+   [
+    "sad",
+    0.0006
+   ]
+  ],
+  "candidate_p": [
+   0.9039,
+   0.9809,
+   0.9662,
+   0.9182,
+   0.9436,
+   0.9295
+  ]
+ },
+ "stairs": {
+  "source": "train_landmark_files/28656/2177058840.parquet",
+  "participant_id": 28656,
+  "frames": 21,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.762,
+  "sign_median_frames": 23.0,
+  "length_gap": 2.0,
+  "candidates": 5,
+  "model": "main-reg30_T32",
+  "p": 0.9591,
+  "rank": 1,
+  "top3": [
+   [
+    "stairs",
+    0.9591
+   ],
+   [
+    "alligator",
+    0.0046
+   ],
+   [
+    "any",
+    0.0015
+   ]
+  ],
+  "candidate_p": [
+   0.9511,
+   0.0469,
+   0.9591,
+   0.8607,
+   0.0222
+  ]
+ },
+ "stay": {
+  "source": "train_landmark_files/29302/3922969135.parquet",
+  "participant_id": 29302,
+  "frames": 24,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.75,
+  "sign_median_frames": 18.0,
+  "length_gap": 6.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.9657,
+  "rank": 1,
+  "top3": [
+   [
+    "stay",
+    0.9657
+   ],
+   [
+    "that",
+    0.0232
+   ],
+   [
+    "same",
+    0.0043
+   ]
+  ],
+  "candidate_p": [
+   0.1202,
+   0.8043,
+   0.9657
+  ]
+ },
+ "sticky": {
+  "source": "train_landmark_files/49445/4243167578.parquet",
+  "participant_id": 49445,
+  "frames": 19,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.947,
+  "sign_median_frames": 23.0,
+  "length_gap": 4.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.4319,
+  "rank": 1,
+  "top3": [
+   [
+    "sticky",
+    0.4319
+   ],
+   [
+    "why",
+    0.0847
+   ],
+   [
+    "sick",
+    0.0664
+   ]
+  ],
+  "candidate_p": [
+   0.0014,
+   0.0051,
+   0.4319
+  ]
+ },
+ "store": {
+  "source": "train_landmark_files/27610/2340850156.parquet",
+  "participant_id": 27610,
+  "frames": 24,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.75,
+  "sign_median_frames": 22.5,
+  "length_gap": 1.5,
+  "candidates": 7,
+  "model": "main-reg30_T32",
+  "p": 0.9708,
+  "rank": 1,
+  "top3": [
+   [
+    "store",
+    0.9708
+   ],
+   [
+    "lamp",
+    0.0019
+   ],
+   [
+    "outside",
+    0.0012
+   ]
+  ],
+  "candidate_p": [
+   0.8901,
+   0.9492,
+   0.9708,
+   0.9581,
+   0.9021,
+   0.9529,
+   0.9146
+  ]
+ },
+ "story": {
+  "source": "train_landmark_files/49445/1444199421.parquet",
+  "participant_id": 49445,
+  "frames": 26,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.808,
+  "sign_median_frames": 27.0,
+  "length_gap": 1.0,
+  "candidates": 6,
+  "model": "main-reg30_T32",
+  "p": 0.916,
+  "rank": 1,
+  "top3": [
+   [
+    "story",
+    0.916
+   ],
+   [
+    "say",
+    0.007
+   ],
+   [
+    "cloud",
+    0.0053
+   ]
+  ],
+  "candidate_p": [
+   0.8142,
+   0.916,
+   0.0049,
+   0.8794,
+   0.6557,
+   0.8322
+  ]
+ },
+ "stuck": {
+  "source": "train_landmark_files/29302/819076995.parquet",
+  "participant_id": 29302,
+  "frames": 18,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 1.0,
+  "sign_median_frames": 19.0,
+  "length_gap": 1.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.9251,
+  "rank": 1,
+  "top3": [
+   [
+    "stuck",
+    0.9251
+   ],
+   [
+    "frog",
+    0.005
+   ],
+   [
+    "hungry",
+    0.0049
+   ]
+  ],
+  "candidate_p": [
+   0.9251,
+   0.9062,
+   0.0007
+  ]
+ },
+ "sun": {
+  "source": "train_landmark_files/28656/2617603358.parquet",
+  "participant_id": 28656,
+  "frames": 23,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.87,
+  "sign_median_frames": 22.0,
+  "length_gap": 1.0,
+  "candidates": 7,
+  "model": "main-reg30_T32",
+  "p": 0.8765,
+  "rank": 1,
+  "top3": [
+   [
+    "sun",
+    0.8765
+   ],
+   [
+    "shower",
+    0.0306
+   ],
+   [
+    "dad",
+    0.0048
+   ]
+  ],
+  "candidate_p": [
+   0.045,
+   0.2195,
+   0.0049,
+   0.0134,
+   0.8765,
+   0.0089,
+   0.0005
+  ]
+ },
+ "table": {
+  "source": "train_landmark_files/29302/3511775757.parquet",
+  "participant_id": 29302,
+  "frames": 12,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 1.0,
+  "sign_median_frames": 19.0,
+  "length_gap": 7.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.1581,
+  "rank": 1,
+  "top3": [
+   [
+    "table",
+    0.1581
+   ],
+   [
+    "backyard",
+    0.1561
+   ],
+   [
+    "book",
+    0.1425
+   ]
+  ],
+  "candidate_p": [
+   0.0697,
+   0.1581,
+   0.0308
+  ]
+ },
+ "talk": {
+  "source": "train_landmark_files/28656/1743425665.parquet",
+  "participant_id": 28656,
+  "frames": 22,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.909,
+  "sign_median_frames": 23.0,
+  "length_gap": 1.0,
+  "candidates": 8,
+  "model": "main-reg30_T32",
+  "p": 0.9836,
+  "rank": 1,
+  "top3": [
+   [
+    "talk",
+    0.9836
+   ],
+   [
+    "brown",
+    0.0027
+   ],
+   [
+    "dirty",
+    0.0006
+   ]
+  ],
+  "candidate_p": [
+   0.9797,
+   0.5854,
+   0.9743,
+   0.7945,
+   0.9836,
+   0.0106,
+   0.0013,
+   0.1242
+  ]
+ },
+ "taste": {
+  "source": "train_landmark_files/49445/2771993434.parquet",
+  "participant_id": 49445,
+  "frames": 25,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.68,
+  "sign_median_frames": 21.0,
+  "length_gap": 4.0,
+  "candidates": 6,
+  "model": "main-reg30_T32",
+  "p": 0.9661,
+  "rank": 1,
+  "top3": [
+   [
+    "taste",
+    0.9661
+   ],
+   [
+    "lips",
+    0.0007
+   ],
+   [
+    "tooth",
+    0.0006
+   ]
+  ],
+  "candidate_p": [
+   0.9067,
+   0.8705,
+   0.8666,
+   0.4555,
+   0.9278,
+   0.9661
+  ]
+ },
+ "thankyou": {
+  "source": "train_landmark_files/28656/2213356388.parquet",
+  "participant_id": 28656,
+  "frames": 13,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.615,
+  "sign_median_frames": 16.0,
+  "length_gap": 3.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.9691,
+  "rank": 1,
+  "top3": [
+   [
+    "thankyou",
+    0.9691
+   ],
+   [
+    "taste",
+    0.0045
+   ],
+   [
+    "sticky",
+    0.0036
+   ]
+  ],
+  "candidate_p": [
+   0.3165,
+   0.9691,
+   0.8032
+  ]
+ },
+ "that": {
+  "source": "train_landmark_files/28656/3431541462.parquet",
+  "participant_id": 28656,
+  "frames": 17,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.824,
+  "sign_median_frames": 16.0,
+  "length_gap": 1.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.9961,
+  "rank": 1,
+  "top3": [
+   [
+    "that",
+    0.9961
+   ],
+   [
+    "all",
+    0.0002
+   ],
+   [
+    "night",
+    0.0002
+   ]
+  ],
+  "candidate_p": [
+   0.9961,
+   0.7985,
+   0.7958
+  ]
+ },
+ "there": {
+  "source": "train_landmark_files/28656/709523511.parquet",
+  "participant_id": 28656,
+  "frames": 22,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 1.0,
+  "sign_median_frames": 18.0,
+  "length_gap": 4.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.7946,
+  "rank": 1,
+  "top3": [
+   [
+    "there",
+    0.7946
+   ],
+   [
+    "morning",
+    0.0274
+   ],
+   [
+    "backyard",
+    0.0082
+   ]
+  ],
+  "candidate_p": [
+   0.2623,
+   0.0004,
+   0.7946
+  ]
+ },
+ "think": {
+  "source": "train_landmark_files/28656/3587281623.parquet",
+  "participant_id": 28656,
+  "frames": 24,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 1.0,
+  "sign_median_frames": 22.0,
+  "length_gap": 2.0,
+  "candidates": 7,
+  "model": "main-reg30_T32",
+  "p": 0.9939,
+  "rank": 1,
+  "top3": [
+   [
+    "think",
+    0.9939
+   ],
+   [
+    "cow",
+    0.0002
+   ],
+   [
+    "sticky",
+    0.0002
+   ]
+  ],
+  "candidate_p": [
+   0.9627,
+   0.9546,
+   0.9939,
+   0.8701,
+   0.0772,
+   0.2276,
+   0.9228
+  ]
+ },
+ "thirsty": {
+  "source": "train_landmark_files/29302/2145700843.parquet",
+  "participant_id": 29302,
+  "frames": 17,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 1.0,
+  "sign_median_frames": 21.0,
+  "length_gap": 4.0,
+  "candidates": 7,
+  "model": "main-reg30_T32",
+  "p": 0.9905,
+  "rank": 1,
+  "top3": [
+   [
+    "thirsty",
+    0.9905
+   ],
+   [
+    "cheek",
+    0.0005
+   ],
+   [
+    "garbage",
+    0.0005
+   ]
+  ],
+  "candidate_p": [
+   0.975,
+   0.974,
+   0.9547,
+   0.8508,
+   0.9125,
+   0.9797,
+   0.9905
+  ]
+ },
+ "tiger": {
+  "source": "train_landmark_files/28656/1282335043.parquet",
+  "participant_id": 28656,
+  "frames": 20,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.7,
+  "sign_median_frames": 24.5,
+  "length_gap": 4.5,
+  "candidates": 7,
+  "model": "main-reg30_T32",
+  "p": 0.9731,
+  "rank": 1,
+  "top3": [
+   [
+    "tiger",
+    0.9731
+   ],
+   [
+    "cloud",
+    0.0013
+   ],
+   [
+    "before",
+    0.0006
+   ]
+  ],
+  "candidate_p": [
+   0.9651,
+   0.625,
+   0.9191,
+   0.6873,
+   0.8795,
+   0.9612,
+   0.9731
+  ]
+ },
+ "time": {
+  "source": "train_landmark_files/49445/2186684187.parquet",
+  "participant_id": 49445,
+  "frames": 25,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.6,
+  "sign_median_frames": 22.0,
+  "length_gap": 3.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.9924,
+  "rank": 1,
+  "top3": [
+   [
+    "time",
+    0.9924
+   ],
+   [
+    "toothbrush",
+    0.0019
+   ],
+   [
+    "down",
+    0.0002
+   ]
+  ],
+  "candidate_p": [
+   0.9567,
+   0.9924,
+   0.9594
+  ]
+ },
+ "tomorrow": {
+  "source": "train_landmark_files/28656/1249915107.parquet",
+  "participant_id": 28656,
+  "frames": 21,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 1.0,
+  "sign_median_frames": 20.0,
+  "length_gap": 1.0,
+  "candidates": 5,
+  "model": "main-reg30_T32",
+  "p": 0.9583,
+  "rank": 1,
+  "top3": [
+   [
+    "tomorrow",
+    0.9583
+   ],
+   [
+    "blow",
+    0.0016
+   ],
+   [
+    "owie",
+    0.0015
+   ]
+  ],
+  "candidate_p": [
+   0.9583,
+   0.941,
+   0.8709,
+   0.1523,
+   0.7721
+  ]
+ },
+ "tongue": {
+  "source": "train_landmark_files/49445/2359149245.parquet",
+  "participant_id": 49445,
+  "frames": 18,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 1.0,
+  "sign_median_frames": 21.0,
+  "length_gap": 3.0,
+  "candidates": 7,
+  "model": "main-reg30_T32",
+  "p": 0.9931,
+  "rank": 1,
+  "top3": [
+   [
+    "tongue",
+    0.9931
+   ],
+   [
+    "duck",
+    0.0035
+   ],
+   [
+    "say",
+    0.0001
+   ]
+  ],
+  "candidate_p": [
+   0.9374,
+   0.2013,
+   0.8786,
+   0.9389,
+   0.2424,
+   0.9931,
+   0.3042
+  ]
+ },
+ "tooth": {
+  "source": "train_landmark_files/28656/4022457894.parquet",
+  "participant_id": 28656,
+  "frames": 20,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 1.0,
+  "sign_median_frames": 22.0,
+  "length_gap": 2.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.7608,
+  "rank": 1,
+  "top3": [
+   [
+    "tooth",
+    0.7608
+   ],
+   [
+    "glasswindow",
+    0.0946
+   ],
+   [
+    "tongue",
+    0.0149
+   ]
+  ],
+  "candidate_p": [
+   0.0646,
+   0.7608,
+   0.7306
+  ]
+ },
+ "toothbrush": {
+  "source": "train_landmark_files/49445/2311669198.parquet",
+  "participant_id": 49445,
+  "frames": 29,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.517,
+  "sign_median_frames": 26.0,
+  "length_gap": 3.0,
+  "candidates": 7,
+  "model": "main-reg30_T32",
+  "p": 0.9981,
+  "rank": 1,
+  "top3": [
+   [
+    "toothbrush",
+    0.9981
+   ],
+   [
+    "mouse",
+    0.0001
+   ],
+   [
+    "hide",
+    0.0001
+   ]
+  ],
+  "candidate_p": [
+   0.9315,
+   0.9862,
+   0.9981,
+   0.9886,
+   0.9108,
+   0.6898,
+   0.9566
+  ]
+ },
+ "touch": {
+  "source": "train_landmark_files/49445/1935463060.parquet",
+  "participant_id": 49445,
+  "frames": 16,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.688,
+  "sign_median_frames": 20.0,
+  "length_gap": 4.0,
+  "candidates": 9,
+  "model": "main-reg30_T32",
+  "p": 0.9876,
+  "rank": 1,
+  "top3": [
+   [
+    "touch",
+    0.9876
+   ],
+   [
+    "snow",
+    0.002
+   ],
+   [
+    "man",
+    0.0004
+   ]
+  ],
+  "candidate_p": [
+   0.9749,
+   0.9792,
+   0.5005,
+   0.9769,
+   0.7408,
+   0.763,
+   0.0404,
+   0.1871,
+   0.9876
+  ]
+ },
+ "toy": {
+  "source": "train_landmark_files/28656/905256089.parquet",
+  "participant_id": 28656,
+  "frames": 24,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.958,
+  "sign_median_frames": 25.0,
+  "length_gap": 1.0,
+  "candidates": 8,
+  "model": "main-reg30_T32",
+  "p": 0.9652,
+  "rank": 1,
+  "top3": [
+   [
+    "toy",
+    0.9652
+   ],
+   [
+    "green",
+    0.0013
+   ],
+   [
+    "girl",
+    0.001
+   ]
+  ],
+  "candidate_p": [
+   0.0001,
+   0.204,
+   0.9652,
+   0.0046,
+   0.9168,
+   0.181,
+   0.0015,
+   0.0099
+  ]
+ },
+ "tree": {
+  "source": "train_landmark_files/49445/1649407598.parquet",
+  "participant_id": 49445,
+  "frames": 23,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.696,
+  "sign_median_frames": 25.0,
+  "length_gap": 2.0,
+  "candidates": 7,
+  "model": "main-reg30_T32",
+  "p": 0.9934,
+  "rank": 1,
+  "top3": [
+   [
+    "tree",
+    0.9934
+   ],
+   [
+    "go",
+    0.0005
+   ],
+   [
+    "green",
+    0.0002
+   ]
+  ],
+  "candidate_p": [
+   0.9449,
+   0.9496,
+   0.0064,
+   0.9934,
+   0.0004,
+   0.9647,
+   0.0035
+  ]
+ },
+ "uncle": {
+  "source": "train_landmark_files/49445/3423198953.parquet",
+  "participant_id": 49445,
+  "frames": 28,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.964,
+  "sign_median_frames": 26.0,
+  "length_gap": 2.0,
+  "candidates": 4,
+  "model": "main-reg30_T32",
+  "p": 0.9612,
+  "rank": 1,
+  "top3": [
+   [
+    "uncle",
+    0.9612
+   ],
+   [
+    "refrigerator",
+    0.0056
+   ],
+   [
+    "pizza",
+    0.001
+   ]
+  ],
+  "candidate_p": [
+   0.8651,
+   0.9612,
+   0.8007,
+   0.6643
+  ]
+ },
+ "underwear": {
+  "source": "train_landmark_files/28656/3951840398.parquet",
+  "participant_id": 28656,
+  "frames": 27,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 1.0,
+  "sign_median_frames": 25.0,
+  "length_gap": 2.0,
+  "candidates": 6,
+  "model": "main-reg30_T32",
+  "p": 0.9894,
+  "rank": 1,
+  "top3": [
+   [
+    "underwear",
+    0.9894
+   ],
+   [
+    "orange",
+    0.0008
+   ],
+   [
+    "snack",
+    0.0004
+   ]
+  ],
+  "candidate_p": [
+   0.9769,
+   0.9709,
+   0.8752,
+   0.9894,
+   0.9412,
+   0.9432
+  ]
+ },
+ "up": {
+  "source": "train_landmark_files/29302/387180987.parquet",
+  "participant_id": 29302,
+  "frames": 17,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 1.0,
+  "sign_median_frames": 19.0,
+  "length_gap": 2.0,
+  "candidates": 6,
+  "model": "main-reg30_T32",
+  "p": 0.9014,
+  "rank": 1,
+  "top3": [
+   [
+    "up",
+    0.9014
+   ],
+   [
+    "penny",
+    0.012
+   ],
+   [
+    "person",
+    0.0054
+   ]
+  ],
+  "candidate_p": [
+   0.4983,
+   0.9014,
+   0.5073,
+   0.8987,
+   0.1892,
+   0.8989
+  ]
+ },
+ "vacuum": {
+  "source": "train_landmark_files/28656/3061336862.parquet",
+  "participant_id": 28656,
+  "frames": 12,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.833,
+  "sign_median_frames": 26.0,
+  "length_gap": 14.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.1581,
+  "rank": 2,
+  "top3": [
+   [
+    "chocolate",
+    0.4363
+   ],
+   [
+    "vacuum",
+    0.1581
+   ],
+   [
+    "shirt",
+    0.0433
+   ]
+  ],
+  "candidate_p": [
+   0.0003,
+   0.1581,
+   0.0013
+  ]
+ },
+ "wait": {
+  "source": "train_landmark_files/28656/3116064383.parquet",
+  "participant_id": 28656,
+  "frames": 21,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.81,
+  "sign_median_frames": 23.5,
+  "length_gap": 2.5,
+  "candidates": 5,
+  "model": "main-reg30_T32",
+  "p": 0.9845,
+  "rank": 1,
+  "top3": [
+   [
+    "wait",
+    0.9845
+   ],
+   [
+    "green",
+    0.0005
+   ],
+   [
+    "wet",
+    0.0005
+   ]
+  ],
+  "candidate_p": [
+   0.9532,
+   0.0048,
+   0.9845,
+   0.9553,
+   0.3367
+  ]
+ },
+ "wake": {
+  "source": "train_landmark_files/28656/3479723763.parquet",
+  "participant_id": 28656,
+  "frames": 18,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.778,
+  "sign_median_frames": 22.0,
+  "length_gap": 4.0,
+  "candidates": 10,
+  "model": "main-reg30_T32",
+  "p": 0.7921,
+  "rank": 1,
+  "top3": [
+   [
+    "wake",
+    0.7921
+   ],
+   [
+    "awake",
+    0.1426
+   ],
+   [
+    "nap",
+    0.0015
+   ]
+  ],
+  "candidate_p": [
+   0.1445,
+   0.636,
+   0.6067,
+   0.2236,
+   0.5484,
+   0.6421,
+   0.6568,
+   0.7921,
+   0.7221,
+   0.6848
+  ]
+ },
+ "water": {
+  "source": "train_landmark_files/28656/1692719269.parquet",
+  "participant_id": 28656,
+  "frames": 18,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.667,
+  "sign_median_frames": 22.0,
+  "length_gap": 4.0,
+  "candidates": 4,
+  "model": "main-reg30_T32",
+  "p": 0.9958,
+  "rank": 1,
+  "top3": [
+   [
+    "water",
+    0.9958
+   ],
+   [
+    "owie",
+    0.0003
+   ],
+   [
+    "dirty",
+    0.0002
+   ]
+  ],
+  "candidate_p": [
+   0.9811,
+   0.9885,
+   0.9784,
+   0.9958
+  ]
+ },
+ "wet": {
+  "source": "train_landmark_files/28656/1986356456.parquet",
+  "participant_id": 28656,
+  "frames": 12,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.75,
+  "sign_median_frames": 13.0,
+  "length_gap": 1.0,
+  "candidates": 5,
+  "model": "main-reg30_T32",
+  "p": 0.9788,
+  "rank": 1,
+  "top3": [
+   [
+    "wet",
+    0.9788
+   ],
+   [
+    "outside",
+    0.0027
+   ],
+   [
+    "go",
+    0.0025
+   ]
+  ],
+  "candidate_p": [
+   0.9788,
+   0.8281,
+   0.4779,
+   0.4953,
+   0.9516
+  ]
+ },
+ "weus": {
+  "source": "train_landmark_files/27610/2510801720.parquet",
+  "participant_id": 27610,
+  "frames": 22,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.545,
+  "sign_median_frames": 22.0,
+  "length_gap": 0.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.976,
+  "rank": 1,
+  "top3": [
+   [
+    "weus",
+    0.976
+   ],
+   [
+    "feet",
+    0.0032
+   ],
+   [
+    "zipper",
+    0.0023
+   ]
+  ],
+  "candidate_p": [
+   0.976,
+   0.0001,
+   0.931
+  ]
+ },
+ "where": {
+  "source": "train_landmark_files/27610/1151135884.parquet",
+  "participant_id": 27610,
+  "frames": 18,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.611,
+  "sign_median_frames": 21.0,
+  "length_gap": 3.0,
+  "candidates": 6,
+  "model": "main-reg30_T32",
+  "p": 0.9923,
+  "rank": 1,
+  "top3": [
+   [
+    "where",
+    0.9923
+   ],
+   [
+    "shhh",
+    0.0004
+   ],
+   [
+    "talk",
+    0.0003
+   ]
+  ],
+  "candidate_p": [
+   0.8896,
+   0.9817,
+   0.961,
+   0.9689,
+   0.9256,
+   0.9923
+  ]
+ },
+ "white": {
+  "source": "train_landmark_files/28656/1349140768.parquet",
+  "participant_id": 28656,
+  "frames": 12,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.75,
+  "sign_median_frames": 16.0,
+  "length_gap": 4.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.0238,
+  "rank": 4,
+  "top3": [
+   [
+    "wet",
+    0.4567
+   ],
+   [
+    "many",
+    0.0923
+   ],
+   [
+    "wait",
+    0.0748
+   ]
+  ],
+  "candidate_p": [
+   0.001,
+   0.0012,
+   0.0238
+  ]
+ },
+ "who": {
+  "source": "train_landmark_files/29302/2142576162.parquet",
+  "participant_id": 29302,
+  "frames": 26,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.538,
+  "sign_median_frames": 22.0,
+  "length_gap": 4.0,
+  "candidates": 9,
+  "model": "main-reg30_T32",
+  "p": 0.9588,
+  "rank": 1,
+  "top3": [
+   [
+    "who",
+    0.9588
+   ],
+   [
+    "shhh",
+    0.0056
+   ],
+   [
+    "pool",
+    0.0038
+   ]
+  ],
+  "candidate_p": [
+   0.9376,
+   0.47,
+   0.8043,
+   0.5834,
+   0.0078,
+   0.6415,
+   0.6517,
+   0.6145,
+   0.9588
+  ]
+ },
+ "why": {
+  "source": "train_landmark_files/49445/2361040138.parquet",
+  "participant_id": 49445,
+  "frames": 22,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.909,
+  "sign_median_frames": 19.0,
+  "length_gap": 3.0,
+  "candidates": 5,
+  "model": "main-reg30_T32",
+  "p": 0.9844,
+  "rank": 1,
+  "top3": [
+   [
+    "why",
+    0.9844
+   ],
+   [
+    "wait",
+    0.0008
+   ],
+   [
+    "sick",
+    0.0006
+   ]
+  ],
+  "candidate_p": [
+   0.8412,
+   0.0428,
+   0.9535,
+   0.9844,
+   0.6822
+  ]
+ },
+ "will": {
+  "source": "train_landmark_files/29302/2494005079.parquet",
+  "participant_id": 29302,
+  "frames": 16,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.812,
+  "sign_median_frames": 16.0,
+  "length_gap": 0.0,
+  "candidates": 6,
+  "model": "main-reg30_T32",
+  "p": 0.9739,
+  "rank": 1,
+  "top3": [
+   [
+    "will",
+    0.9739
+   ],
+   [
+    "cry",
+    0.0035
+   ],
+   [
+    "bedroom",
+    0.0029
+   ]
+  ],
+  "candidate_p": [
+   0.9739,
+   0.0012,
+   0.9044,
+   0.0066,
+   0.9394,
+   0.9154
+  ]
+ },
+ "wolf": {
+  "source": "train_landmark_files/28656/137005994.parquet",
+  "participant_id": 28656,
+  "frames": 22,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.636,
+  "sign_median_frames": 19.0,
+  "length_gap": 3.0,
+  "candidates": 5,
+  "model": "main-reg30_T32",
+  "p": 0.9867,
+  "rank": 1,
+  "top3": [
+   [
+    "wolf",
+    0.9867
+   ],
+   [
+    "outside",
+    0.0004
+   ],
+   [
+    "sleepy",
+    0.0003
+   ]
+  ],
+  "candidate_p": [
+   0.0082,
+   0.0041,
+   0.8321,
+   0.9845,
+   0.9867
+  ]
+ },
+ "yellow": {
+  "source": "train_landmark_files/28656/2006100183.parquet",
+  "participant_id": 28656,
+  "frames": 26,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.731,
+  "sign_median_frames": 24.0,
+  "length_gap": 2.0,
+  "candidates": 4,
+  "model": "main-reg30_T32",
+  "p": 0.9968,
+  "rank": 1,
+  "top3": [
+   [
+    "yellow",
+    0.9968
+   ],
+   [
+    "same",
+    0.0002
+   ],
+   [
+    "jeans",
+    0.0001
+   ]
+  ],
+  "candidate_p": [
+   0.9896,
+   0.9264,
+   0.1915,
+   0.9968
+  ]
+ },
+ "yes": {
+  "source": "train_landmark_files/28656/645175559.parquet",
+  "participant_id": 28656,
+  "frames": 25,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.84,
+  "sign_median_frames": 22.0,
+  "length_gap": 3.0,
+  "candidates": 8,
+  "model": "main-reg30_T32",
+  "p": 0.99,
+  "rank": 1,
+  "top3": [
+   [
+    "yes",
+    0.99
+   ],
+   [
+    "carrot",
+    0.0008
+   ],
+   [
+    "mitten",
+    0.0005
+   ]
+  ],
+  "candidate_p": [
+   0.8888,
+   0.9885,
+   0.8706,
+   0.9636,
+   0.8668,
+   0.99,
+   0.0152,
+   0.0867
+  ]
+ },
+ "yesterday": {
+  "source": "train_landmark_files/28656/982935803.parquet",
+  "participant_id": 28656,
+  "frames": 21,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.857,
+  "sign_median_frames": 23.0,
+  "length_gap": 2.0,
+  "candidates": 7,
+  "model": "main-reg30_T32",
+  "p": 0.9859,
+  "rank": 1,
+  "top3": [
+   [
+    "yesterday",
+    0.9859
+   ],
+   [
+    "stay",
+    0.0006
+   ],
+   [
+    "drink",
+    0.0005
+   ]
+  ],
+  "candidate_p": [
+   0.9207,
+   0.9144,
+   0.9859,
+   0.1343,
+   0.971,
+   0.938,
+   0.9745
+  ]
+ },
+ "yourself": {
+  "source": "train_landmark_files/28656/2651000530.parquet",
+  "participant_id": 28656,
+  "frames": 13,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.769,
+  "sign_median_frames": 18.0,
+  "length_gap": 5.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.973,
+  "rank": 1,
+  "top3": [
+   [
+    "yourself",
+    0.973
+   ],
+   [
+    "later",
+    0.0009
+   ],
+   [
+    "any",
+    0.0008
+   ]
+  ],
+  "candidate_p": [
+   0.0011,
+   0.9383,
+   0.973
+  ]
+ },
+ "yucky": {
+  "source": "train_landmark_files/49445/1207220859.parquet",
+  "participant_id": 49445,
+  "frames": 25,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 1.0,
+  "sign_median_frames": 23.0,
+  "length_gap": 2.0,
+  "candidates": 12,
+  "model": "main-reg30_T32",
+  "p": 0.9734,
+  "rank": 1,
+  "top3": [
+   [
+    "yucky",
+    0.9734
+   ],
+   [
+    "sticky",
+    0.0022
+   ],
+   [
+    "say",
+    0.0013
+   ]
+  ],
+  "candidate_p": [
+   0.0774,
+   0.8722,
+   0.9539,
+   0.9286,
+   0.9734,
+   0.9249,
+   0.5167,
+   0.2965,
+   0.7696,
+   0.0001,
+   0.9551,
+   0.9635
+  ]
+ },
+ "zebra": {
+  "source": "train_landmark_files/49445/4050366465.parquet",
+  "participant_id": 49445,
+  "frames": 27,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.556,
+  "sign_median_frames": 23.0,
+  "length_gap": 4.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.9387,
+  "rank": 1,
+  "top3": [
+   [
+    "zebra",
+    0.9387
+   ],
+   [
+    "weus",
+    0.0075
+   ],
+   [
+    "police",
+    0.0051
+   ]
+  ],
+  "candidate_p": [
+   0.9387,
+   0.8824,
+   0.9319
+  ]
+ },
+ "zipper": {
+  "source": "train_landmark_files/49445/835115408.parquet",
+  "participant_id": 49445,
+  "frames": 16,
+  "fps": 30.0,
+  "aspect": 0.75,
+  "right_dominant": true,
+  "mirrored": false,
+  "hand_share": 0.875,
+  "sign_median_frames": 17.0,
+  "length_gap": 1.0,
+  "candidates": 3,
+  "model": "main-reg30_T32",
+  "p": 0.039,
+  "rank": 3,
+  "top3": [
+   [
+    "jacket",
+    0.6065
+   ],
+   [
+    "bath",
+    0.2178
+   ],
+   [
+    "zipper",
+    0.039
+   ]
+  ],
+  "candidate_p": [
+   0.039,
+   0.0002,
+   0.0047
+  ]
+ }
+}

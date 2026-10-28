@@ -128,8 +128,12 @@ class Prediction:
     hand_share: float  # share of recorded frames with a hand
     time: str = field(default_factory=lambda: datetime.now().isoformat(timespec="seconds"))
     attempt: Optional[str] = None  # file name of the saved attempt in logs/attempts/
-    mode: str = "single"  # single | sentence_manual | sentence_auto: where the UI shows it
+    mode: str = "single"  # single | sentence_manual | sentence_auto | learn: where the UI shows it
     stream_t: float = 0.0  # stream time of the clip's last frame (Sentence: the repeat rule)
+    target: Optional[str] = None  # Learn mode: the sign the user tried to show
+    probs: Optional[np.ndarray] = field(default=None, repr=False)  # all class probabilities (Learn: score)
+    clip: Optional["Clip"] = field(default=None, repr=False)  # the recorded clip (Learn: side by side)
+    kept: Tuple[int, int] = (0, 0)  # trim_idle range inside the clip (what the model saw)
 
     @property
     def sign(self) -> Optional[str]:
@@ -149,7 +153,17 @@ def classify(model, clip: Clip, aspect: float, threshold: float, top_k: int = co
     start, stop = features.trim_idle(lm, clip.fps, aspect)
     probs = model.predict_clip(lm, clip.fps, aspect)
     top = model.top_k(probs, top_k)
-    return Prediction(top=top, accepted=top[0][1] >= threshold, kept_s=round((stop - start) / clip.fps, 2), **info)
+    return Prediction(top=top, accepted=top[0][1] >= threshold, kept_s=round((stop - start) / clip.fps, 2),
+                      probs=np.asarray(probs), kept=(int(start), int(stop)), **info)
+
+
+def target_score(prediction: Prediction, labels: dict, sign: str) -> Tuple[float, int]:
+    """Learn mode: (probability of `sign`, its rank among all classes; 1 = top-1). (0, 0) without probs."""
+    if prediction.probs is None:
+        return 0.0, 0
+    index = {v: k for k, v in labels.items()}[sign]
+    p = float(prediction.probs[index])
+    return p, int((prediction.probs > p).sum()) + 1
 
 
 class PredictionLog:
@@ -157,12 +171,26 @@ class PredictionLog:
     logs/attempts/ (same format as recordings/) so attempts can be scored again with later models."""
 
     FIELDS = ["time", "mode", "top1", "p1", "top2", "p2", "top3", "p3", "accepted", "threshold", "frames", "fps",
-              "duration_s", "kept_s", "hand_share", "model", "features_version", "attempt"]
+              "duration_s", "kept_s", "hand_share", "model", "features_version", "attempt", "target"]
 
     RECORDING_KEYS = ("frames", "fps", "duration_s", "timestamps")  # written by save_recording itself
 
     def __init__(self, path=config.PREDICTIONS_LOG, attempts_dir=config.ATTEMPTS_DIR):
         self.path, self.attempts_dir = path, attempts_dir
+
+    def _upgrade_header(self) -> None:
+        """An older log with fewer columns is rewritten with the current ones (new cells empty)."""
+        if not self.path.exists():
+            return
+        with open(self.path, encoding="utf-8", newline="") as f:
+            reader = csv.DictReader(f)
+            if reader.fieldnames == self.FIELDS:
+                return
+            rows = list(reader)
+        with open(self.path, "w", encoding="utf-8", newline="") as f:
+            w = csv.DictWriter(f, self.FIELDS, extrasaction="ignore")
+            w.writeheader()
+            w.writerows(rows)
 
     def append(self, pred: Prediction, clip: Clip, mode: str, model_name: str, capture: dict) -> None:
         capture = {k: v for k, v in capture.items() if k not in self.RECORDING_KEYS}
@@ -175,11 +203,12 @@ class PredictionLog:
         row = {"time": pred.time, "mode": mode, "accepted": pred.accepted, "threshold": pred.threshold,
                "frames": pred.n_frames, "fps": pred.fps, "duration_s": pred.duration_s, "kept_s": pred.kept_s,
                "hand_share": pred.hand_share, "model": model_name,
-               "features_version": features.FEATURES_VERSION, "attempt": pred.attempt}
+               "features_version": features.FEATURES_VERSION, "attempt": pred.attempt, "target": pred.target or ""}
         for i in range(config.TOP_K):
             sign, p = pred.top[i] if i < len(pred.top) else ("", "")
             row[f"top{i + 1}"], row[f"p{i + 1}"] = sign, round(p, 4) if p != "" else ""
         self.path.parent.mkdir(parents=True, exist_ok=True)
+        self._upgrade_header()
         new = not self.path.exists()
         with open(self.path, "a", newline="", encoding="utf-8") as f:
             w = csv.DictWriter(f, self.FIELDS)

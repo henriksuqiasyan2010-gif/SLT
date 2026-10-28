@@ -48,6 +48,18 @@ FACE_FEATURES = [EYE_A, EYE_B, BROW_A, BROW_B, NOSE_BRIDGE, NOSE_BASE]
 # Lips alone look odd, so they are only drawn together with the rest of the face.
 DRAW_FACE = True
 
+
+def _display_indices():
+    face = {CHIN, *FACE_OVAL, *LIPS_OUTER, *LIPS_INNER, *(i for line in FACE_FEATURES for i in line)}
+    pose = {i for edge in POSE_EDGES for i in edge}
+    return sorted([FACE.start + i for i in face] + [POSE.start + i for i in pose]
+                  + list(range(LEFT_HAND.start, LEFT_HAND.stop)) + list(range(RIGHT_HAND.start, RIGHT_HAND.stop)))
+
+
+# Every landmark the drawing uses (indices into the 543-point frame); the Learn-mode references
+# store only these points.
+DISPLAY_INDICES = np.array(_display_indices())
+
 # One ink colour for body and face so the figure reads as one person; hands are coloured so the
 # active hand stands out. Line widths are in points at the GIF's dpi.
 INK = "#1d2126"

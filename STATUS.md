@@ -8,7 +8,7 @@
 | 3 | Training on Kaggle | done | 2026-10-27 | 90 tests pass; `models/` = main-reg30 (Transformer T=32): top-1 62.7% / top-3 76.9%, 13 fps 59.6% / 74.5% on held-out participants 27610, 28656, 29302, 49445 — below the 0.70 target, ACCEPTED by the user (per participant 71 / 68 / 47 / 65%; ensemble of the 3 trained models only +1.1 pp); baseline CNN T=32 52.6% / 69.3%; ONNX parity 8e-7; CPU latency 1.2 ms model / 2.5 ms live path; smoke test on 24 user recordings: top-1 19/24, top-3 22/24 (ensemble 17/24 -> not used); two-handed sick fails 2/2 (second hand, see CLAUDE.md); 5-fold check deferred to Phase 8 |
 | 4 | App shell and Single word mode | done | 2026-10-28 | `python -m asl.app` (camera, Holistic, main-reg30, UI hy/ru/en, default hy, Armenian font Segoe UI checked); 121 tests pass; user's 10 test attempts top-1 10/10, accepted 10/10 (airplane retake), no crash or freeze, feedback: nothing broken, UI texts correct; keep_moving_hand in the live path (val 62.7% -> 65.1%); retraining with it inside extract (FEATURES_VERSION 2, main-fv2) 64.4% -> not kept; app FPS after 5 min median 16.0 |
 | 5 | Sentence mode | done | 2026-10-29 | segmenter by wrist height: 3 sessions 5/5 segments each, 15/15 words (main-reg30); 135/144 threshold sets also 15/15 (`reports/segmenter/tuning.csv`); manual (button) mode separate from the segmenter; replace the last word from its top-3 (logged); 134 tests pass; new UI strings (63) to be reviewed by the user |
-| 6 | Learn mode | not started | | |
+| 6 | Learn mode | in progress | 2026-10-29 | 250 references (asl-references: 242 top-1, median p 0.97) in assets/reference; Learn tab with list/search/filter, player, Try + score, side-by-side; progress.json seeded: 9 of the user's 10 tested signs learned (mom 2/4); defense_set.csv; 144 tests pass; WAITING for the user: learn 5 new signs (first: dad) and give feedback |
 | 7 | Translations and Armenian audio | not started | | |
 | 7.5 | Interface design | not started | | added by the user in Phase 4: Qt styles, name and logo, icon, result display; after all three modes are ready |
 | 8 | Packaging and defense kit | not started | | |
@@ -48,7 +48,7 @@
 
 ## Current state (2026-10-29, for the next session)
 
-- Phases 0-5 done. **Next: Phase 6 (Learn mode)**; first task: CPU kernel `asl-references` (reference clip per sign; use the reference rule from CLAUDE.md).
+- Phases 0-5 done, Phase 6 waits for the user's test (learn 5 new signs, first dad). Next: Phase 7 (translations and Armenian audio).
 - `models/` = **main-reg30** (FEATURES_VERSION 1); the live path adds `keep_moving_hand`. Val 65.1% with the live rule.
 - Sentence mode: segmenter defaults in `config.SEG_*`; sessions in `recordings/sessions/` (+ `reports/user_tests/phase5_sessions.json`).
 - **Kaggle: nothing is running.** The latest outputs of `asl-preprocess` and `asl-augment-0..2` are FEATURES_VERSION 2 — rerun them before training a FEATURES_VERSION 1 model. `asl-src` holds version 1 code.
@@ -57,3 +57,5 @@
 ## Ideas for later
 
 - **Two-handed signs:** the team records 5-10 two-handed words (several takes each, our camera), and the model is fine-tuned on them together with the dataset. Then soften the second-hand rule: drop the second hand only if it is **still** (path below a threshold), not simply the one that moves less, so real two-handed signs keep both hands.
+
+| 2026-10-29 | `henriksuqiasyan/asl-references v1` | CPU: Learn-mode reference per sign (held-out candidates by the reference rule, most confident one) | done (3.5 min): 250 signs, 242 top-1, median p 0.97; `assets/reference/` |

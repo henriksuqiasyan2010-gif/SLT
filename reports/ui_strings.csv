@@ -3,7 +3,6 @@ app_title,ASL Translator,ASL թարգմանիչ,Переводчик ASL
 tab_single,Single word,Մեկ բառ,Одно слово
 tab_sentence,Sentence,Նախադասություն,Предложение
 tab_learn,Learn,Ուսուցում,Обучение
-tab_coming_soon,This mode will be added in a later version.,Այս ռեժիմը կավելացվի հաջորդ տարբերակներում։,Этот режим появится в следующих версиях.
 menu_file,&File,&Ֆայլ,&Файл
 menu_exit,E&xit,&Ելք,&Выход
 menu_settings,&Settings,&Կարգավորումներ,&Настройки
@@ -85,6 +84,34 @@ sent_help_manual,For each word press Space or «Record sign»; the words are add
 overlay_seg_idle,Waiting — raise your hand,Սպասում՝ բարձրացրեք ձեռքը,Ожидание — поднимите руку
 overlay_seg_sign,Sign,Ժեստ,Жест
 overlay_seg_pause,Pause,Դադար,Пауза
+learn_search,"Search in English, Armenian or Russian","Որոնում՝ անգլերեն, հայերեն կամ ռուսերեն","Поиск по-английски, по-армянски или по-русски"
+learn_filter_all,All signs,Բոլոր ժեստերը,Все жесты
+learn_filter_learned,Learned,Սովորած,Выученные
+learn_filter_new,Not learned yet,Դեռ չսովորած,Ещё не выученные
+learn_reference,Reference,Օրինակ,Эталон
+learn_you,You,Դուք,Вы
+learn_play,Play,Նվագարկել,Воспроизвести
+learn_pause,Pause,Դադար,Пауза
+learn_speed,Speed:,Արագություն՝,Скорость:
+learn_loop,Repeat,Կրկնել,Повторять
+learn_try,Try  [Space],Փորձել  [Բացատ],Попробовать  [Пробел]
+learn_pick,Choose a sign in the list.,Ընտրեք ժեստը ցուցակից։,Выберите жест в списке.
+learn_result_ok,Correct! «{word}»: {p}.,Ճիշտ է։ «{word}»՝ {p}։,Верно! «{word}»: {p}.
+learn_result_low,"«{word}» is the best guess, but only {p} (needs {threshold}). Try once more.","«{word}»-ը առաջինն է, բայց միայն {p} (պետք է {threshold})։ Փորձեք ևս մեկ անգամ։","«{word}» на первом месте, но только {p} (нужно {threshold}). Попробуйте ещё раз."
+learn_result_other,"Looks like «{other}» ({p_other}). «{word}»: {p}, place {rank}.","Նման է «{other}»-ին ({p_other})։ «{word}»՝ {p}, {rank}-րդ տեղ։","Похоже на «{other}» ({p_other}). «{word}»: {p}, {rank}-е место."
+learn_result_none,"No hand was seen in the recording, try again.","Տեսագրության մեջ ձեռքը չի երևացել, փորձեք նորից։","В записи не видно руки, попробуйте ещё раз."
+learn_progress,Successful attempts: {n} of {need},Հաջող փորձեր՝ {n}-ը {need}-ից,Удачных попыток: {n} из {need}
+learn_learned,Learned ✓,Սովորած է ✓,Выучено ✓
+learn_export,Export the defense set,Արտահանել պաշտպանության հավաքածուն,Экспортировать набор для защиты
+learn_exported,{n} signs saved to {path},{n} ժեստ պահպանվեց՝ {path},Сохранено жестов: {n} — {path}
+learn_no_reference,No reference for this sign.,Այս ժեստի համար օրինակ չկա։,Для этого жеста нет эталона.
+error_references,"The reference clips (assets/reference) could not be loaded, so Learn mode is not available.
+
+Details: {details}","Օրինակների ֆայլերը (assets/reference) չհաջողվեց բեռնել, ուստի Ուսուցման ռեժիմը հասանելի չէ։
+
+Մանրամասներ՝ {details}","Не удалось загрузить эталоны (assets/reference), поэтому режим обучения недоступен.
+
+Подробности: {details}"
 settings_title,Settings,Կարգավորումներ,Настройки
 settings_camera,Camera number,Տեսախցիկի համարը,Номер камеры
 settings_record_seconds,Recording length,Տեսագրման տևողությունը,Длительность записи

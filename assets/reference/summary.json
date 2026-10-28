@@ -1,0 +1,10 @@
+{
+ "signs": 250,
+ "candidates": 1354,
+ "rank1": 242,
+ "p_median": 0.97,
+ "p_below_0.4": 10,
+ "mirrored": 0,
+ "frames_median": 21.0,
+ "runtime_s": 208.4
+}

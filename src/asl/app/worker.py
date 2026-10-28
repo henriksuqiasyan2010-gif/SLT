@@ -3,7 +3,8 @@ clip -> classification -> prediction log. The UI thread only draws what the sign
 model runs here, once per clip.
 
 Modes (set_mode from the UI):
-  single, sentence_manual  the button / Space starts countdown + fixed-length recording
+  single, sentence_manual, learn
+                           the button / Space starts countdown + fixed-length recording
                            (SingleWordRecorder); the segmenter is not used at all
   sentence_auto            every frame goes to the segmenter; each finished segment is classified
 """
@@ -24,7 +25,7 @@ from asl.segmenter import Segmenter
 log = logging.getLogger(__name__)
 
 BLANK_RGB = (32, 34, 38)  # background when the source has no camera image (recordings)
-MODES = ("single", "sentence_manual", "sentence_auto")
+MODES = ("single", "sentence_manual", "sentence_auto", "learn")
 
 
 def to_qimage(bgr: np.ndarray) -> QImage:
@@ -55,6 +56,7 @@ class PipelineWorker(QObject):
         self.mode = "single"
         self._mode_requested = None
         self._record_requested = False
+        self.target = None  # Learn mode: the sign being practised (set from the UI thread)
         self._stop = False
         self.fps = 0.0
 
@@ -172,6 +174,8 @@ class PipelineWorker(QObject):
         pred = classify(self.model, clip, aspect, settings.threshold)
         pred.mode = self.mode
         pred.stream_t = float(clip.timestamps[-1]) if len(clip.timestamps) else 0.0
+        if self.mode == "learn":
+            pred.target, pred.clip = self.target, clip
         try:
             self.prediction_log.append(pred, clip, self.mode, self.model.metrics.get("preset", "?"), self._capture_info())
         except OSError:

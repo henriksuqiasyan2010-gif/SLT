@@ -77,6 +77,16 @@ FEATURES_VELOCITY_SMOOTH_SIGMA = 2.0
 # --- Reference clips (asl.reference) -----------------------------------------
 DATASET_STATS_CSV = REPORTS_DIR / "stats" / "stats.csv"  # output of the asl-stats kernel (git-ignored)
 REFERENCE_MIN_HAND_SHARE = 0.5  # the hand must be found in most frames of a reference clip
+# Learn mode references (kernel asl-references, Phase 6): candidates = held-out clips that pass the rule
+# above, right-dominant, length within REFERENCE_LENGTH_TOL of the sign's median (at least
+# REFERENCE_LENGTH_TOL_MIN frames, at least REFERENCE_MIN_CANDIDATES closest clips); the one the model
+# is most confident about is kept (user's spec).
+REFERENCE_DIR = ASSETS_DIR / "reference"
+REFERENCE_LENGTH_TOL = 0.2  # fraction of the median length
+REFERENCE_LENGTH_TOL_MIN = 3  # frames
+REFERENCE_MIN_CANDIDATES = 3
+REFERENCE_FPS = 30.0  # the dataset's frame rate (assumed, see DATASET_FPS_ASSUMED)
+VAL_PARTICIPANTS = (27610, 28656, 29302, 49445)  # held out from training (GroupKFold(5) fold 0)
 
 # --- Idle trimming (asl.features.trim_idle) -------------------------------------
 # Leading/trailing frames where no hand is visible or the hands are almost still are cut.
@@ -141,3 +151,11 @@ SEG_MAX_SIGN_S = 5.0  # a longer segment is closed and classified anyway
 SEG_PREROLL_S = 0.0  # frames kept before the start (the rise of the hand)
 SENTENCE_REPEAT_S = 1.0  # the same word is not appended twice within this time
 CORRECTIONS_LOG = LOGS_DIR / "corrections.csv"  # words replaced by the user in the sentence
+
+# --- Learn mode (asl.app.progress) ------------------------------------------------------
+PROGRESS_JSON = ROOT / "progress.json"  # the user's learning progress (git-ignored, like settings.json)
+LEARN_SUCCESSES = 3  # successful attempts (the sign is top-1 and >= the threshold) to count as learned
+DEFENSE_SET_CSV = REPORTS_DIR / "defense_set.csv"
+DEFENSE_SET_MAX = 30  # signs in the defense set (PHASES.md: 20-30)
+REFERENCE_PLAYER_FPS = 30  # redraws per second of the Learn-mode player
+LEARN_SPEEDS = (0.5, 1.0)

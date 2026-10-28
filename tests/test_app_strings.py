@@ -7,7 +7,7 @@ from asl import config
 from asl.app import strings
 
 ALLOWED_LATIN = {"ASL", "FPS", "OK", "Google", "Isolated", "Sign", "Language", "Recognition", "Kaggle", "top",
-                 "logs", "app", "log", "data", "vocab", "csv", "English"}
+                 "logs", "app", "log", "data", "vocab", "csv", "English", "assets", "reference"}  # + file paths
 
 
 @pytest.fixture(autouse=True)

@@ -17,6 +17,7 @@ from asl.app import strings
 from asl.app.fonts import armenian_font_family, missing_glyphs
 from asl.app.main_window import MainWindow
 from asl.app.pipeline import PredictionLog
+from asl.app.progress import Progress
 from asl.app.settings import AppSettings
 from asl.app.settings_dialog import SettingsDialog
 from asl.app.speech import Speaker
@@ -28,9 +29,10 @@ WAIT_MS = 15000
 
 class FakeModel:
     metrics = {"preset": "fake", "orig": {"top1": 0.627, "top3": 0.769}}
+    labels = {0: "hello", 1: "hat", 2: "cowboy", 3: "dad"}
 
     def predict_clip(self, clip, fps, aspect):
-        return np.array([0.9, 0.06, 0.04])
+        return np.array([0.9, 0.06, 0.04, 0.0])
 
     def top_k(self, probs, k):
         return list(zip(["hello", "hat", "cowboy"], probs.tolist()))[:k]
@@ -60,7 +62,9 @@ def make_window(qtbot, tmp_path):
                        settings_path=tmp_path / "settings.json",
                        prediction_log=PredictionLog(tmp_path / "predictions.csv", tmp_path / "attempts"),
                        fps_log_path=tmp_path / "fps.csv", start=start,
-                       corrections_log=tmp_path / "corrections.csv")
+                       corrections_log=tmp_path / "corrections.csv",
+                       progress=Progress.load(tmp_path / "progress.json"),
+                       defense_set_path=tmp_path / "defense_set.csv")
         qtbot.addWidget(w)
         windows.append(w)
         return w
@@ -231,4 +235,48 @@ def test_replace_last_word_from_its_alternatives(qtbot, make_window, recording, 
     assert rows[0]["predicted"] == "hello" and rows[0]["corrected_to"] == "hat"
     w.sentence_panel.btn_delete.click()
     assert w.sentence.signs() == [] and not w.sentence_panel.btn_clear.isEnabled()
+
+
+def select_learn(qtbot, w, sign):
+    w.tabs.setCurrentIndex(2)
+    w.learn_panel.search.setText(sign)
+    items = [w.learn_panel.words.item(i) for i in range(w.learn_panel.words.count())]
+    item = next(i for i in items if i.data(256) == sign)  # Qt.ItemDataRole.UserRole
+    w.learn_panel.words.setCurrentItem(item)
+    qtbot.waitUntil(lambda: w.video.image is not None and w.worker.mode == "learn", timeout=WAIT_MS)
+    w.worker.recorder.countdown_s = 0.2
+
+
+def test_learn_attempt_is_scored_shown_side_by_side_and_counted(qtbot, make_window, recording, tmp_path):
+    w = make_window(lambda: RecordedSource(recording, loop=True))
+    if "dad" not in w.references:
+        pytest.skip("no assets/reference")
+    select_learn(qtbot, w, "dad")
+    assert w.learn_panel.sign == "dad" and len(w.learn_panel.player.clips) == 1  # the reference plays
+    w.shortcut_record.activated.emit()  # Space = Try
+    qtbot.waitUntil(lambda: w.progress.get("dad").attempts == 1, timeout=WAIT_MS)
+    assert "hello" in w.learn_panel.result.text()  # "Looks like «hello»"
+    assert [c[2] for c in w.learn_panel.player.clips] == [strings.tr("learn_reference"), strings.tr("learn_you")]
+    assert w.progress.get("dad").successes == 0 and not w.progress.is_learned("dad")
+    rows = list(csv.DictReader(open(tmp_path / "predictions.csv", encoding="utf-8")))
+    assert rows[-1]["mode"] == "learn" and rows[-1]["target"] == "dad"
+    assert Progress.load(tmp_path / "progress.json").get("dad").attempts == 1  # saved at once
+
+
+def test_three_successes_mark_a_sign_learned_and_export(qtbot, make_window, recording, tmp_path):
+    w = make_window(lambda: RecordedSource(recording, loop=True))
+    if "hello" not in w.references:
+        pytest.skip("no assets/reference")
+    select_learn(qtbot, w, "hello")
+    for n in (1, 2, 3):
+        qtbot.waitUntil(lambda: w.learn_panel.btn_try.isEnabled(), timeout=WAIT_MS)
+        w.record()
+        qtbot.waitUntil(lambda: w.progress.get("hello").attempts == n, timeout=WAIT_MS)
+    assert w.progress.is_learned("hello") and w.learn_panel.progress_label.text() == strings.tr("learn_learned")
+    assert w.learn_panel.words.currentItem().text().startswith("✓")
+    w.learn_panel.filter.setCurrentIndex(1)  # learned only
+    assert [w.learn_panel.words.item(i).data(256) for i in range(w.learn_panel.words.count())] == ["hello"]
+    w.learn_panel.btn_export.click()
+    rows = list(csv.DictReader(open(tmp_path / "defense_set.csv", encoding="utf-8-sig")))
+    assert rows[0]["sign"] == "hello" and rows[0]["learned"] == "True"
 

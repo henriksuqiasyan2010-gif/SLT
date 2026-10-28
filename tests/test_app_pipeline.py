@@ -136,3 +136,23 @@ def test_full_pipeline_on_recordings_without_camera(tmp_path):
         log.append(pred, clip, "single", model.metrics["preset"], dict(src.meta))
     rows = list(csv.DictReader(open(tmp_path / "p.csv", encoding="utf-8")))
     assert len(rows) == len(recordings())
+
+
+def test_learn_scoring_with_the_real_model_on_recordings():
+    """PHASES.md Phase 6: scoring works with recordings (probability of the target and its rank)."""
+    from asl.app.pipeline import target_score
+    from asl.inference import ModelError, SignModel
+    try:
+        model = SignModel.load()
+    except ModelError:
+        pytest.skip("no model in models/")
+    files = sorted(glob.glob(str(config.RECORDINGS_DIR / "hello_*.npy")))
+    if not files:
+        pytest.skip("no recordings/hello_*.npy")
+    clip, meta = load_recording(files[0])
+    pred = classify(model, Clip(clip, np.asarray(meta["timestamps"])), recording_aspect(meta), 0.4)
+    p, rank = target_score(pred, model.labels, "hello")
+    assert rank == 1 and p == pytest.approx(pred.top[0][1]) and p >= 0.4
+    p_other, rank_other = target_score(pred, model.labels, "dad")
+    assert rank_other > 1 and p_other < p
+

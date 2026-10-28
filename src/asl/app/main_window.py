@@ -1,23 +1,29 @@
 """Main window: the video (shared by all modes) and the tabs Single word / Sentence / Learn, the
 menu, the worker thread and its signals. The current tab (and the Sentence "manual" toggle) sets
-the worker mode: single, sentence_manual (button, no segmenter) or sentence_auto (segmenter)."""
+the worker mode: single, sentence_manual (button, no segmenter), sentence_auto (segmenter) or learn
+(button; the attempt is scored against the selected sign and counted in progress.json)."""
 
+import csv
 import logging
 
 from PySide6.QtCore import Qt, QThread, Signal
 from PySide6.QtGui import QAction, QGuiApplication, QKeySequence, QShortcut
-from PySide6.QtWidgets import QHBoxLayout, QLabel, QMainWindow, QMessageBox, QTabWidget, QWidget
+from PySide6.QtWidgets import QHBoxLayout, QMainWindow, QMessageBox, QTabWidget, QWidget
 
 from asl import config
 from asl.app import settings as settings_io
 from asl.app import strings
+from asl.app.learn import LearnPanel, attempt_display_clip
+from asl.app.pipeline import target_score
+from asl.app.progress import Progress, defense_set, export_defense_set
 from asl.app.sentence import Sentence, log_correction
 from asl.app.settings_dialog import SettingsDialog
 from asl.app.speech import Speaker
 from asl.app.strings import tr
 from asl.app.widgets import ResultPanel, SentencePanel, VideoView
 from asl.app.worker import PipelineWorker
-from asl.capture import LiveSource
+from asl.capture import LiveSource, recording_aspect
+from asl.reference import ReferenceLibrary
 
 log = logging.getLogger(__name__)
 
@@ -37,7 +43,8 @@ class MainWindow(QMainWindow):
 
     def __init__(self, settings, model, vocab: dict, source_factory=None, settings_path=config.SETTINGS_JSON,
                  prediction_log=None, fps_tag: str = "app", fps_log_path=config.FPS_LOG, start: bool = True,
-                 corrections_log=config.CORRECTIONS_LOG):
+                 corrections_log=config.CORRECTIONS_LOG, progress=None, references=None,
+                 defense_set_path=config.DEFENSE_SET_CSV):
         """source_factory() -> LandmarkSource; default: the camera from the settings (LiveSource)."""
         super().__init__()
         self.settings, self.model, self.vocab = settings, model, vocab
@@ -45,6 +52,9 @@ class MainWindow(QMainWindow):
         self.source_factory = source_factory
         self.prediction_log, self.fps_tag, self.fps_log_path = prediction_log, fps_tag, fps_log_path
         self.corrections_log = corrections_log
+        self.progress = progress if progress is not None else Progress.load()
+        self.references = references if references is not None else ReferenceLibrary()
+        self.defense_set_path = defense_set_path
         self.thread = self.worker = None
         self.last_prediction = None
         self.speaker = Speaker(on_error=self.speech_failed.emit)
@@ -54,14 +64,11 @@ class MainWindow(QMainWindow):
         self.panel = ResultPanel(vocab)
         self.sentence = Sentence()
         self.sentence_panel = SentencePanel(vocab, self.sentence)
-        self.placeholders = [QLabel()]  # Learn (Phase 6)
-        for label in self.placeholders:
-            label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.learn_panel = LearnPanel(vocab, self.progress, self.references)
         self.tabs = QTabWidget()
         self.tabs.addTab(self.panel, "")
         self.tabs.addTab(self.sentence_panel, "")
-        for label in self.placeholders:
-            self.tabs.addTab(label, "")
+        self.tabs.addTab(self.learn_panel, "")
         central = QWidget()
         lay = QHBoxLayout(central)
         lay.addWidget(self.video, VIDEO_STRETCH)
@@ -92,6 +99,8 @@ class MainWindow(QMainWindow):
         for b in sp.alt_buttons:
             b.clicked.connect(lambda _=False, b=b: self.sentence_replace(b.property("sign")))
         sp.manual.toggled.connect(lambda _: self.update_mode())
+        self.learn_panel.btn_try.clicked.connect(self.record)
+        self.learn_panel.btn_export.clicked.connect(self.export_defense_set)
         self.tabs.currentChanged.connect(lambda _: self.update_mode())
         self.shortcut_record = QShortcut(QKeySequence(Qt.Key.Key_Space), self)
         self.shortcut_record.activated.connect(self.record)
@@ -135,6 +144,8 @@ class MainWindow(QMainWindow):
     def mode(self) -> str:
         if self.tabs.currentIndex() == TAB_SENTENCE:
             return "sentence_manual" if self.sentence_panel.manual.isChecked() else "sentence_auto"
+        if self.tabs.currentIndex() == TAB_LEARN:
+            return "learn"
         return "single"
 
     def update_mode(self) -> None:
@@ -144,9 +155,13 @@ class MainWindow(QMainWindow):
     # --- slots ----------------------------------------------------------------------------
     def record(self) -> None:
         """Button or Space: a fixed-length recording in Single word and in manual Sentence mode."""
-        if self.model is None or self.worker is None or self.tabs.currentIndex() == TAB_LEARN:
+        if self.model is None or self.worker is None:
             return
-        if self.mode() in ("single", "sentence_manual"):
+        if self.mode() == "learn":
+            if self.learn_panel.sign is None:
+                return
+            self.worker.target = self.learn_panel.sign
+        if self.mode() in ("single", "sentence_manual", "learn"):
             self.worker.request_record()
 
     def on_frame(self, image, overlay: dict) -> None:
@@ -156,8 +171,12 @@ class MainWindow(QMainWindow):
         idle = self.model is not None and overlay.get("phase") == "idle"
         self.panel.btn_record.setEnabled(idle)
         self.sentence_panel.btn_record.setEnabled(idle)
+        self.learn_panel.btn_try.setEnabled(idle and self.learn_panel.sign is not None)
 
     def on_prediction(self, prediction) -> None:
+        if prediction.mode == "learn":
+            self.on_learn_attempt(prediction)
+            return
         if prediction.mode == "single":
             self.last_prediction = prediction
             self.panel.show_prediction(prediction)
@@ -167,6 +186,49 @@ class MainWindow(QMainWindow):
         self.sentence.add(prediction, prediction.stream_t)
         self.sentence_panel.status_key = None if prediction.accepted else "sent_not_recognized"
         self.sentence_panel.refresh()
+
+    def on_learn_attempt(self, prediction) -> None:
+        sign = prediction.target
+        if sign is None:
+            return
+        words = self.panel.words
+        if not prediction.top:  # no hand in the recording: not counted as an attempt
+            self.learn_panel.show_attempt(tr("learn_result_none"))
+            return
+        p, rank = target_score(prediction, self.model.labels, sign)
+        success = self.progress.record(sign, p, rank, self.settings.threshold)
+        word, pct = words(sign)["en"], f"{p:.0%}"
+        if success:
+            text = tr("learn_result_ok", word=word, p=pct)
+        elif rank == 1:
+            text = tr("learn_result_low", word=word, p=pct, threshold=f"{self.settings.threshold:.0%}")
+        else:
+            other, p_other = prediction.top[0]
+            text = tr("learn_result_other", other=words(other)["en"], p_other=f"{p_other:.0%}", word=word, p=pct,
+                      rank=rank)
+        self.learn_panel.show_attempt(text, attempt_display_clip(prediction), self._attempt_aspect())
+
+    def _attempt_aspect(self) -> float:
+        """Frame width / height of the live source (camera or replayed recording)."""
+        src = self.worker.source if self.worker is not None else None
+        if src is not None and getattr(src, "frame_size", None):
+            return src.frame_size[0] / src.frame_size[1]
+        return recording_aspect(getattr(src, "meta", {})) if src is not None else config.CAMERA_ASPECT
+
+    def export_defense_set(self) -> None:
+        preset = self.model.metrics.get("preset", "") if self.model is not None else ""
+        per_sign = config.REPORTS_DIR / preset / f"{preset}_T32" / "per_sign_accuracy.csv"
+        val = {}
+        if preset and per_sign.exists():
+            with open(per_sign, encoding="utf-8") as f:
+                val = {r["sign"]: round(float(r["accuracy"]), 3) for r in csv.DictReader(f)}
+        try:
+            n = export_defense_set(defense_set(self.progress, self.vocab, val), self.defense_set_path)
+        except OSError as e:
+            log.exception("defense set export")
+            show_error(self, tr("error_internal", details=e))
+            return
+        self.statusBar().showMessage(tr("learn_exported", n=n, path=self.defense_set_path), STATUS_MS * 2)
 
     def sentence_delete_last(self) -> None:
         self.sentence.delete_last()
@@ -240,8 +302,6 @@ class MainWindow(QMainWindow):
         self.setWindowTitle(tr("app_title"))
         for i, key in enumerate(("tab_single", "tab_sentence", "tab_learn")):
             self.tabs.setTabText(i, tr(key))
-        for label in self.placeholders:
-            label.setText(tr("tab_coming_soon"))
         self.menu_file.setTitle(tr("menu_file"))
         self.act_exit.setText(tr("menu_exit"))
         self.menu_settings.setTitle(tr("menu_settings"))
@@ -250,6 +310,7 @@ class MainWindow(QMainWindow):
         self.act_about.setText(tr("menu_about"))
         self.panel.retranslate()
         self.sentence_panel.retranslate()
+        self.learn_panel.retranslate()
         self.video.update()
 
     def closeEvent(self, event):  # noqa: N802 - Qt API

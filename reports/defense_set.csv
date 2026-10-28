@@ -1,0 +1,11 @@
+﻿sign,en,hy,ru,learned,attempts,successes,success_rate,best_p,val_accuracy,seeded_from
+sick,sick,հիվանդ,больной,True,7,7,1.0,0.9754,0.914,"tests: attempts 1, recordings 4, sessions 2 (main-reg30)"
+high,high,բարձր,высоко,True,5,5,1.0,0.9576,0.904,"tests: attempts 1, recordings 2, sessions 2 (main-reg30)"
+hat,hat,գլխարկ,шапка,True,5,5,1.0,0.955,0.691,"tests: attempts 1, recordings 2, sessions 2 (main-reg30)"
+please,please,խնդրում եմ,пожалуйста,True,5,5,1.0,0.9346,0.859,"tests: attempts 1, recordings 2, sessions 2 (main-reg30)"
+hello,hello,բարև,привет,True,5,5,1.0,0.8739,0.697,"tests: attempts 1, recordings 2, sessions 2 (main-reg30)"
+airplane,airplane,ինքնաթիռ,самолёт,True,4,4,1.0,0.9598,0.893,"tests: attempts 1, recordings 2, sessions 1 (main-reg30)"
+shower,shower,ցնցուղ,душ,True,4,4,1.0,0.9598,0.806,"tests: attempts 1, recordings 2, sessions 1 (main-reg30)"
+find,find,գտնել,найти,True,4,4,1.0,0.9477,0.889,"tests: attempts 1, recordings 2, sessions 1 (main-reg30)"
+happy,happy,ուրախ,радостный,True,4,4,1.0,0.7381,0.676,"tests: attempts 1, recordings 2, sessions 1 (main-reg30)"
+mom,mom,մայրիկ,мама,False,4,2,0.5,0.8719,0.56,"tests: attempts 1, recordings 2, sessions 1 (main-reg30)"
