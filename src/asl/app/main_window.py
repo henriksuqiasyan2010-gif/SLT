@@ -18,10 +18,10 @@ from asl.app.pipeline import target_score
 from asl.app.progress import Progress, defense_set, export_defense_set
 from asl.app.sentence import Sentence, log_correction
 from asl.app.settings_dialog import SettingsDialog
-from asl.app.speech import Speaker
 from asl.app.strings import tr
 from asl.app.widgets import ResultPanel, SentencePanel, VideoView
 from asl.app.worker import PipelineWorker
+from asl.audio import AudioPlayer
 from asl.capture import LiveSource, recording_aspect
 from asl.reference import ReferenceLibrary
 
@@ -39,12 +39,12 @@ def show_error(parent, text: str) -> None:
 
 
 class MainWindow(QMainWindow):
-    speech_failed = Signal(str)  # emitted from the speech thread, shown in the UI thread
+    speech_failed = Signal(str)  # emitted from the audio thread, shown in the UI thread
 
     def __init__(self, settings, model, vocab: dict, source_factory=None, settings_path=config.SETTINGS_JSON,
                  prediction_log=None, fps_tag: str = "app", fps_log_path=config.FPS_LOG, start: bool = True,
                  corrections_log=config.CORRECTIONS_LOG, progress=None, references=None,
-                 defense_set_path=config.DEFENSE_SET_CSV):
+                 defense_set_path=config.DEFENSE_SET_CSV, audio=None):
         """source_factory() -> LandmarkSource; default: the camera from the settings (LiveSource)."""
         super().__init__()
         self.settings, self.model, self.vocab = settings, model, vocab
@@ -57,7 +57,7 @@ class MainWindow(QMainWindow):
         self.defense_set_path = defense_set_path
         self.thread = self.worker = None
         self.last_prediction = None
-        self.speaker = Speaker(on_error=self.speech_failed.emit)
+        self.audio = audio if audio is not None else AudioPlayer(vocab, on_error=self.speech_failed.emit)
         self.speech_failed.connect(lambda d: self.statusBar().showMessage(tr("error_speech", details=d)))
 
         self.video = VideoView()
@@ -251,7 +251,7 @@ class MainWindow(QMainWindow):
         self.sentence_panel.refresh()
 
     def sentence_speak(self) -> None:
-        self.speaker.speak(self.sentence.text(self.vocab, "en"))
+        self.audio.play_sentence(self.sentence.signs())
 
     def sentence_copy(self) -> None:
         QGuiApplication.clipboard().setText(self.sentence.text(self.vocab, self.sentence_panel.word_lang))
@@ -260,7 +260,7 @@ class MainWindow(QMainWindow):
     def speak(self) -> None:
         pred = self.last_prediction
         if pred is not None and pred.accepted:
-            self.speaker.speak(self.panel.words(pred.top[0][0])["en"])
+            self.audio.play_word(pred.top[0][0])
 
     def on_camera_failed(self, details: str) -> None:
         self.video.set_message("hint_camera_missing")

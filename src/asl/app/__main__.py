@@ -22,7 +22,7 @@ from asl.app.pipeline import PredictionLog
 from asl.app.strings import tr
 from asl.capture import RecordedSource
 from asl.inference import SignModel
-from asl.vocab import VocabError, load_vocab
+from asl.vocab import VocabError, load_vocab, validate_vocab
 
 log = logging.getLogger("asl.app")
 MS = 1000
@@ -64,6 +64,11 @@ def main(argv=None) -> int:
     except Exception as e:  # noqa: BLE001 - shown to the user, the window still opens
         log.exception("model")
         model, errors = None, errors + [tr("error_model", details=e)]
+    if vocab and model is not None:  # every class of the model needs its three translations
+        problems = validate_vocab(vocab, model.labels)
+        if problems:
+            log.error("vocab: %s", "; ".join(problems))
+            errors.append(tr("error_vocab", details="; ".join(problems)))
 
     source_factory = (lambda: RecordedSource(args.recording, loop=True)) if args.recording else None
     measuring = bool(args.auto_record)

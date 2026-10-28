@@ -159,3 +159,15 @@ DEFENSE_SET_CSV = REPORTS_DIR / "defense_set.csv"
 DEFENSE_SET_MAX = 30  # signs in the defense set (PHASES.md: 20-30)
 REFERENCE_PLAYER_FPS = 30  # redraws per second of the Learn-mode player
 LEARN_SPEEDS = (0.5, 1.0)
+
+# --- Audio (asl.audio, Phase 7) ---------------------------------------------------------
+# Armenian words are played from AUDIO_DIR/<sign>.wav; a missing file -> the English word via pyttsx3.
+AUDIO_DIR = ASSETS_DIR / "audio" / "hy"
+AUDIO_SCRIPT_CSV = REPORTS_DIR / "audio_script.csv"  # file name + Armenian word, for recording
+AUDIO_SENTENCE_GAP_S = 0.3  # silence between the words of a sentence
+AUDIO_SAMPLE_RATE = 44100  # recording (scripts/record_audio.py), mono 16-bit
+AUDIO_TRIM_DB = -40.0  # post-processing: leading/trailing audio quieter than peak + this is silence
+AUDIO_PAD_S = 0.05  # kept around the trimmed word
+AUDIO_TARGET_RMS_DB = -20.0  # loudness normalisation target (dBFS) ...
+AUDIO_PEAK_DB = -1.0  # ... without the peak going above this (dBFS)
+AUDIO_FRAME_S = 0.01  # window for the level used by the silence trim

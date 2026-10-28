@@ -4,9 +4,6 @@ Sentence tab works in both modes (manual = button, automatic = segmenter) indepe
 
 import csv
 import glob
-import sys
-import threading
-import types
 
 import numpy as np
 import pytest
@@ -20,7 +17,6 @@ from asl.app.pipeline import PredictionLog
 from asl.app.progress import Progress
 from asl.app.settings import AppSettings
 from asl.app.settings_dialog import SettingsDialog
-from asl.app.speech import Speaker
 from asl.capture import CameraError, LiveSource, RecordedSource
 from asl.vocab import load_vocab
 
@@ -140,45 +136,6 @@ def test_ui_font_draws_all_armenian_text(qapp):
     assert missing_glyphs(family, text) == ""
 
 
-def test_speaker_does_not_block_and_skips_while_busy(monkeypatch):
-    spoken, release = [], threading.Event()
-
-    class Engine:
-        def say(self, text):
-            spoken.append(text)
-
-        def runAndWait(self):  # noqa: N802 - pyttsx3 API
-            release.wait(5)
-
-    monkeypatch.setitem(sys.modules, "pyttsx3", types.SimpleNamespace(init=lambda: Engine()))
-    sp = Speaker()
-    assert sp.speak("hello")
-    assert not sp.speak("again")  # still speaking
-    release.set()  # the first word ends; the next call is accepted once its thread is done
-    for _ in range(100):
-        if sp.speak("again"):
-            break
-        threading.Event().wait(0.02)
-    for _ in range(100):
-        if len(spoken) == 2:
-            break
-        threading.Event().wait(0.02)
-    assert spoken == ["hello", "again"]
-
-
-def test_speaker_reports_errors(monkeypatch):
-    errors, done = [], threading.Event()
-
-    def boom():
-        raise RuntimeError("no voice")
-
-    monkeypatch.setitem(sys.modules, "pyttsx3", types.SimpleNamespace(init=boom))
-    sp = Speaker(on_error=lambda d: (errors.append(d), done.set()))
-    assert sp.speak("hello")
-    done.wait(5)
-    assert errors and "no voice" in errors[0]
-
-
 @pytest.fixture
 def session():
     files = sorted(glob.glob(str(config.SESSIONS_DIR / "session1.npy")))
@@ -280,3 +237,21 @@ def test_three_successes_mark_a_sign_learned_and_export(qtbot, make_window, reco
     rows = list(csv.DictReader(open(tmp_path / "defense_set.csv", encoding="utf-8-sig")))
     assert rows[0]["sign"] == "hello" and rows[0]["learned"] == "True"
 
+
+
+def test_armenian_text_is_drawn(qapp):
+    """PHASES.md Phase 7: an Armenian string renders (real pixels, not empty boxes)."""
+    from PySide6.QtGui import QColor, QFont, QFontMetrics, QImage, QPainter
+    family = armenian_font_family()
+    font = QFont(family, 28)
+    text = "բարև ձեզ"
+    img = QImage(400, 80, QImage.Format.Format_RGB32)
+    img.fill(QColor("white"))
+    p = QPainter(img)
+    p.setFont(font)
+    p.setPen(QColor("black"))
+    p.drawText(10, 55, text)
+    p.end()
+    dark = sum(1 for x in range(0, 400, 2) for y in range(0, 80, 2) if img.pixelColor(x, y).lightness() < 128)
+    assert dark > 50 and QFontMetrics(font).horizontalAdvance(text) > 0
+    assert missing_glyphs(family, text) == ""
