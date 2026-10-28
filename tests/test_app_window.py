@@ -34,6 +34,13 @@ class FakeModel:
         return list(zip(["hello", "hat", "cowboy"], probs.tolist()))[:k]
 
 
+@pytest.fixture(autouse=True, scope="module")
+def design(qapp):
+    """The app's fonts and stylesheet, as asl.app.__main__ sets them."""
+    from asl.app import theme
+    theme.apply(qapp)
+
+
 @pytest.fixture(autouse=True)
 def armenian_interface():
     strings.set_language("hy")
@@ -109,11 +116,13 @@ def test_language_switch_is_saved_and_applied(make_window, tmp_path):
     w = make_window(None, start=False)
     w.apply_settings(AppSettings(language="ru", sound=False))
     assert strings.language() == "ru"
-    assert w.windowTitle() == "Переводчик ASL" and w.tabs.tabText(0) == "Одно слово"
+    assert w.windowTitle() == "SLT" and w.tabs.tabText(0) == "Одно слово"
     assert w.panel.btn_record.text() == strings.STRINGS["btn_record"]["ru"]
     assert '"language": "ru"' in (tmp_path / "settings.json").read_text(encoding="utf-8")
-    w.apply_settings(AppSettings(language="en", sound=False))
-    assert w.menu_settings.title() == "&Settings"
+    assert w.header.lang.current() == "ru"
+    w.header.lang.buttons["en"].click()  # the HY / RU / EN switch in the header
+    assert strings.language() == "en" and w.header.btn_settings.toolTip() == "Settings"
+    assert '"language": "en"' in (tmp_path / "settings.json").read_text(encoding="utf-8")
 
 
 def test_settings_dialog_values(qtbot):
@@ -157,7 +166,7 @@ def test_sentence_manual_mode_uses_the_button_and_never_the_segmenter(qtbot, mak
         qtbot.waitUntil(lambda: w.sentence_panel.btn_record.isEnabled(), timeout=WAIT_MS)
     assert w.sentence.signs() == ["hello", "hello"]  # two button presses = two words, seconds apart
     assert w.worker.segmenter is None  # the automatic path was never touched
-    assert "hello" in w.sentence_panel.line.text()
+    assert w.sentence_panel.text() == "hello hello"
     rows = list(csv.DictReader(open(tmp_path / "predictions.csv", encoding="utf-8")))
     assert [r["mode"] for r in rows] == ["sentence_manual"] * 2
     assert w.panel.prediction is None  # Single word panel untouched
@@ -200,7 +209,7 @@ def select_learn(qtbot, w, sign):
     items = [w.learn_panel.words.item(i) for i in range(w.learn_panel.words.count())]
     item = next(i for i in items if i.data(256) == sign)  # Qt.ItemDataRole.UserRole
     w.learn_panel.words.setCurrentItem(item)
-    qtbot.waitUntil(lambda: w.video.image is not None and w.worker.mode == "learn", timeout=WAIT_MS)
+    qtbot.waitUntil(lambda: w.worker.mode == "learn" and w.learn_panel.you_view.live is not None, timeout=WAIT_MS)
     w.worker.recorder.countdown_s = 0.2
 
 
@@ -209,11 +218,14 @@ def test_learn_attempt_is_scored_shown_side_by_side_and_counted(qtbot, make_wind
     if "dad" not in w.references:
         pytest.skip("no assets/reference")
     select_learn(qtbot, w, "dad")
-    assert w.learn_panel.sign == "dad" and len(w.learn_panel.player.clips) == 1  # the reference plays
+    lp = w.learn_panel
+    assert lp.sign == "dad" and lp.ref_view.clip is not None and lp.playing  # the reference plays
+    assert lp.you_view.live is not None and lp.you_view.clip is None  # your attempt player shows you live
     w.shortcut_record.activated.emit()  # Space = Try
     qtbot.waitUntil(lambda: w.progress.get("dad").attempts == 1, timeout=WAIT_MS)
-    assert "hello" in w.learn_panel.result.text()  # "Looks like «hello»"
-    assert [c[2] for c in w.learn_panel.player.clips] == [strings.tr("learn_reference"), strings.tr("learn_you")]
+    assert "hello" in lp.result.text() and lp.result.property("chip") == "error"  # "Looks like hello"
+    assert lp.showing_attempt and lp.you_view.clip is not None  # the attempt replays next to the reference
+    assert (lp.ref_view.name, lp.you_view.name) == (strings.tr("learn_reference"), strings.tr("learn_you"))
     assert w.progress.get("dad").successes == 0 and not w.progress.is_learned("dad")
     rows = list(csv.DictReader(open(tmp_path / "predictions.csv", encoding="utf-8")))
     assert rows[-1]["mode"] == "learn" and rows[-1]["target"] == "dad"
@@ -229,9 +241,13 @@ def test_three_successes_mark_a_sign_learned_and_export(qtbot, make_window, reco
         qtbot.waitUntil(lambda: w.learn_panel.btn_try.isEnabled(), timeout=WAIT_MS)
         w.record()
         qtbot.waitUntil(lambda: w.progress.get("hello").attempts == n, timeout=WAIT_MS)
-    assert w.progress.is_learned("hello") and w.learn_panel.progress_label.text() == strings.tr("learn_learned")
-    assert w.learn_panel.words.currentItem().text().startswith("✓")
-    w.learn_panel.filter.setCurrentIndex(1)  # learned only
+    lp = w.learn_panel
+    assert w.progress.is_learned("hello")
+    assert lp.progress_label.text() == strings.tr("learn_progress_done", n=3)
+    assert lp.result.property("chip") == "success"
+    lp.search.setText("")
+    assert lp.count.text() == strings.tr("learn_count", n=1, total=len(load_vocab()))
+    lp.filter.set_current("learned")
     assert [w.learn_panel.words.item(i).data(256) for i in range(w.learn_panel.words.count())] == ["hello"]
     w.learn_panel.btn_export.click()
     rows = list(csv.DictReader(open(tmp_path / "defense_set.csv", encoding="utf-8-sig")))
@@ -255,3 +271,39 @@ def test_armenian_text_is_drawn(qapp):
     dark = sum(1 for x in range(0, 400, 2) for y in range(0, 80, 2) if img.pixelColor(x, y).lightness() < 128)
     assert dark > 50 and QFontMetrics(font).horizontalAdvance(text) > 0
     assert missing_glyphs(family, text) == ""
+
+
+def test_design_fonts_logo_and_shadow_flag(qapp, monkeypatch):
+    """Phase 7.5: bundled Rubik + Noto Sans Armenian, Armenian drawn with Noto, logo / icon files, the
+    shadow flag in config, and the record button grows with a long label instead of cutting it."""
+    from PySide6.QtGui import QFontInfo
+    from asl.app import theme, ui_kit
+    families = theme.load_fonts()
+    assert {"Rubik", "Noto Sans Armenian"} <= set(families)
+    assert armenian_font_family() == "Noto Sans Armenian"
+    assert QFontInfo(theme.font(16, 800)).family() == "Rubik"
+    assert missing_glyphs("Noto Sans Armenian", "".join(v["hy"] for v in load_vocab().values())) == ""
+    for name in ("slt_logo.png", "slt_icon.png", "slt.ico"):
+        assert (config.BRANDING_DIR / name).exists(), name
+    card = ui_kit.Card()
+    assert card.graphicsEffect() is not None
+    monkeypatch.setattr(config, "UI_SHADOWS", False)
+    assert ui_kit.Card().graphicsEffect() is None
+    short, long = ui_kit.button("OK", "primary"), ui_kit.button("Տեսագրել ժեստը, խնդրում եմ, հիմա", "primary")
+    assert long.minimumSizeHint().width() > short.minimumSizeHint().width()
+
+
+
+def test_long_armenian_labels_are_not_cut(qtbot, make_window):
+    """Phase 7.5: buttons widen with longer Armenian texts instead of cutting them."""
+    from PySide6.QtWidgets import QPushButton
+    strings.set_language("hy")
+    w = make_window(None, start=False)
+    w.resize(1280, 800)
+    w.show()
+    for tab in range(3):
+        w.tabs.setCurrentIndex(tab)
+        qtbot.wait(100)  # let the layout settle
+        for b in w.findChildren(QPushButton):
+            if b.isVisible() and b.text():
+                assert b.width() >= b.fontMetrics().horizontalAdvance(b.text()), (tab, b.text())

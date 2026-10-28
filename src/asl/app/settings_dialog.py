@@ -36,6 +36,8 @@ class SettingsDialog(QDialog):
         self.sound.setChecked(settings.sound)
         self.mirror = QCheckBox()
         self.mirror.setChecked(settings.mirrored_preview)
+        self.camera_picture = QCheckBox()
+        self.camera_picture.setChecked(settings.show_camera)
         self.language = QComboBox()
         for lang in config.UI_LANGUAGES:
             self.language.addItem(tr(f"lang_name_{lang}"), lang)
@@ -48,6 +50,7 @@ class SettingsDialog(QDialog):
         form.addRow(tr("settings_threshold"), self.threshold)
         form.addRow(tr("settings_sound"), self.sound)
         form.addRow(tr("settings_mirror"), self.mirror)
+        form.addRow(tr("settings_show_camera"), self.camera_picture)
         buttons = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel)
         buttons.button(QDialogButtonBox.StandardButton.Ok).setText(tr("btn_ok"))
         buttons.button(QDialogButtonBox.StandardButton.Cancel).setText(tr("btn_cancel"))
@@ -59,5 +62,5 @@ class SettingsDialog(QDialog):
         """The values in the dialog (validated)."""
         return replace(self.original, camera_index=self.camera.value(), record_seconds=self.record.value(),
                        threshold=self.threshold.value() / PERCENT, sound=self.sound.isChecked(),
-                       mirrored_preview=self.mirror.isChecked(),
+                       mirrored_preview=self.mirror.isChecked(), show_camera=self.camera_picture.isChecked(),
                        language=self.language.currentData()).validated()

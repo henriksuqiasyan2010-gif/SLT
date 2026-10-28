@@ -1,15 +1,9 @@
 ﻿key,en,hy,ru
-app_title,ASL Translator,ASL թարգմանիչ,Переводчик ASL
+app_title,SLT,SLT,SLT
 tab_single,Single word,Մեկ բառ,Одно слово
 tab_sentence,Sentence,Նախադասություն,Предложение
 tab_learn,Learn,Ուսուցում,Обучение
-menu_file,&File,&Ֆայլ,&Файл
-menu_exit,E&xit,&Ելք,&Выход
-menu_settings,&Settings,&Կարգավորումներ,&Настройки
-menu_settings_open,&Settings…,&Կարգավորումներ…,&Настройки…
-menu_help,&Help,&Օգնություն,&Справка
-menu_about,&About,&Ծրագրի մասին,&О программе
-about_title,About ASL Translator,ASL թարգմանչի մասին,О программе «Переводчик ASL»
+about_title,About SLT,SLT ծրագրի մասին,О программе SLT
 about_text,"Recognizes {n_signs} isolated signs of American Sign Language (ASL) from the webcam and shows them in English, Armenian and Russian.
 
 Model: {model}. Accuracy on people it has never seen: top-1 {top1}, top-3 {top3}.
@@ -23,20 +17,12 @@ Data: Google — Isolated Sign Language Recognition (Kaggle).","Տեսախցիկ
 Модель: {model}. Точность на людях, которых модель не видела: top-1 {top1}, top-3 {top3}.
 
 Данные: Google — Isolated Sign Language Recognition (Kaggle)."
-btn_record,Record sign  [Space],Տեսագրել ժեստը  [Բացատ],Записать жест  [Пробел]
+btn_record,Record sign,Տեսագրել ժեստը,Записать жест
 btn_speak,Speak,Արտասանել,Произнести
-hint_press_record,"Press Space or «Record sign», then show one sign after the countdown.","Սեղմեք Բացատ կամ «Տեսագրել ժեստը», ապա հետհաշվարկից հետո ցույց տվեք մեկ ժեստ։",Нажмите пробел или «Записать жест» и после отсчёта покажите один жест.
 overlay_get_ready,Get ready,Պատրաստվեք,Приготовьтесь
 overlay_recording,Recording {left:.1f} s,Տեսագրում՝ {left:.1f} վ,Запись: {left:.1f} с
-overlay_processing,Recognizing…,Ճանաչվում է…,Распознаю…
-overlay_fps,FPS {fps:.0f},FPS {fps:.0f},FPS {fps:.0f}
-result_empty,The result will appear here.,Արդյունքը կհայտնվի այստեղ։,Здесь появится результат.
-result_not_recognized,"Not recognized, try again","Չհաջողվեց ճանաչել, փորձեք նորից","Не распознано, попробуйте ещё раз"
-result_best_guess,Closest: {word} ({p}),Ամենամոտը՝ {word} ({p}),Ближе всего: {word} ({p})
-result_confidence,Confidence: {p},Վստահություն՝ {p},Уверенность: {p}
+result_empty,Press Space and show a sign: the word will appear here.,Սեղմիր Բացատ և ցույց տուր ժեստը․ բառը կհայտնվի այստեղ։,Нажми Пробел и покажи жест — слово появится здесь.
 result_other,Other guesses,Այլ տարբերակներ,Другие варианты
-hint_no_hands,Hands not visible,Ձեռքերը չեն երևում,Руки не видны
-hint_no_shoulders,Shoulders not visible — move back,"Ուսերը չեն երևում, մի փոքր հետ գնացեք",Плечи не видны — отодвиньтесь
 hint_camera_missing,Camera not found,Տեսախցիկը չի գտնվել,Камера не найдена
 hint_camera_starting,Starting the camera…,Տեսախցիկը միանում է…,Камера запускается…
 error_title,Error,Սխալ,Ошибка
@@ -70,38 +56,27 @@ The details are in logs/app.log.","Ինչ-որ բան սխալ գնաց՝ {detai
 Подробности в logs/app.log."
 error_speech,Speech is not available: {details},Արտասանությունը հասանելի չէ՝ {details},Озвучивание недоступно: {details}
 sent_empty,The words will appear here.,Բառերը կհայտնվեն այստեղ։,Здесь появятся слова.
-sent_lang_label,Show the words in:,Բառերը ցույց տալ՝,Показывать слова на:
 sent_manual,Record each word with the button,Յուրաքանչյուր բառը տեսագրել կոճակով,Записывать каждое слово по кнопке
-sent_alternatives,Replace the last word:,Փոխարինել վերջին բառը՝,Заменить последнее слово:
+sent_alternatives,Wrong word? Tap the right one:,Սխա՞լ բառ է։ Սեղմիր ճիշտը՝,Не то слово? Нажми правильное:
 sent_delete_last,Delete last,Ջնջել վերջինը,Удалить последнее
 sent_clear,Clear,Մաքրել,Очистить
-sent_speak,Speak sentence,Արտասանել նախադասությունը,Произнести предложение
+sent_speak,Speak,Արտասանել,Произнести
 sent_copy,Copy,Պատճենել,Копировать
 sent_copied,The sentence is copied.,Նախադասությունը պատճենված է։,Предложение скопировано.
-sent_not_recognized,"The last sign was not recognized, try again.","Վերջին ժեստը չճանաչվեց, փորձեք նորից։","Последний жест не распознан, попробуйте ещё раз."
-sent_help_auto,Lower your hands between signs: a sign starts when the hand goes up and ends when it goes down.,"Ժեստերի միջև իջեցրեք ձեռքերը։ Ժեստը սկսվում է, երբ ձեռքը բարձրանում է, և ավարտվում, երբ իջնում է։","Между жестами опускайте руки: жест начинается, когда рука поднимается, и заканчивается, когда она опускается."
-sent_help_manual,For each word press Space or «Record sign»; the words are added to the line.,"Յուրաքանչյուր բառի համար սեղմեք Բացատ կամ «Տեսագրել ժեստը», բառերը կավելանան տողին։",Для каждого слова нажмите пробел или «Записать жест» — слова добавятся в строку.
-overlay_seg_idle,Waiting — raise your hand,Սպասում՝ բարձրացրեք ձեռքը,Ожидание — поднимите руку
-overlay_seg_sign,Sign,Ժեստ,Жест
-overlay_seg_pause,Pause,Դադար,Пауза
-learn_search,"Search in English, Armenian or Russian","Որոնում՝ անգլերեն, հայերեն կամ ռուսերեն","Поиск по-английски, по-армянски или по-русски"
-learn_filter_all,All signs,Բոլոր ժեստերը,Все жесты
+sent_not_recognized,"The last sign was not recognized, try again.","Վերջին ժեստը չճանաչվեց, փորձիր նորից։","Последний жест не распознан, попробуй ещё раз."
+learn_filter_all,All,Բոլորը,Все
 learn_filter_learned,Learned,Սովորած,Выученные
-learn_filter_new,Not learned yet,Դեռ չսովորած,Ещё не выученные
+learn_filter_new,Not learned,Չսովորած,Не выученные
 learn_reference,Reference,Օրինակ,Эталон
-learn_you,You,Դուք,Вы
-learn_play,Play,Նվագարկել,Воспроизвести
-learn_pause,Pause,Դադար,Пауза
-learn_speed,Speed:,Արագություն՝,Скорость:
-learn_loop,Repeat,Կրկնել,Повторять
-learn_try,Try  [Space],Փորձել  [Բացատ],Попробовать  [Пробел]
-learn_pick,Choose a sign in the list.,Ընտրեք ժեստը ցուցակից։,Выберите жест в списке.
-learn_result_ok,Correct! «{word}»: {p}.,Ճիշտ է։ «{word}»՝ {p}։,Верно! «{word}»: {p}.
-learn_result_low,"«{word}» is the best guess, but only {p} (needs {threshold}). Try once more.","«{word}»-ը առաջինն է, բայց միայն {p} (պետք է {threshold})։ Փորձեք ևս մեկ անգամ։","«{word}» на первом месте, но только {p} (нужно {threshold}). Попробуйте ещё раз."
-learn_result_other,"Looks like «{other}» ({p_other}). «{word}»: {p}, place {rank}.","Նման է «{other}»-ին ({p_other})։ «{word}»՝ {p}, {rank}-րդ տեղ։","Похоже на «{other}» ({p_other}). «{word}»: {p}, {rank}-е место."
-learn_result_none,"No hand was seen in the recording, try again.","Տեսագրության մեջ ձեռքը չի երևացել, փորձեք նորից։","В записи не видно руки, попробуйте ещё раз."
+learn_you,Your attempt,Քո փորձը,Твоя попытка
+learn_try,Try,Փորձել,Попробовать
+learn_pick,Choose a sign in the list,Ընտրիր ժեստը ցուցակից,Выбери слово в списке
+learn_result_ok,Correct! {word} — {p},Ճիշտ է։ {word}՝ {p},Верно! {word} — {p}
+learn_result_low,"{word} is first, but only {p} (needs {threshold}). Try once more.","{word}-ը առաջինն է, բայց միայն {p} (պետք է {threshold})։ Փորձիր ևս մեկ անգամ։","{word} на первом месте, но только {p} (нужно {threshold}). Попробуй ещё раз."
+learn_result_other,"Looks like {other} ({p_other}). {word}: {p}, place {rank}","Նման է {other}-ին ({p_other})։ {word}՝ {p}, {rank}-րդ տեղ","Похоже на {other} ({p_other}). {word}: {p}, {rank}-е место"
+learn_result_none,"No hand was seen in the recording, try again","Տեսագրության մեջ ձեռքը չի երևացել, փորձիր նորից","В записи не видно руки, попробуй ещё раз"
 learn_progress,Successful attempts: {n} of {need},Հաջող փորձեր՝ {n}-ը {need}-ից,Удачных попыток: {n} из {need}
-learn_learned,Learned ✓,Սովորած է ✓,Выучено ✓
+learn_learned,Learned,Սովորած,Выучено
 learn_export,Export the defense set,Արտահանել պաշտպանության հավաքածուն,Экспортировать набор для защиты
 learn_exported,{n} signs saved to {path},{n} ժեստ պահպանվեց՝ {path},Сохранено жестов: {n} — {path}
 learn_no_reference,No reference for this sign.,Այս ժեստի համար օրինակ չկա։,Для этого жеста нет эталона.
@@ -125,3 +100,28 @@ btn_cancel,Cancel,Չեղարկել,Отмена
 lang_name_hy,Հայերեն,Հայերեն,Հայերեն
 lang_name_ru,Русский,Русский,Русский
 lang_name_en,English,English,English
+tip_settings,Settings,Կարգավորումներ,Настройки
+tip_help,About the program,Ծրագրի մասին,О программе
+key_space,Space,Բացատ,Пробел
+hint_space,Press {key} and show a sign,Սեղմիր {key} և ցույց տուր ժեստը,Нажми {key} и покажи жест
+hint_lower_hand,Lower your hand between signs,Ժեստերի միջև իջեցրու ձեռքը,Между жестами опускай руку
+chip_fps,{fps} fps,{fps} կ/վ,{fps} к/с
+chip_shoulders_ok,Shoulders visible,Ուսերը երևում են,Плечи видны
+chip_hand_ok,Hand visible,Ձեռքը երևում է,Рука видна
+chip_shoulders_missing,Shoulders not visible — move back,"Ուսերը չեն երևում, մի փոքր հետ գնա",Плечи не видны — отодвинься
+chip_hand_missing,Hand not visible,Ձեռքը չի երևում,Рука не видна
+seg_idle,Waiting,Սպասում,Ожидание
+seg_sign,Sign,Ժեստ,Жест
+seg_pause,Pause,Դադար,Пауза
+res_recognized,Recognized,Ճանաչվեց,Распознано
+res_not_recognized,Not recognized — try again,"Չճանաչվեց, փորձիր նորից",Не распознано — попробуй ещё раз
+res_confidence,Confidence,Վստահություն,Уверенность
+sent_manual_note,More reliable on stage: each word with Space,Ելույթի ժամանակ ավելի հուսալի է՝ յուրաքանչյուր բառ Բացատով,Надёжнее на выступлении: каждое слово — по Пробелу
+learn_search_label,Find a sign,Ժեստի որոնում,Поиск слова
+learn_search_placeholder,"dad, папа, հայրիկ…","dad, папа, հայրիկ…","dad, папа, հայրիկ…"
+learn_count,Learned: {n} of {total},Սովորած՝ {n}-ը {total}-ից,Выучено: {n} из {total}
+learn_sync,Reference and attempt play in sync,Օրինակն ու փորձը ընթանում են համաժամ,Эталон и попытка идут синхронно
+learn_ready,"Watch the reference, then press «Try»","Դիտիր օրինակը, ապա սեղմիր «Փորձել»",Посмотри эталон и нажми «Попробовать»
+learn_progress_one_left,Successful attempts: {n} of {need} — one more and the sign is learned,"Հաջող փորձեր՝ {n}-ը {need}-ից։ Եվս մեկը, և ժեստը սովորած է","Удачных попыток: {n} из {need} — ещё одна, и слово выучено"
+learn_progress_done,Learned! Successful attempts: {n},Սովորած է։ Հաջող փորձեր՝ {n},Выучено! Удачных попыток: {n}
+settings_show_camera,Show the camera picture under the skeleton,Ցույց տալ տեսախցիկի պատկերը կմախքի տակ,Показывать изображение камеры под скелетом

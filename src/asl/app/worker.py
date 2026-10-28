@@ -16,15 +16,15 @@ import numpy as np
 from PySide6.QtCore import QObject, Signal, Slot
 from PySide6.QtGui import QImage
 
-from asl import config, skeleton
+from asl import config
 from asl.app.pipeline import Clip, HintTracker, PredictionLog, SingleWordRecorder, classify, frame_status
+from asl.app.widgets import FramePayload
 from asl.capture import CameraError, recording_aspect
 from asl.fpslog import FpsLog
 from asl.segmenter import Segmenter
 
 log = logging.getLogger(__name__)
 
-BLANK_RGB = (32, 34, 38)  # background when the source has no camera image (recordings)
 MODES = ("single", "sentence_manual", "sentence_auto", "learn")
 
 
@@ -35,7 +35,7 @@ def to_qimage(bgr: np.ndarray) -> QImage:
 
 
 class PipelineWorker(QObject):
-    frame_ready = Signal(QImage, dict)  # preview with skeleton; overlay: phase, count/left, hints, fps
+    frame_ready = Signal(object, dict)  # widgets.FramePayload; overlay: mode, phase, count/left, status, hints, fps
     prediction_ready = Signal(object)  # pipeline.Prediction
     camera_failed = Signal(str)  # details
     failed = Signal(str)  # unexpected error, details
@@ -75,18 +75,6 @@ class PipelineWorker(QObject):
         self._stop = True
         if self.source is not None:
             self.source.close()
-
-    def _preview(self, frame, mirrored: bool) -> np.ndarray:
-        import cv2
-
-        if frame.image is not None:
-            img = skeleton.draw_cv2(frame.image.copy(), frame.landmarks)
-            mirror_input = getattr(self.source, "mirror_input", config.MIRROR_INPUT)
-            return cv2.flip(img, 1) if mirrored != mirror_input else img
-        w = int(self._capture_info().get("frame_width") or config.CAMERA_WIDTH)
-        h = int(self._capture_info().get("frame_height") or config.CAMERA_HEIGHT)
-        img = skeleton.draw_cv2(np.full((h, w, 3), BLANK_RGB[::-1], np.uint8), frame.landmarks)
-        return cv2.flip(img, 1) if mirrored else img
 
     def _capture_info(self) -> dict:
         """Capture settings saved with every attempt (camera settings or the replayed recording)."""
@@ -139,7 +127,9 @@ class PipelineWorker(QObject):
                     clip = self.recorder.feed(frame.landmarks, frame.timestamp, now)
                     overlay = self.recorder.overlay(now)
                 overlay = {**overlay, "mode": self.mode, "hints": hints, "fps": self.fps}
-                self.frame_ready.emit(to_qimage(self._preview(frame, settings.mirrored_preview)), overlay)
+                image = to_qimage(frame.image) if settings.show_camera and frame.image is not None else None
+                self.frame_ready.emit(FramePayload(frame.landmarks, self._aspect(frame), image),
+                                      {**overlay, "status": {"hands": status.hands, "shoulders": status.shoulders}})
                 if clip is not None:
                     self._classify(clip, self._aspect(frame), settings)
             else:  # the source ended (a replayed recording): a sign still open is classified too

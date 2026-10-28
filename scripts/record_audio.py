@@ -26,7 +26,7 @@ from PySide6.QtWidgets import QApplication, QLabel, QVBoxLayout, QWidget  # noqa
 import numpy as np  # noqa: E402
 
 from asl import audio, config  # noqa: E402
-from asl.app.fonts import apply_ui_font  # noqa: E402
+from asl.app import theme  # noqa: E402
 from asl.vocab import load_vocab  # noqa: E402
 
 WORD_POINT_SIZE = 48
@@ -128,7 +128,7 @@ def main():
         print("every sign already has a file (use --all to record again)")
         return 0
     app = QApplication(sys.argv[:1])
-    apply_ui_font(app)
+    theme.apply(app)
     w = Recorder(vocab, signs)
     w.show()
     return app.exec()

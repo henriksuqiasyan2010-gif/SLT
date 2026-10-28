@@ -133,7 +133,7 @@ MIN_CLIP_FRAMES = 4  # fewer recorded frames than this -> "not recognized" witho
 MIN_HAND_S = 0.2
 HINT_MISSING_S = 1.0  # a "hands / shoulders not visible" hint appears after this long without them
 FPS_SMOOTHING = 0.1  # weight of the newest frame in the displayed FPS (exponential average)
-UI_FONT_CANDIDATES = ("Segoe UI", "Sylfaen", "Arial")  # first one with Armenian glyphs is used
+UI_FONT_CANDIDATES = ("Noto Sans Armenian", "Segoe UI", "Sylfaen", "Arial")  # first with Armenian glyphs (bundled first)
 UI_STRINGS_CSV = REPORTS_DIR / "ui_strings.csv"
 PREDICTIONS_LOG = LOGS_DIR / "predictions.csv"
 ATTEMPTS_DIR = LOGS_DIR / "attempts"  # every recorded attempt (.npy + .meta.json) for later scoring
@@ -171,3 +171,8 @@ AUDIO_PAD_S = 0.05  # kept around the trimmed word
 AUDIO_TARGET_RMS_DB = -20.0  # loudness normalisation target (dBFS) ...
 AUDIO_PEAK_DB = -1.0  # ... without the peak going above this (dBFS)
 AUDIO_FRAME_S = 0.01  # window for the level used by the silence trim
+
+# --- Interface design "Фиолетовый вечер" (asl.app.theme, Phase 7.5) ---------------------
+FONTS_DIR = ASSETS_DIR / "fonts"  # Rubik + Noto Sans Armenian (variable TTF, SIL OFL), loaded at start-up
+BRANDING_DIR = ASSETS_DIR / "branding"  # SLT logo / icon (made by asl.app.theme.save_branding)
+UI_SHADOWS = True  # soft shadows under cards and yellow buttons (QGraphicsDropShadowEffect)

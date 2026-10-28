@@ -1,25 +1,28 @@
-"""Main window: the video (shared by all modes) and the tabs Single word / Sentence / Learn, the
-menu, the worker thread and its signals. The current tab (and the Sentence "manual" toggle) sets
-the worker mode: single, sentence_manual (button, no segmenter), sentence_auto (segmenter) or learn
-(button; the attempt is scored against the selected sign and counted in progress.json)."""
+"""Main window ("Фиолетовый вечер"): the header (logo, tabs, HY / RU / EN, settings, help), the live
+video on the left (Single word, Sentence) and the page of the current tab; the Learn page takes the
+whole width. The current tab (and the Sentence "manual" toggle) sets the worker mode: single,
+sentence_manual (button, no segmenter), sentence_auto (segmenter) or learn (button; the attempt is
+scored against the selected sign and counted in progress.json)."""
 
 import csv
 import logging
+from dataclasses import replace
 
 from PySide6.QtCore import Qt, QThread, Signal
-from PySide6.QtGui import QAction, QGuiApplication, QKeySequence, QShortcut
-from PySide6.QtWidgets import QHBoxLayout, QMainWindow, QMessageBox, QTabWidget, QWidget
+from PySide6.QtGui import QGuiApplication, QKeySequence, QShortcut
+from PySide6.QtWidgets import QHBoxLayout, QMainWindow, QMessageBox, QStackedWidget, QVBoxLayout, QWidget
 
 from asl import config
 from asl.app import settings as settings_io
-from asl.app import strings
+from asl.app import strings, theme
+from asl.app.header import Header, TabSwitch
 from asl.app.learn import LearnPanel, attempt_display_clip
 from asl.app.pipeline import target_score
 from asl.app.progress import Progress, defense_set, export_defense_set
 from asl.app.sentence import Sentence, log_correction
 from asl.app.settings_dialog import SettingsDialog
 from asl.app.strings import tr
-from asl.app.widgets import ResultPanel, SentencePanel, VideoView
+from asl.app.widgets import PANEL_WIDTH, ResultPanel, SentencePanel, VideoView
 from asl.app.worker import PipelineWorker
 from asl.audio import AudioPlayer
 from asl.capture import LiveSource, recording_aspect
@@ -27,15 +30,31 @@ from asl.reference import ReferenceLibrary
 
 log = logging.getLogger(__name__)
 
-VIDEO_STRETCH, PANEL_STRETCH = 3, 2
 WORKER_STOP_TIMEOUT_MS = 5000
 TAB_SINGLE, TAB_SENTENCE, TAB_LEARN = 0, 1, 2
 STATUS_MS = 3000  # status bar messages
+PAGE_MARGINS = (26, 22, 26, 22)
+GAP = 22
+QWIDGETSIZE_MAX = 16777215
+PANEL_MAX_WIDTH = int(PANEL_WIDTH * 1.25)  # a long translation may widen the right column this much
 
 
 def show_error(parent, text: str) -> None:
     """Every error dialog of the app goes through here (tests replace QMessageBox.critical)."""
     QMessageBox.critical(parent, tr("error_title"), text)
+
+
+def about_box(window) -> QMessageBox:
+    """"About SLT": the logo, what the app does, the model's accuracy, the data credit."""
+    m = window.model.metrics if window.model is not None else {}
+    orig = m.get("orig", {})
+    pct = (lambda v: f"{v:.1%}" if isinstance(v, (int, float)) else "—")  # noqa: E731
+    box = QMessageBox(window)
+    box.setWindowTitle(tr("about_title"))
+    box.setIconPixmap(theme.logo_pixmap())
+    box.setText(tr("about_text", n_signs=config.NUM_CLASSES, model=m.get("preset", "—"),
+                   top1=pct(orig.get("top1")), top3=pct(orig.get("top3"))))
+    return box
 
 
 class MainWindow(QMainWindow):
@@ -57,37 +76,39 @@ class MainWindow(QMainWindow):
         self.defense_set_path = defense_set_path
         self.thread = self.worker = None
         self.last_prediction = None
+        self._idle = None  # last record-button state: changed only when it changes (the buttons have shadows)
         self.audio = audio if audio is not None else AudioPlayer(vocab, on_error=self.speech_failed.emit)
         self.speech_failed.connect(lambda d: self.statusBar().showMessage(tr("error_speech", details=d)))
 
+        self.header = Header()
         self.video = VideoView()
         self.panel = ResultPanel(vocab)
         self.sentence = Sentence()
         self.sentence_panel = SentencePanel(vocab, self.sentence)
         self.learn_panel = LearnPanel(vocab, self.progress, self.references)
-        self.tabs = QTabWidget()
-        self.tabs.addTab(self.panel, "")
-        self.tabs.addTab(self.sentence_panel, "")
-        self.tabs.addTab(self.learn_panel, "")
-        central = QWidget()
-        lay = QHBoxLayout(central)
-        lay.addWidget(self.video, VIDEO_STRETCH)
-        lay.addWidget(self.tabs, PANEL_STRETCH)
-        self.setCentralWidget(central)
+        self.stack = QStackedWidget()
+        for page in (self.panel, self.sentence_panel, self.learn_panel):
+            self.stack.addWidget(page)
+        self.tabs = TabSwitch(self.header.tabs, self.stack, self)
+        self.header.tabs.set_current("tab_single")
+        root = QWidget()
+        root.setObjectName("root")
+        outer = QVBoxLayout(root)
+        outer.setContentsMargins(*PAGE_MARGINS)
+        outer.setSpacing(GAP)
+        outer.addWidget(self.header)
+        content = QHBoxLayout()
+        content.setSpacing(GAP)
+        content.addWidget(self.video, 1)
+        content.addWidget(self.stack)
+        outer.addLayout(content, 1)
+        self.setCentralWidget(root)
+        self.setWindowIcon(theme.app_icon())
 
-        self.menu_file = self.menuBar().addMenu("")
-        self.act_exit = QAction(self)
-        self.act_exit.triggered.connect(self.close)
-        self.menu_file.addAction(self.act_exit)
-        self.menu_settings = self.menuBar().addMenu("")
-        self.act_settings = QAction(self)
-        self.act_settings.triggered.connect(self.open_settings)
-        self.menu_settings.addAction(self.act_settings)
-        self.menu_help = self.menuBar().addMenu("")
-        self.act_about = QAction(self)
-        self.act_about.triggered.connect(self.show_about)
-        self.menu_help.addAction(self.act_about)
-
+        self.header.lang.set_current(settings.language)
+        self.header.lang.changed.connect(lambda lang: self.apply_settings(replace(self.settings, language=lang)))
+        self.header.btn_settings.clicked.connect(self.open_settings)
+        self.header.btn_help.clicked.connect(self.show_about)
         self.panel.btn_record.clicked.connect(self.record)
         self.panel.btn_speak.clicked.connect(self.speak)
         sp = self.sentence_panel
@@ -101,11 +122,11 @@ class MainWindow(QMainWindow):
         sp.manual.toggled.connect(lambda _: self.update_mode())
         self.learn_panel.btn_try.clicked.connect(self.record)
         self.learn_panel.btn_export.clicked.connect(self.export_defense_set)
-        self.tabs.currentChanged.connect(lambda _: self.update_mode())
+        self.tabs.currentChanged.connect(self.on_tab)
         self.shortcut_record = QShortcut(QKeySequence(Qt.Key.Key_Space), self)
         self.shortcut_record.activated.connect(self.record)
-        self.panel.btn_record.setEnabled(model is not None)
-        sp.btn_record.setEnabled(model is not None)
+        self.set_record_enabled(model is not None)
+        self.on_tab(TAB_SINGLE)
         self.retranslate()
         if start:
             self.start_worker()
@@ -152,9 +173,16 @@ class MainWindow(QMainWindow):
         if self.worker is not None:
             self.worker.set_mode(self.mode())
 
+    def on_tab(self, index: int) -> None:
+        learn = index == TAB_LEARN
+        self.video.setVisible(not learn)  # Learn has its own players
+        self.stack.setMinimumWidth(0 if learn else PANEL_WIDTH)
+        self.stack.setMaximumWidth(QWIDGETSIZE_MAX if learn else PANEL_MAX_WIDTH)
+        self.update_mode()
+
     # --- slots ----------------------------------------------------------------------------
     def record(self) -> None:
-        """Button or Space: a fixed-length recording in Single word and in manual Sentence mode."""
+        """Button or Space: a fixed-length recording in Single word, manual Sentence and Learn."""
         if self.model is None or self.worker is None:
             return
         if self.mode() == "learn":
@@ -164,14 +192,22 @@ class MainWindow(QMainWindow):
         if self.mode() in ("single", "sentence_manual", "learn"):
             self.worker.request_record()
 
-    def on_frame(self, image, overlay: dict) -> None:
+    def set_record_enabled(self, on: bool) -> None:
+        self._idle = on
+        self.panel.btn_record.setEnabled(on)
+        self.sentence_panel.btn_record.setEnabled(on)
+        self.learn_panel.btn_try.setEnabled(on and self.learn_panel.sign is not None)
+
+    def on_frame(self, payload, overlay: dict) -> None:
         if self.sender() is not self.worker:  # a frame from a worker that is being replaced
             return
-        self.video.set_frame(image, overlay)
+        if self.tabs.currentIndex() == TAB_LEARN:
+            self.learn_panel.show_live(payload, overlay)
+        else:
+            self.video.set_frame(payload, overlay, self.settings.mirrored_preview)
         idle = self.model is not None and overlay.get("phase") == "idle"
-        self.panel.btn_record.setEnabled(idle)
-        self.sentence_panel.btn_record.setEnabled(idle)
-        self.learn_panel.btn_try.setEnabled(idle and self.learn_panel.sign is not None)
+        if idle != self._idle:
+            self.set_record_enabled(idle)
 
     def on_prediction(self, prediction) -> None:
         if prediction.mode == "learn":
@@ -193,20 +229,21 @@ class MainWindow(QMainWindow):
             return
         words = self.panel.words
         if not prediction.top:  # no hand in the recording: not counted as an attempt
-            self.learn_panel.show_attempt(tr("learn_result_none"))
+            self.learn_panel.show_attempt(tr("learn_result_none"), "error")
             return
         p, rank = target_score(prediction, self.model.labels, sign)
         success = self.progress.record(sign, p, rank, self.settings.threshold)
         word, pct = words(sign)["en"], f"{p:.0%}"
         if success:
-            text = tr("learn_result_ok", word=word, p=pct)
+            text, tone = "✓ " + tr("learn_result_ok", word=word, p=pct), "success"
         elif rank == 1:
-            text = tr("learn_result_low", word=word, p=pct, threshold=f"{self.settings.threshold:.0%}")
+            text, tone = tr("learn_result_low", word=word, p=pct, threshold=f"{self.settings.threshold:.0%}"), "error"
         else:
             other, p_other = prediction.top[0]
             text = tr("learn_result_other", other=words(other)["en"], p_other=f"{p_other:.0%}", word=word, p=pct,
                       rank=rank)
-        self.learn_panel.show_attempt(text, attempt_display_clip(prediction), self._attempt_aspect())
+            tone = "error"
+        self.learn_panel.show_attempt(text, tone, attempt_display_clip(prediction), self._attempt_aspect())
 
     def _attempt_aspect(self) -> float:
         """Frame width / height of the live source (camera or replayed recording)."""
@@ -264,7 +301,7 @@ class MainWindow(QMainWindow):
 
     def on_camera_failed(self, details: str) -> None:
         self.video.set_message("hint_camera_missing")
-        self.panel.btn_record.setEnabled(False)
+        self.set_record_enabled(False)
         show_error(self, tr("error_camera", index=self.settings.camera_index, details=details))
 
     def on_failed(self, details: str) -> None:
@@ -285,29 +322,18 @@ class MainWindow(QMainWindow):
             show_error(self, tr("error_internal", details=e))
         if new.language != old.language:
             strings.set_language(new.language)
+            self.header.lang.set_current(new.language)
             self.retranslate()
         if new.camera_index != old.camera_index:
             self.stop_worker()
             self.start_worker()
 
     def show_about(self) -> None:
-        m = self.model.metrics if self.model is not None else {}
-        orig = m.get("orig", {})
-        pct = (lambda v: f"{v:.1%}" if isinstance(v, (int, float)) else "—")
-        QMessageBox.about(self, tr("about_title"), tr("about_text", n_signs=config.NUM_CLASSES,
-                                                     model=m.get("preset", "—"), top1=pct(orig.get("top1")),
-                                                     top3=pct(orig.get("top3"))))
+        about_box(self).exec()
 
     def retranslate(self) -> None:
         self.setWindowTitle(tr("app_title"))
-        for i, key in enumerate(("tab_single", "tab_sentence", "tab_learn")):
-            self.tabs.setTabText(i, tr(key))
-        self.menu_file.setTitle(tr("menu_file"))
-        self.act_exit.setText(tr("menu_exit"))
-        self.menu_settings.setTitle(tr("menu_settings"))
-        self.act_settings.setText(tr("menu_settings_open"))
-        self.menu_help.setTitle(tr("menu_help"))
-        self.act_about.setText(tr("menu_about"))
+        self.header.retranslate()
         self.panel.retranslate()
         self.sentence_panel.retranslate()
         self.learn_panel.retranslate()

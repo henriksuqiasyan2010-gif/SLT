@@ -15,8 +15,7 @@ from PySide6.QtWidgets import QApplication
 
 from asl import config
 from asl.app import settings as settings_io
-from asl.app import strings
-from asl.app.fonts import apply_ui_font
+from asl.app import strings, theme
 from asl.app.main_window import MainWindow, show_error
 from asl.app.pipeline import PredictionLog
 from asl.app.strings import tr
@@ -47,7 +46,7 @@ def main(argv=None) -> int:
     setup_logging()
     log.info("start %s", " ".join(sys.argv))
     app = QApplication(sys.argv[:1])
-    apply_ui_font(app)
+    theme.apply(app)  # bundled fonts, the stylesheet, the app icon
     settings = settings_io.load()
     if args.auto_record:  # measurement runs never speak (the setting itself is not changed)
         settings = replace(settings, sound=False)

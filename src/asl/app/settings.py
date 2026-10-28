@@ -21,6 +21,7 @@ class AppSettings:
     sound: bool = True
     mirrored_preview: bool = config.PREVIEW_MIRRORED
     language: str = config.UI_LANGUAGES[0]
+    show_camera: bool = False  # the design shows the skeleton only; the camera picture can be added under it
 
     def validated(self) -> "AppSettings":
         """A copy where every out-of-range value is replaced by its default."""
@@ -32,6 +33,7 @@ class AppSettings:
             "threshold": lambda v: isinstance(v, (int, float)) and not isinstance(v, bool) and 0.0 <= v <= 1.0,
             "sound": lambda v: isinstance(v, bool),
             "mirrored_preview": lambda v: isinstance(v, bool),
+            "show_camera": lambda v: isinstance(v, bool),
             "language": lambda v: v in config.UI_LANGUAGES,
         }
         for name, ok in checks.items():
