@@ -45,3 +45,14 @@
 | 2026-10-27 | `henriksuqiasyan/asl-augment-2 v2` | FEATURES_VERSION 2 augmented features T=32, versions 10-14 (CPU), for main-fv2 | done 2026-10-28 ~00:10 |
 | 2026-10-28 | `henriksuqiasyan/asl-train-main-fv2 v1` | main-reg on FEATURES_VERSION 2 (keep_moving_hand in extract), 15 augmented versions (GPU) | still RUNNING after 11 h on 2026-10-28 11:19 (expected ~1 h), probably stuck in the queue; cancelled by the user; replaced by v2 |
 | 2026-10-28 | `henriksuqiasyan/asl-train-main-fv2 v2` | re-run of v1 (v1 RUNNING 11 h with no result) | done 12:20 (60 min): top-1 64.4% / top-3 79.4% (13 fps 61.4%) vs main-reg30 + live rule 65.1% (61.7%) -> not kept; `reports/main-fv2/` |
+
+## Current state (2026-10-28, for the next session)
+
+- Phases 0-4 done. **Next: Phase 5 (Sentence mode)**, starting with the 🧑 USER step: 3 sessions of 5 signs (`scripts/live_debug.py --session <name>`); candidate sentences from well-recognized words were given to the user (e.g. YESTERDAY BOY FIND BROWN DOLL, FIREMAN THIRSTY PLEASE WATER NOW, HELLO UNCLE SICK HOME NOW).
+- `models/` = **main-reg30** (FEATURES_VERSION 1); the live path adds `keep_moving_hand` (`config.LIVE_KEEP_MOVING_HAND`). Val 65.1% with the live rule (62.7% without).
+- **Kaggle: nothing is running.** The main-fv2 chain is finished: `asl-preprocess` v3 -> `asl-augment-0..2` v2 -> `asl-train-main-fv2` v2 (64.4%, not kept). The latest outputs of `asl-preprocess` and `asl-augment-0..2` are **FEATURES_VERSION 2** — rerun them before training any FEATURES_VERSION 1 model (the train kernel refuses mixed versions). `asl-src` holds version 1 code.
+- Open, optional: the user may re-record `dad` x2 with the corrected technique; then move the two 2026-10-27 dad recordings to `recordings/old/` and rescore (`scripts/score_user.py`).
+
+## Ideas for later
+
+- **Two-handed signs:** the team records 5-10 two-handed words (several takes each, our camera), and the model is fine-tuned on them together with the dataset. Then soften the second-hand rule: drop the second hand only if it is **still** (path below a threshold), not simply the one that moves less, so real two-handed signs keep both hands.
