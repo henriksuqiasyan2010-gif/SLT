@@ -8,6 +8,7 @@ airplane,airplane,ինքնաթիռ,самолёт,True,4,4,1.0,0.9598,0.893,"tes
 shower,shower,ցնցուղ,душ,True,4,4,1.0,0.9598,0.806,"tests: attempts 1, recordings 2, sessions 1 (main-reg30)"
 find,find,գտնել,найти,True,4,4,1.0,0.9477,0.889,"tests: attempts 1, recordings 2, sessions 1 (main-reg30)"
 happy,happy,ուրախ,радостный,True,4,4,1.0,0.7381,0.676,"tests: attempts 1, recordings 2, sessions 1 (main-reg30)"
+balloon,balloon,փուչիկ,воздушный шарик,True,3,3,1.0,0.9387,0.625,
 dad,dad,հայրիկ,папа,True,4,3,0.75,0.8823,0.712,
 after,after,հետո,после,True,5,3,0.6,0.9527,0.465,
 book,book,գիրք,книга,True,6,3,0.5,0.815,0.554,
