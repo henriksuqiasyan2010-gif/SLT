@@ -148,10 +148,15 @@ def test_dominant_hand_lands_in_the_right_slot(sample_clips):
         assert dom.sum() >= other.sum()
 
 
+MAX_HEAD_ROLL = 0.1  # eye-line slope (y difference / interocular distance)
+
+
 def test_face_mirror_pairs_match_the_data(sample_clips, recordings):
     """Each FACE_PAIRS pair lies symmetric about the face midline in real frames."""
     pts = np.concatenate([c[:, FACE, :2] for c in sample_clips + recordings])
     pts = pts[~np.isnan(pts).any(axis=(1, 2))]
+    roll = (pts[:, 33, 1] - pts[:, 263, 1]) / np.abs(pts[:, 33, 0] - pts[:, 263, 0])
+    pts = pts[np.abs(roll) < MAX_HEAD_ROLL]  # a tilted head (dad: hand at the forehead) is not asymmetry
     mid = pts[:, [168, 6, 1, 152], 0].mean(axis=1, keepdims=True)
     io = np.abs(pts[:, 33, 0] - pts[:, 263, 0])[:, None]
     x = np.median((pts[..., 0] - mid) / io, axis=0)

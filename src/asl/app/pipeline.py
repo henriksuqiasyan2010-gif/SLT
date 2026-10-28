@@ -128,6 +128,8 @@ class Prediction:
     hand_share: float  # share of recorded frames with a hand
     time: str = field(default_factory=lambda: datetime.now().isoformat(timespec="seconds"))
     attempt: Optional[str] = None  # file name of the saved attempt in logs/attempts/
+    mode: str = "single"  # single | sentence_manual | sentence_auto: where the UI shows it
+    stream_t: float = 0.0  # stream time of the clip's last frame (Sentence: the repeat rule)
 
     @property
     def sign(self) -> Optional[str]:

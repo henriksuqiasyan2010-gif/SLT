@@ -1,8 +1,9 @@
-"""Widgets of the Single word tab: the video view with its overlays and the result panel."""
+"""Widgets: the video view with its overlays, the Single word result panel, the Sentence panel."""
 
 from PySide6.QtCore import QRectF, Qt
 from PySide6.QtGui import QColor, QFont, QPainter, QPen
-from PySide6.QtWidgets import QHBoxLayout, QLabel, QPushButton, QSizePolicy, QVBoxLayout, QWidget
+from PySide6.QtWidgets import (QButtonGroup, QCheckBox, QHBoxLayout, QLabel, QPushButton, QRadioButton, QSizePolicy,
+                               QVBoxLayout, QWidget)
 
 from asl import config
 from asl.app.strings import tr
@@ -12,6 +13,8 @@ PANEL = QColor(0, 0, 0, 160)
 TEXT = QColor(245, 245, 245)
 REC_RED = QColor(220, 50, 50)
 HINT_AMBER = QColor(230, 150, 20, 220)
+SEG_COLORS = {"seg_idle": QColor(90, 90, 90, 200), "seg_sign": QColor(40, 160, 70, 230),
+              "seg_pause": QColor(200, 140, 30, 230)}
 FPS_OK, FPS_LOW = QColor(90, 200, 90), QColor(230, 90, 60)
 MARGIN = 10  # px around overlay boxes
 REC_BORDER = 4  # px
@@ -97,6 +100,13 @@ class VideoView(QWidget):
             p.setFont(big)
             p.setPen(TEXT)
             p.drawText(target, Qt.AlignmentFlag.AlignCenter, str(ov["count"]))
+        elif ov.get("phase") in SEG_COLORS:  # Sentence, automatic: segmenter state
+            if ov["phase"] == "seg_sign":
+                p.setPen(QPen(SEG_COLORS["seg_sign"], REC_BORDER))
+                p.setBrush(Qt.BrushStyle.NoBrush)
+                p.drawRect(target.adjusted(REC_BORDER / 2, REC_BORDER / 2, -REC_BORDER / 2, -REC_BORDER / 2))
+            self._box(p, tr(f"overlay_{ov['phase']}"), target.right() - MARGIN, target.top() + MARGIN,
+                      SEG_COLORS[ov["phase"]], anchor="right")
         elif ov.get("phase") == "recording":
             p.setPen(QPen(REC_RED, REC_BORDER))
             p.setBrush(Qt.BrushStyle.NoBrush)
@@ -188,3 +198,116 @@ class ResultPanel(QWidget):
             self.word_ru.clear()
             self.confidence.setText(tr("result_best_guess", word=self.words(pred.top[0][0])["en"],
                                        p=f"{pred.top[0][1]:.0%}") if pred.top else "")
+
+
+class SentencePanel(QWidget):
+    """The sentence line (last word highlighted with its confidence), the top-3 of the last word as
+    replacement buttons, the word language switch, Delete last / Clear / Speak / Copy, the manual
+    toggle and its Record button. Holds no state of its own: it draws an asl.app.sentence.Sentence."""
+
+    def __init__(self, vocab: dict, sentence, parent=None):
+        super().__init__(parent)
+        self.vocab, self.sentence = vocab, sentence
+        self.word_lang = "en"
+        self.status_key = None  # e.g. "sent_not_recognized" after a rejected sign
+        self.line = QLabel()
+        self.line.setWordWrap(True)
+        self.line.setTextFormat(Qt.TextFormat.RichText)
+        self.line.setTextInteractionFlags(Qt.TextInteractionFlag.TextSelectableByMouse)
+        f = QFont(self.font())
+        f.setPointSize(RESULT_SUB_POINT_SIZE)
+        self.line.setFont(f)
+        self.line.setMinimumHeight(RESULT_SUB_POINT_SIZE * 5)
+        self.status = QLabel()
+        self.alt_title = QLabel()
+        self.alt_buttons = [QPushButton() for _ in range(config.TOP_K)]
+        self.lang_label = QLabel()
+        self.lang_group = QButtonGroup(self)
+        self.lang_buttons = {}
+        for lang in ("en", "hy", "ru"):
+            b = QRadioButton(tr(f"lang_name_{lang}"))
+            b.setFocusPolicy(Qt.FocusPolicy.NoFocus)
+            self.lang_group.addButton(b)
+            self.lang_buttons[lang] = b
+        self.lang_buttons["en"].setChecked(True)
+        self.btn_delete, self.btn_clear, self.btn_speak, self.btn_copy = (QPushButton() for _ in range(4))
+        self.manual = QCheckBox()
+        self.btn_record = QPushButton()
+        self.btn_record.setMinimumHeight(40)
+        self.help = QLabel()
+        self.help.setWordWrap(True)
+        for b in [*self.alt_buttons, self.btn_delete, self.btn_clear, self.btn_speak, self.btn_copy, self.manual,
+                  self.btn_record]:
+            b.setFocusPolicy(Qt.FocusPolicy.NoFocus)  # Space is the window shortcut
+
+        lay = QVBoxLayout(self)
+        langs = QHBoxLayout()
+        langs.addWidget(self.lang_label)
+        for b in self.lang_buttons.values():
+            langs.addWidget(b)
+        langs.addStretch(1)
+        lay.addLayout(langs)
+        lay.addWidget(self.line)
+        lay.addWidget(self.status)
+        lay.addWidget(self.alt_title)
+        alts = QHBoxLayout()
+        for b in self.alt_buttons:
+            alts.addWidget(b)
+        lay.addLayout(alts)
+        edit = QHBoxLayout()
+        for b in (self.btn_delete, self.btn_clear, self.btn_speak, self.btn_copy):
+            edit.addWidget(b)
+        lay.addLayout(edit)
+        lay.addStretch(1)
+        lay.addWidget(self.manual)
+        lay.addWidget(self.btn_record)
+        lay.addWidget(self.help)
+        for lang, b in self.lang_buttons.items():
+            b.toggled.connect(lambda on, lang=lang: on and self.set_word_lang(lang))
+        self.manual.toggled.connect(lambda _: self.refresh())
+        self.retranslate()
+
+    def words(self, sign: str) -> dict:
+        return self.vocab.get(sign, {"en": sign, "hy": sign, "ru": sign})
+
+    def set_word_lang(self, lang: str) -> None:
+        self.word_lang = lang
+        self.refresh()
+
+    def retranslate(self) -> None:
+        self.lang_label.setText(tr("sent_lang_label"))
+        self.alt_title.setText(tr("sent_alternatives"))
+        self.btn_delete.setText(tr("sent_delete_last"))
+        self.btn_clear.setText(tr("sent_clear"))
+        self.btn_speak.setText(tr("sent_speak"))
+        self.btn_copy.setText(tr("sent_copy"))
+        self.manual.setText(tr("sent_manual"))
+        self.btn_record.setText(tr("btn_record"))
+        self.refresh()
+
+    def refresh(self) -> None:
+        words = self.sentence.words
+        if words:
+            shown = [self.words(w.sign)[self.word_lang] for w in words]
+            last = f"<b><span style='color:#2e9e4f'>{shown[-1]}</span></b> <small>({words[-1].prob:.0%})</small>"
+            self.line.setText(" ".join(shown[:-1] + [last]))
+        else:
+            self.line.setText(f"<span style='color:gray'>{tr('sent_empty')}</span>")
+        self.status.setText(tr(self.status_key) if self.status_key else "")
+        top = words[-1].top if words else []
+        self.alt_title.setVisible(bool(top))
+        for i, b in enumerate(self.alt_buttons):
+            if i < len(top):
+                sign, p = top[i]
+                b.setText(f"{self.words(sign)[self.word_lang]}  {p:.0%}")
+                b.setProperty("sign", sign)
+                b.setEnabled(sign != words[-1].sign)
+                b.setVisible(True)
+            else:
+                b.setVisible(False)
+        for b in (self.btn_delete, self.btn_clear, self.btn_speak, self.btn_copy):
+            b.setEnabled(bool(words))
+        manual = self.manual.isChecked()
+        self.btn_record.setVisible(manual)
+        self.help.setText(tr("sent_help_manual" if manual else "sent_help_auto"))
+

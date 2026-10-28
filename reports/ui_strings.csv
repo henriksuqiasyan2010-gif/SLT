@@ -70,6 +70,21 @@ The details are in logs/app.log.","Ինչ-որ բան սխալ գնաց՝ {detai
 Մանրամասները logs/app.log ֆայլում են։","Что-то пошло не так: {details}
 Подробности в logs/app.log."
 error_speech,Speech is not available: {details},Արտասանությունը հասանելի չէ՝ {details},Озвучивание недоступно: {details}
+sent_empty,The words will appear here.,Բառերը կհայտնվեն այստեղ։,Здесь появятся слова.
+sent_lang_label,Show the words in:,Բառերը ցույց տալ՝,Показывать слова на:
+sent_manual,Record each word with the button,Յուրաքանչյուր բառը տեսագրել կոճակով,Записывать каждое слово по кнопке
+sent_alternatives,Replace the last word:,Փոխարինել վերջին բառը՝,Заменить последнее слово:
+sent_delete_last,Delete last,Ջնջել վերջինը,Удалить последнее
+sent_clear,Clear,Մաքրել,Очистить
+sent_speak,Speak sentence,Արտասանել նախադասությունը,Произнести предложение
+sent_copy,Copy,Պատճենել,Копировать
+sent_copied,The sentence is copied.,Նախադասությունը պատճենված է։,Предложение скопировано.
+sent_not_recognized,"The last sign was not recognized, try again.","Վերջին ժեստը չճանաչվեց, փորձեք նորից։","Последний жест не распознан, попробуйте ещё раз."
+sent_help_auto,Lower your hands between signs: a sign starts when the hand goes up and ends when it goes down.,"Ժեստերի միջև իջեցրեք ձեռքերը։ Ժեստը սկսվում է, երբ ձեռքը բարձրանում է, և ավարտվում, երբ իջնում է։","Между жестами опускайте руки: жест начинается, когда рука поднимается, и заканчивается, когда она опускается."
+sent_help_manual,For each word press Space or «Record sign»; the words are added to the line.,"Յուրաքանչյուր բառի համար սեղմեք Բացատ կամ «Տեսագրել ժեստը», բառերը կավելանան տողին։",Для каждого слова нажмите пробел или «Записать жест» — слова добавятся в строку.
+overlay_seg_idle,Waiting — raise your hand,Սպասում՝ բարձրացրեք ձեռքը,Ожидание — поднимите руку
+overlay_seg_sign,Sign,Ժեստ,Жест
+overlay_seg_pause,Pause,Դադար,Пауза
 settings_title,Settings,Կարգավորումներ,Настройки
 settings_camera,Camera number,Տեսախցիկի համարը,Номер камеры
 settings_record_seconds,Recording length,Տեսագրման տևողությունը,Длительность записи

@@ -128,3 +128,16 @@ UI_STRINGS_CSV = REPORTS_DIR / "ui_strings.csv"
 PREDICTIONS_LOG = LOGS_DIR / "predictions.csv"
 ATTEMPTS_DIR = LOGS_DIR / "attempts"  # every recorded attempt (.npy + .meta.json) for later scoring
 APP_LOG = LOGS_DIR / "app.log"
+
+# --- Sentence mode: segmenter (asl.segmenter) ----------------------------------------
+# A sign = the higher wrist (pose 15/16, always estimated) above SEG_WRIST_UP shoulder widths relative
+# to the shoulder line; a pause = the hands lowered. The user's 3 sessions: rest -1.2..-1.3, signs
+# -0.7..+0.9. Speed is not used to end a sign: held poses (high, sick, hello) stand still for 1-2 s.
+SEG_WRIST_UP = -0.85  # shoulder widths, + = above the shoulder line
+SEG_START_S = 0.1  # the wrist must stay up this long before a sign starts
+SEG_PAUSE_S = 0.35  # ... and down this long before it ends
+SEG_MIN_SIGN_S = 0.4  # shorter segments are dropped (a twitch, not a sign)
+SEG_MAX_SIGN_S = 5.0  # a longer segment is closed and classified anyway
+SEG_PREROLL_S = 0.0  # frames kept before the start (the rise of the hand)
+SENTENCE_REPEAT_S = 1.0  # the same word is not appended twice within this time
+CORRECTIONS_LOG = LOGS_DIR / "corrections.csv"  # words replaced by the user in the sentence

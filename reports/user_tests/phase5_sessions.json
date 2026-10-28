@@ -1,0 +1,42 @@
+{
+ "session1": {
+  "signs": [
+   "hello",
+   "please",
+   "happy",
+   "hat",
+   "shower"
+  ],
+  "note": "order given by the user before recording (Phase 5)",
+  "frames": 350,
+  "fps": 15.873,
+  "duration_s": 21.987
+ },
+ "session2": {
+  "signs": [
+   "airplane",
+   "high",
+   "find",
+   "sick",
+   "mom"
+  ],
+  "note": "order given by the user before recording (Phase 5)",
+  "note_user": "the pause between find and sick is a bit longer (user)",
+  "frames": 398,
+  "fps": 16.383,
+  "duration_s": 24.233
+ },
+ "session3": {
+  "signs": [
+   "please",
+   "hat",
+   "sick",
+   "hello",
+   "high"
+  ],
+  "note": "order given by the user before recording (Phase 5)",
+  "frames": 363,
+  "fps": 14.998,
+  "duration_s": 24.136
+ }
+}

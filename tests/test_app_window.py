@@ -1,5 +1,6 @@
 """pytest-qt: the window opens, records from a replayed recording, survives a missing camera,
-switches the interface language, and the UI font can draw every Armenian letter we show."""
+switches the interface language, the UI font can draw every Armenian letter we show, and the
+Sentence tab works in both modes (manual = button, automatic = segmenter) independently."""
 
 import csv
 import glob
@@ -58,7 +59,8 @@ def make_window(qtbot, tmp_path):
         w = MainWindow(settings or AppSettings(sound=False), model, load_vocab(), source_factory=source_factory,
                        settings_path=tmp_path / "settings.json",
                        prediction_log=PredictionLog(tmp_path / "predictions.csv", tmp_path / "attempts"),
-                       fps_log_path=tmp_path / "fps.csv", start=start)
+                       fps_log_path=tmp_path / "fps.csv", start=start,
+                       corrections_log=tmp_path / "corrections.csv")
         qtbot.addWidget(w)
         windows.append(w)
         return w
@@ -171,3 +173,62 @@ def test_speaker_reports_errors(monkeypatch):
     assert sp.speak("hello")
     done.wait(5)
     assert errors and "no voice" in errors[0]
+
+
+@pytest.fixture
+def session():
+    files = sorted(glob.glob(str(config.SESSIONS_DIR / "session1.npy")))
+    if not files:
+        pytest.skip("no recordings/sessions/session1.npy")
+    return files[0]
+
+
+def test_sentence_manual_mode_uses_the_button_and_never_the_segmenter(qtbot, make_window, recording, tmp_path):
+    w = make_window(lambda: RecordedSource(recording, loop=True))
+    w.tabs.setCurrentIndex(1)
+    w.sentence_panel.manual.setChecked(True)
+    assert w.mode() == "sentence_manual" and w.sentence_panel.btn_record.isVisible() is not None
+    qtbot.waitUntil(lambda: w.video.image is not None and w.worker.mode == "sentence_manual", timeout=WAIT_MS)
+    w.worker.recorder.countdown_s = 0.2
+    for n in (1, 2):
+        w.shortcut_record.activated.emit()  # Space
+        qtbot.waitUntil(lambda: len(w.sentence.words) == n, timeout=WAIT_MS)
+        qtbot.waitUntil(lambda: w.sentence_panel.btn_record.isEnabled(), timeout=WAIT_MS)
+    assert w.sentence.signs() == ["hello", "hello"]  # two button presses = two words, seconds apart
+    assert w.worker.segmenter is None  # the automatic path was never touched
+    assert "hello" in w.sentence_panel.line.text()
+    rows = list(csv.DictReader(open(tmp_path / "predictions.csv", encoding="utf-8")))
+    assert [r["mode"] for r in rows] == ["sentence_manual"] * 2
+    assert w.panel.prediction is None  # Single word panel untouched
+
+
+def test_sentence_auto_mode_segments_a_session(qtbot, make_window, session, tmp_path):
+    w = make_window(lambda: RecordedSource(session, speed=4.0))
+    w.tabs.setCurrentIndex(1)
+    assert w.mode() == "sentence_auto"
+    w.record()  # the button does nothing in automatic mode
+    qtbot.waitUntil(lambda: w.worker is None or w.worker.source is None or len(w.sentence.words) >= 5,
+                    timeout=4 * WAIT_MS)
+    qtbot.waitUntil(lambda: len(w.sentence.words) == 5, timeout=WAIT_MS)  # the last one comes from flush()
+    assert w.worker.recorder.phase.value == "idle"
+    rows = list(csv.DictReader(open(tmp_path / "predictions.csv", encoding="utf-8")))
+    assert [r["mode"] for r in rows] == ["sentence_auto"] * 5
+
+
+def test_replace_last_word_from_its_alternatives(qtbot, make_window, recording, tmp_path):
+    w = make_window(lambda: RecordedSource(recording, loop=True))
+    w.tabs.setCurrentIndex(1)
+    w.sentence_panel.manual.setChecked(True)
+    qtbot.waitUntil(lambda: w.video.image is not None and w.worker.mode == "sentence_manual", timeout=WAIT_MS)
+    w.worker.recorder.countdown_s = 0.2
+    w.record()
+    qtbot.waitUntil(lambda: len(w.sentence.words) == 1, timeout=WAIT_MS)
+    alts = w.sentence_panel.alt_buttons
+    assert [b.property("sign") for b in alts] == ["hello", "hat", "cowboy"] and not alts[0].isEnabled()
+    alts[1].click()
+    assert w.sentence.signs() == ["hat"]
+    rows = list(csv.DictReader(open(tmp_path / "corrections.csv", encoding="utf-8")))
+    assert rows[0]["predicted"] == "hello" and rows[0]["corrected_to"] == "hat"
+    w.sentence_panel.btn_delete.click()
+    assert w.sentence.signs() == [] and not w.sentence_panel.btn_clear.isEnabled()
+

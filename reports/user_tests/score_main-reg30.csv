@@ -1,8 +1,8 @@
 group,name,sign,rank,p_true,accepted,top3
 recording,airplane_20261027_195317,airplane,1,0.9598,True,"airplane 0.96, kitty 0.00, stairs 0.00"
 recording,airplane_20261027_195459,airplane,1,0.4067,True,"airplane 0.41, empty 0.11, that 0.05"
-recording,dad_20261027_200201,dad,2,0.1244,False,"grandpa 0.58, dad 0.12, man 0.02"
-recording,dad_20261027_200210,dad,2,0.0847,False,"grandpa 0.70, dad 0.08, man 0.02"
+recording,dad_20261028_141638,dad,,0.07,False,"cloud 0.43, boy 0.17, grandpa 0.08"
+recording,dad_20261028_141645,dad,3,0.0054,False,"boy 0.91, brother 0.02, dad 0.01"
 recording,find_20261027_195705,find,1,0.41,True,"find 0.41, hair 0.21, shirt 0.03"
 recording,find_20261027_195711,find,1,0.7103,True,"find 0.71, noisy 0.03, hair 0.02"
 recording,happy_20261027_200330,happy,1,0.4267,True,"happy 0.43, please 0.09, table 0.06"

@@ -1,18 +1,21 @@
-"""Main window: tabs (Single word, Sentence, Learn), menu, the worker thread and its signals."""
+"""Main window: the video (shared by all modes) and the tabs Single word / Sentence / Learn, the
+menu, the worker thread and its signals. The current tab (and the Sentence "manual" toggle) sets
+the worker mode: single, sentence_manual (button, no segmenter) or sentence_auto (segmenter)."""
 
 import logging
 
 from PySide6.QtCore import Qt, QThread, Signal
-from PySide6.QtGui import QAction, QKeySequence, QShortcut
+from PySide6.QtGui import QAction, QGuiApplication, QKeySequence, QShortcut
 from PySide6.QtWidgets import QHBoxLayout, QLabel, QMainWindow, QMessageBox, QTabWidget, QWidget
 
 from asl import config
 from asl.app import settings as settings_io
 from asl.app import strings
+from asl.app.sentence import Sentence, log_correction
 from asl.app.settings_dialog import SettingsDialog
 from asl.app.speech import Speaker
 from asl.app.strings import tr
-from asl.app.widgets import ResultPanel, VideoView
+from asl.app.widgets import ResultPanel, SentencePanel, VideoView
 from asl.app.worker import PipelineWorker
 from asl.capture import LiveSource
 
@@ -20,6 +23,8 @@ log = logging.getLogger(__name__)
 
 VIDEO_STRETCH, PANEL_STRETCH = 3, 2
 WORKER_STOP_TIMEOUT_MS = 5000
+TAB_SINGLE, TAB_SENTENCE, TAB_LEARN = 0, 1, 2
+STATUS_MS = 3000  # status bar messages
 
 
 def show_error(parent, text: str) -> None:
@@ -31,13 +36,15 @@ class MainWindow(QMainWindow):
     speech_failed = Signal(str)  # emitted from the speech thread, shown in the UI thread
 
     def __init__(self, settings, model, vocab: dict, source_factory=None, settings_path=config.SETTINGS_JSON,
-                 prediction_log=None, fps_tag: str = "app", fps_log_path=config.FPS_LOG, start: bool = True):
+                 prediction_log=None, fps_tag: str = "app", fps_log_path=config.FPS_LOG, start: bool = True,
+                 corrections_log=config.CORRECTIONS_LOG):
         """source_factory() -> LandmarkSource; default: the camera from the settings (LiveSource)."""
         super().__init__()
         self.settings, self.model, self.vocab = settings, model, vocab
         self.settings_path = settings_path
         self.source_factory = source_factory
         self.prediction_log, self.fps_tag, self.fps_log_path = prediction_log, fps_tag, fps_log_path
+        self.corrections_log = corrections_log
         self.thread = self.worker = None
         self.last_prediction = None
         self.speaker = Speaker(on_error=self.speech_failed.emit)
@@ -45,18 +52,21 @@ class MainWindow(QMainWindow):
 
         self.video = VideoView()
         self.panel = ResultPanel(vocab)
-        single = QWidget()
-        lay = QHBoxLayout(single)
-        lay.addWidget(self.video, VIDEO_STRETCH)
-        lay.addWidget(self.panel, PANEL_STRETCH)
-        self.placeholders = [QLabel(), QLabel()]
+        self.sentence = Sentence()
+        self.sentence_panel = SentencePanel(vocab, self.sentence)
+        self.placeholders = [QLabel()]  # Learn (Phase 6)
         for label in self.placeholders:
             label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.tabs = QTabWidget()
-        self.tabs.addTab(single, "")
+        self.tabs.addTab(self.panel, "")
+        self.tabs.addTab(self.sentence_panel, "")
         for label in self.placeholders:
             self.tabs.addTab(label, "")
-        self.setCentralWidget(self.tabs)
+        central = QWidget()
+        lay = QHBoxLayout(central)
+        lay.addWidget(self.video, VIDEO_STRETCH)
+        lay.addWidget(self.tabs, PANEL_STRETCH)
+        self.setCentralWidget(central)
 
         self.menu_file = self.menuBar().addMenu("")
         self.act_exit = QAction(self)
@@ -73,9 +83,20 @@ class MainWindow(QMainWindow):
 
         self.panel.btn_record.clicked.connect(self.record)
         self.panel.btn_speak.clicked.connect(self.speak)
+        sp = self.sentence_panel
+        sp.btn_record.clicked.connect(self.record)
+        sp.btn_delete.clicked.connect(self.sentence_delete_last)
+        sp.btn_clear.clicked.connect(self.sentence_clear)
+        sp.btn_speak.clicked.connect(self.sentence_speak)
+        sp.btn_copy.clicked.connect(self.sentence_copy)
+        for b in sp.alt_buttons:
+            b.clicked.connect(lambda _=False, b=b: self.sentence_replace(b.property("sign")))
+        sp.manual.toggled.connect(lambda _: self.update_mode())
+        self.tabs.currentChanged.connect(lambda _: self.update_mode())
         self.shortcut_record = QShortcut(QKeySequence(Qt.Key.Key_Space), self)
         self.shortcut_record.activated.connect(self.record)
         self.panel.btn_record.setEnabled(model is not None)
+        sp.btn_record.setEnabled(model is not None)
         self.retranslate()
         if start:
             self.start_worker()
@@ -98,6 +119,7 @@ class MainWindow(QMainWindow):
         self.worker.prediction_ready.connect(self.on_prediction)
         self.worker.camera_failed.connect(self.on_camera_failed)
         self.worker.failed.connect(self.on_failed)
+        self.worker.set_mode(self.mode())
         self.thread.start()
 
     def stop_worker(self) -> None:
@@ -109,22 +131,69 @@ class MainWindow(QMainWindow):
             log.warning("worker thread did not stop within %d ms", WORKER_STOP_TIMEOUT_MS)
         self.worker = self.thread = None
 
+    # --- modes ----------------------------------------------------------------------------
+    def mode(self) -> str:
+        if self.tabs.currentIndex() == TAB_SENTENCE:
+            return "sentence_manual" if self.sentence_panel.manual.isChecked() else "sentence_auto"
+        return "single"
+
+    def update_mode(self) -> None:
+        if self.worker is not None:
+            self.worker.set_mode(self.mode())
+
     # --- slots ----------------------------------------------------------------------------
     def record(self) -> None:
-        if self.model is not None and self.worker is not None:
+        """Button or Space: a fixed-length recording in Single word and in manual Sentence mode."""
+        if self.model is None or self.worker is None or self.tabs.currentIndex() == TAB_LEARN:
+            return
+        if self.mode() in ("single", "sentence_manual"):
             self.worker.request_record()
 
     def on_frame(self, image, overlay: dict) -> None:
         if self.sender() is not self.worker:  # a frame from a worker that is being replaced
             return
         self.video.set_frame(image, overlay)
-        self.panel.btn_record.setEnabled(self.model is not None and overlay.get("phase") == "idle")
+        idle = self.model is not None and overlay.get("phase") == "idle"
+        self.panel.btn_record.setEnabled(idle)
+        self.sentence_panel.btn_record.setEnabled(idle)
 
     def on_prediction(self, prediction) -> None:
-        self.last_prediction = prediction
-        self.panel.show_prediction(prediction)
-        if prediction.accepted and self.settings.sound:
-            self.speak()
+        if prediction.mode == "single":
+            self.last_prediction = prediction
+            self.panel.show_prediction(prediction)
+            if prediction.accepted and self.settings.sound:
+                self.speak()
+            return
+        self.sentence.add(prediction, prediction.stream_t)
+        self.sentence_panel.status_key = None if prediction.accepted else "sent_not_recognized"
+        self.sentence_panel.refresh()
+
+    def sentence_delete_last(self) -> None:
+        self.sentence.delete_last()
+        self.sentence_panel.status_key = None
+        self.sentence_panel.refresh()
+
+    def sentence_clear(self) -> None:
+        self.sentence.clear()
+        self.sentence_panel.status_key = None
+        self.sentence_panel.refresh()
+
+    def sentence_replace(self, sign: str) -> None:
+        word = self.sentence.replace_last(sign)
+        if word is None:
+            return
+        try:
+            log_correction(word, self.mode(), self.corrections_log)
+        except OSError:
+            log.exception("cannot write the corrections log")
+        self.sentence_panel.refresh()
+
+    def sentence_speak(self) -> None:
+        self.speaker.speak(self.sentence.text(self.vocab, "en"))
+
+    def sentence_copy(self) -> None:
+        QGuiApplication.clipboard().setText(self.sentence.text(self.vocab, self.sentence_panel.word_lang))
+        self.statusBar().showMessage(tr("sent_copied"), STATUS_MS)
 
     def speak(self) -> None:
         pred = self.last_prediction
@@ -180,6 +249,7 @@ class MainWindow(QMainWindow):
         self.menu_help.setTitle(tr("menu_help"))
         self.act_about.setText(tr("menu_about"))
         self.panel.retranslate()
+        self.sentence_panel.retranslate()
         self.video.update()
 
     def closeEvent(self, event):  # noqa: N802 - Qt API

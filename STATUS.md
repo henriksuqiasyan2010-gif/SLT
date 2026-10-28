@@ -7,7 +7,7 @@
 | 2 | Features | done | 2026-10-26 | FEATURES_VERSION 1, F=542, T_FIX=64 (param); extract ~1 ms/clip; aspect 3:4 + 3 participant overrides (asl-check); trim_idle for live only (cuts 9.4% of dataset hand frames); reference-clip rule; GIFs at real speed |
 | 3 | Training on Kaggle | done | 2026-10-27 | 90 tests pass; `models/` = main-reg30 (Transformer T=32): top-1 62.7% / top-3 76.9%, 13 fps 59.6% / 74.5% on held-out participants 27610, 28656, 29302, 49445 — below the 0.70 target, ACCEPTED by the user (per participant 71 / 68 / 47 / 65%; ensemble of the 3 trained models only +1.1 pp); baseline CNN T=32 52.6% / 69.3%; ONNX parity 8e-7; CPU latency 1.2 ms model / 2.5 ms live path; smoke test on 24 user recordings: top-1 19/24, top-3 22/24 (ensemble 17/24 -> not used); two-handed sick fails 2/2 (second hand, see CLAUDE.md); 5-fold check deferred to Phase 8 |
 | 4 | App shell and Single word mode | done | 2026-10-28 | `python -m asl.app` (camera, Holistic, main-reg30, UI hy/ru/en, default hy, Armenian font Segoe UI checked); 121 tests pass; user's 10 test attempts top-1 10/10, accepted 10/10 (airplane retake), no crash or freeze, feedback: nothing broken, UI texts correct; keep_moving_hand in the live path (val 62.7% -> 65.1%); retraining with it inside extract (FEATURES_VERSION 2, main-fv2) 64.4% -> not kept; app FPS after 5 min median 16.0 |
-| 5 | Sentence mode | not started | | |
+| 5 | Sentence mode | done | 2026-10-29 | segmenter by wrist height: 3 sessions 5/5 segments each, 15/15 words (main-reg30); 135/144 threshold sets also 15/15 (`reports/segmenter/tuning.csv`); manual (button) mode separate from the segmenter; replace the last word from its top-3 (logged); 134 tests pass; new UI strings (63) to be reviewed by the user |
 | 6 | Learn mode | not started | | |
 | 7 | Translations and Armenian audio | not started | | |
 | 7.5 | Interface design | not started | | added by the user in Phase 4: Qt styles, name and logo, icon, result display; after all three modes are ready |
@@ -46,12 +46,13 @@
 | 2026-10-28 | `henriksuqiasyan/asl-train-main-fv2 v1` | main-reg on FEATURES_VERSION 2 (keep_moving_hand in extract), 15 augmented versions (GPU) | still RUNNING after 11 h on 2026-10-28 11:19 (expected ~1 h), probably stuck in the queue; cancelled by the user; replaced by v2 |
 | 2026-10-28 | `henriksuqiasyan/asl-train-main-fv2 v2` | re-run of v1 (v1 RUNNING 11 h with no result) | done 12:20 (60 min): top-1 64.4% / top-3 79.4% (13 fps 61.4%) vs main-reg30 + live rule 65.1% (61.7%) -> not kept; `reports/main-fv2/` |
 
-## Current state (2026-10-28, for the next session)
+## Current state (2026-10-29, for the next session)
 
-- Phases 0-4 done. **Next: Phase 5 (Sentence mode)**, starting with the 🧑 USER step: 3 sessions of 5 signs (`scripts/live_debug.py --session <name>`); candidate sentences from well-recognized words were given to the user (e.g. YESTERDAY BOY FIND BROWN DOLL, FIREMAN THIRSTY PLEASE WATER NOW, HELLO UNCLE SICK HOME NOW).
-- `models/` = **main-reg30** (FEATURES_VERSION 1); the live path adds `keep_moving_hand` (`config.LIVE_KEEP_MOVING_HAND`). Val 65.1% with the live rule (62.7% without).
-- **Kaggle: nothing is running.** The main-fv2 chain is finished: `asl-preprocess` v3 -> `asl-augment-0..2` v2 -> `asl-train-main-fv2` v2 (64.4%, not kept). The latest outputs of `asl-preprocess` and `asl-augment-0..2` are **FEATURES_VERSION 2** — rerun them before training any FEATURES_VERSION 1 model (the train kernel refuses mixed versions). `asl-src` holds version 1 code.
-- Open, optional: the user may re-record `dad` x2 with the corrected technique; then move the two 2026-10-27 dad recordings to `recordings/old/` and rescore (`scripts/score_user.py`).
+- Phases 0-5 done. **Next: Phase 6 (Learn mode)**; first task: CPU kernel `asl-references` (reference clip per sign; use the reference rule from CLAUDE.md).
+- `models/` = **main-reg30** (FEATURES_VERSION 1); the live path adds `keep_moving_hand`. Val 65.1% with the live rule.
+- Sentence mode: segmenter defaults in `config.SEG_*`; sessions in `recordings/sessions/` (+ `reports/user_tests/phase5_sessions.json`).
+- **Kaggle: nothing is running.** The latest outputs of `asl-preprocess` and `asl-augment-0..2` are FEATURES_VERSION 2 — rerun them before training a FEATURES_VERSION 1 model. `asl-src` holds version 1 code.
+- Open: dad is still not recognized from the user's new recordings (cloud / boy); the 15 new Sentence-mode UI strings (hy, ru) are not reviewed yet (`reports/ui_strings.csv`).
 
 ## Ideas for later
 
