@@ -43,5 +43,5 @@
 | 2026-10-27 | `henriksuqiasyan/asl-augment-0 v2` | FEATURES_VERSION 2 augmented features T=32, versions 0-4 (CPU), for main-fv2 | done 2026-10-28 ~00:10 |
 | 2026-10-27 | `henriksuqiasyan/asl-augment-1 v2` | FEATURES_VERSION 2 augmented features T=32, versions 5-9 (CPU), for main-fv2 | done 2026-10-28 ~00:10 |
 | 2026-10-27 | `henriksuqiasyan/asl-augment-2 v2` | FEATURES_VERSION 2 augmented features T=32, versions 10-14 (CPU), for main-fv2 | done 2026-10-28 ~00:10 |
-| 2026-10-28 | `henriksuqiasyan/asl-train-main-fv2 v1` | main-reg on FEATURES_VERSION 2 (keep_moving_hand in extract), 15 augmented versions (GPU) | still RUNNING after 11 h on 2026-10-28 11:19 (expected ~1 h), probably stuck in the queue; replaced by v2 |
-| 2026-10-28 | `henriksuqiasyan/asl-train-main-fv2 v2` | re-run of v1 (v1 RUNNING 11 h with no result) | running |
+| 2026-10-28 | `henriksuqiasyan/asl-train-main-fv2 v1` | main-reg on FEATURES_VERSION 2 (keep_moving_hand in extract), 15 augmented versions (GPU) | still RUNNING after 11 h on 2026-10-28 11:19 (expected ~1 h), probably stuck in the queue; cancelled by the user; replaced by v2 |
+| 2026-10-28 | `henriksuqiasyan/asl-train-main-fv2 v2` | re-run of v1 (v1 RUNNING 11 h with no result) | running (started at once: "Running for 250 s" at ~11:23 on the site) |
