@@ -317,7 +317,7 @@ def test_dataset_aspect_per_participant():
     assert F.dataset_aspect(16069) == config.DATASET_ASPECT
 
 
-# --- keep_moving_hand (step 0 of extract since FEATURES_VERSION 2) ------------------------------------------------------------
+# --- keep_moving_hand (live path only) ------------------------------------------------------------
 
 def with_still_other_hand(clip):
     """Right-dominant clip + a still left hand in every frame (a copy of the first right-hand pose)."""
@@ -340,7 +340,7 @@ def test_keep_moving_hand_drops_the_still_hand(sample_clips):
         assert np.isnan(kept[:, LEFT_HAND]).all()
         np.testing.assert_array_equal(kept[:, RIGHT_HAND], clip[:, RIGHT_HAND])
         np.testing.assert_array_equal(F.extract(kept)[0], F.extract(clip)[0])
-        np.testing.assert_array_equal(F.extract(both)[0], F.extract(clip)[0])  # step 0 of extract (v2)
+        assert not np.array_equal(F.extract(both)[0], F.extract(clip)[0])  # extract() itself keeps both hands
         # the same with the sides swapped: the still hand is the right one
         swapped = both.copy()
         swapped[:, LEFT_HAND], swapped[:, RIGHT_HAND] = both[:, RIGHT_HAND], both[:, LEFT_HAND]

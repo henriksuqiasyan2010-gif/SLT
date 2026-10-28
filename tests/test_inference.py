@@ -76,7 +76,7 @@ def test_real_model_if_present():
 
 
 def test_predict_clip_drops_a_still_second_hand(sample_parquets):
-    """Since FEATURES_VERSION 2 extract() drops a still second hand: it does not reach the model."""
+    """keep_moving_hand is part of the live path: a still extra hand does not reach the model."""
     from asl.landmarks_io import LEFT_HAND, RIGHT_HAND, load_clip
     model = SignModel(FakeSession(), metrics(T_FIX=32), LABELS)
     clip = next(c for c in map(load_clip, sample_parquets)
@@ -85,7 +85,8 @@ def test_predict_clip_drops_a_still_second_hand(sample_parquets):
     both = clip.copy()
     both[:, LEFT_HAND] = clip[right][0, RIGHT_HAND] + np.array([0.2, 0.0, 0.0], np.float32)
     seen = []
-    for c in (clip, both):
-        model.predict_clip(c, 30.0, config.DATASET_ASPECT)
+    for c, keep in ((clip, True), (both, True), (both, False)):
+        model.predict_clip(c, 30.0, config.DATASET_ASPECT, keep_moving_hand=keep)
         seen.append(model.session.last["features"].copy())
     np.testing.assert_array_equal(seen[1], seen[0])
+    assert not np.array_equal(seen[2], seen[0])

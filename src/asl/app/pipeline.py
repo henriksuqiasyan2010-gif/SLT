@@ -135,7 +135,7 @@ class Prediction:
 
 
 def classify(model, clip: Clip, aspect: float, threshold: float, top_k: int = config.TOP_K) -> Prediction:
-    """Live path of SignModel.predict_clip (trim_idle -> extract -> model)."""
+    """Live path of SignModel.predict_clip (trim_idle -> keep_moving_hand -> extract -> model)."""
     lm = clip.landmarks
     left, right = features.hand_presence(lm) if len(lm) else (np.zeros(0, bool), np.zeros(0, bool))
     hand_frames = int((left | right).sum())

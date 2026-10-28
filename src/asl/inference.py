@@ -3,7 +3,7 @@
     model = SignModel.load()                      # models/model.onnx + metrics.json + labels.json
     probs = model.predict(features, mask)         # (250,) for one clip from features.extract()
     model.top_k(probs, 3)                         # [(sign, prob), ...]
-    model.predict_clip(clip, fps, aspect)         # trim_idle -> extract -> probs
+    model.predict_clip(clip, fps, aspect)         # trim_idle -> keep_moving_hand -> extract -> probs
 
 The model is refused if it was trained with another FEATURES_VERSION or another T_FIX / F.
 """
@@ -56,10 +56,17 @@ class SignModel:
     def predict(self, feats: np.ndarray, mask: np.ndarray) -> np.ndarray:
         return self.predict_batch(feats[None], mask[None])[0]
 
-    def predict_clip(self, clip: np.ndarray, fps: float, aspect: float = config.CAMERA_ASPECT) -> np.ndarray:
-        """Live path: cut the idle start/end (trim_idle), extract features, classify."""
+    def predict_clip(self, clip: np.ndarray, fps: float, aspect: float = config.CAMERA_ASPECT,
+                     keep_moving_hand: bool = None) -> np.ndarray:
+        """Live path: cut the idle start/end, drop a still second hand, extract, classify.
+        keep_moving_hand=None -> config.LIVE_KEEP_MOVING_HAND."""
+        if keep_moving_hand is None:
+            keep_moving_hand = config.LIVE_KEEP_MOVING_HAND
         start, stop = features.trim_idle(clip, fps, aspect)
-        feats, mask = features.extract(clip[start:stop], t_fix=self.t_fix, aspect=aspect)
+        clip = clip[start:stop]
+        if keep_moving_hand:
+            clip = features.keep_moving_hand(clip, aspect)
+        feats, mask = features.extract(clip, t_fix=self.t_fix, aspect=aspect)
         return self.predict(feats, mask)
 
     def top_k(self, probs: np.ndarray, k: int = 3):
