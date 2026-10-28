@@ -38,7 +38,7 @@
 
 | 2026-10-27 | `henriksuqiasyan/asl-twohands v1` | CPU: main-reg30 on fold-0 val clips with both hands in a frame, with / without keep_moving_hand (orig + 13 fps) | done (6 min): 1,833 clips, top-1 36.7% -> 61.3%, whole val 62.7% -> 65.1%; `reports/twohands/` |
 
-| 2026-10-27 | `henriksuqiasyan/asl-preprocess v2` | FEATURES_VERSION 2 (keep_moving_hand inside extract): X64/X32 + raw subset (CPU) | still RUNNING after 89 min (v1 took 18 min), probably queued; replaced by v3 |
+| 2026-10-27 | `henriksuqiasyan/asl-preprocess v2` | FEATURES_VERSION 2 (keep_moving_hand inside extract): X64/X32 + raw subset (CPU) | never ran: the CLI reported RUNNING for 89 min, Kaggle shows "Cancelled after 0 seconds" (queued; cancelled by the user); replaced by v3 (ran 16 min 49 s) |
 | 2026-10-27 | `henriksuqiasyan/asl-preprocess v3` | re-run of v2 (v2 cancelled by the user) | done ~23:43 |
 | 2026-10-27 | `henriksuqiasyan/asl-augment-0 v2` | FEATURES_VERSION 2 augmented features T=32, versions 0-4 (CPU), for main-fv2 | done 2026-10-28 ~00:10 |
 | 2026-10-27 | `henriksuqiasyan/asl-augment-1 v2` | FEATURES_VERSION 2 augmented features T=32, versions 5-9 (CPU), for main-fv2 | done 2026-10-28 ~00:10 |
