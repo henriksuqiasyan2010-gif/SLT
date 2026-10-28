@@ -9,7 +9,7 @@
 | 4 | App shell and Single word mode | done | 2026-10-28 | `python -m asl.app` (camera, Holistic, main-reg30, UI hy/ru/en, default hy, Armenian font Segoe UI checked); 121 tests pass; user's 10 test attempts top-1 10/10, accepted 10/10 (airplane retake), no crash or freeze, feedback: nothing broken, UI texts correct; keep_moving_hand in the live path (val 62.7% -> 65.1%); retraining with it inside extract (FEATURES_VERSION 2, main-fv2) 64.4% -> not kept; app FPS after 5 min median 16.0 |
 | 5 | Sentence mode | done | 2026-10-29 | segmenter by wrist height: 3 sessions 5/5 segments each, 15/15 words (main-reg30); 135/144 threshold sets also 15/15 (`reports/segmenter/tuning.csv`); manual (button) mode separate from the segmenter; replace the last word from its top-3 (logged); 134 tests pass; new UI strings (63) to be reviewed by the user |
 | 6 | Learn mode | done | 2026-10-29 | 250 references (asl-references: 242 top-1, median p 0.97) in assets/reference; Learn tab: list/search/filter, player 0.5x/1x, Try + score, side by side; progress.json persists (seeded from earlier tests: 9 signs); user's test: 5 new signs learned in 35 attempts (dad 3/4 after the side-by-side, after, book, can, because), feedback: all works; defense_set.csv 15 signs; 144 tests pass |
-| 7 | Translations and Armenian audio | in progress | 2026-10-29 | vocab check at start-up; audio.py (Armenian file or English pyttsx3, non-blocking); record_audio.py + audio_script.csv + check_audio.py prepared, no audio recorded (user: decide later; 250 words speak English); Armenian render test; 150 tests pass; WAITING for the user: offline run |
+| 7 | Translations and Armenian audio | done | 2026-10-29 | vocab check at start-up; audio.py (Armenian file or English pyttsx3, non-blocking, sentence gaps 0.3 s); record_audio.py + audio_script.csv + check_audio.py prepared, no audio recorded (user: decide later; 0/250 files, English fallback accepted); Armenian text renders (glyph + drawing tests); offline run confirmed by the user (3 modes + speech, FPS 17.3, no errors); 150 tests pass |
 | 7.5 | Interface design | not started | | added by the user in Phase 4: Qt styles, name and logo, icon, result display; after all three modes are ready |
 | 8 | Packaging and defense kit | not started | | |
 
@@ -48,7 +48,7 @@
 
 ## Current state (2026-10-29, for the next session)
 
-- Phases 0-6 done. **Next: Phase 7 (translations and Armenian audio)**; starts with the 🧑 USER choice of the audio source (recorded voice or Azure TTS).
+- Phases 0-7 done. **Next: Phase 7.5 (Interface design)** — all three modes are ready; then Phase 8 (packaging). Armenian audio: not recorded, the team decides later (`scripts/record_audio.py` is ready).
 - `models/` = **main-reg30** (FEATURES_VERSION 1); the live path adds `keep_moving_hand`. Val 65.1% with the live rule.
 - Sentence mode: segmenter defaults in `config.SEG_*`; sessions in `recordings/sessions/` (+ `reports/user_tests/phase5_sessions.json`).
 - **Kaggle: nothing is running.** The latest outputs of `asl-preprocess` and `asl-augment-0..2` are FEATURES_VERSION 2 — rerun them before training a FEATURES_VERSION 1 model. `asl-src` holds version 1 code.
