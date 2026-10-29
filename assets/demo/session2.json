@@ -1,0 +1,11 @@
+{
+ "signs": [
+  "airplane",
+  "high",
+  "find",
+  "sick",
+  "mom"
+ ],
+ "note": "order given by the user before recording (Phase 5)",
+ "note_user": "the pause between find and sick is a bit longer (user)"
+}

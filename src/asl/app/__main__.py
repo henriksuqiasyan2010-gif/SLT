@@ -2,6 +2,7 @@
 
     python -m asl.app --recording recordings/hello_x.npy     replay a recording in a loop instead of the camera
     python -m asl.app --quit-after 330 --auto-record 20      FPS measurement: press Record every 20 s, quit after 330 s
+    python -m asl.app --demo 1                               start in demo mode (session 1 of assets/demo, no camera)
 """
 
 import argparse
@@ -28,7 +29,11 @@ MS = 1000
 
 
 def setup_logging() -> None:
-    config.LOGS_DIR.mkdir(exist_ok=True)
+    config.LOGS_DIR.mkdir(parents=True, exist_ok=True)
+    if sys.stdout is None or sys.stderr is None:  # the windowed build (no console): library output -> logs/
+        console = open(config.LOGS_DIR / "console.log", "a", encoding="utf-8", buffering=1)  # noqa: SIM115
+        sys.stdout = sys.stdout or console
+        sys.stderr = sys.stderr or console
     logging.basicConfig(filename=config.APP_LOG, level=logging.INFO, encoding="utf-8",
                         format="%(asctime)s %(levelname)s %(name)s: %(message)s")
     logging.getLogger("comtypes").setLevel(logging.WARNING)  # pyttsx3 / SAPI5 logs every COM cache lookup
@@ -41,6 +46,7 @@ def main(argv=None) -> int:
     ap.add_argument("--quit-after", type=float, default=0, help="close the app after N seconds (measurements)")
     ap.add_argument("--auto-record", type=float, default=0,
                     help="press Record every N seconds (measurements; logged to logs/predictions_auto.csv)")
+    ap.add_argument("--demo", type=int, default=0, help="start in demo mode: replay session N of assets/demo")
     args = ap.parse_args(argv)
 
     setup_logging()
@@ -75,7 +81,7 @@ def main(argv=None) -> int:
         settings, model, vocab, source_factory=source_factory,
         prediction_log=PredictionLog(config.LOGS_DIR / "predictions_auto.csv", config.LOGS_DIR / "attempts_auto")
         if measuring else None,
-        fps_tag="app-auto-record" if measuring else "app")
+        fps_tag="app-auto-record" if measuring else "app", start=not args.demo)
 
     def excepthook(kind, value, tb):  # exceptions in Qt slots: log + message instead of a silent stderr line
         log.error("uncaught exception:\n%s", "".join(traceback.format_exception(kind, value, tb)))
@@ -84,6 +90,12 @@ def main(argv=None) -> int:
     sys.excepthook = excepthook
     window.resize(config.CAMERA_WIDTH * 2, int(config.CAMERA_HEIGHT * 1.4))
     window.show()
+    if args.demo:  # the camera is never opened
+        if 0 < args.demo <= len(window.demo_sessions):
+            window.start_demo(window.demo_sessions[args.demo - 1])
+        else:
+            log.error("demo session %d not found in %s", args.demo, config.DEMO_DIR)
+            window.start_worker()
     for text in errors:
         show_error(window, text)
     if args.auto_record:

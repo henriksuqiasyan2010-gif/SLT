@@ -1,0 +1,27 @@
+%% SLT architecture (the same picture as figures/architecture.png).
+%% Render: paste into https://mermaid.live or any Markdown viewer with Mermaid support.
+flowchart LR
+    subgraph TRAIN["Training — once, on Kaggle"]
+        direction LR
+        D["Kaggle dataset<br/>Google ISLR: 94,477 clips<br/>250 signs, 21 people<br/>543 landmarks per frame"]
+        A["Augmentation<br/>fps 12-15, time warp,<br/>lost frames and hands,<br/>rotation, x/y stretch"]
+        F1["features.extract<br/>normalise to shoulders,<br/>mirror left-handers,<br/>32 frames x 542 features"]
+        T["Training on a Kaggle GPU<br/>Transformer, 1.9 M parameters<br/>100 epochs, masking, mixup"]
+        M["model.onnx<br/>+ labels + metrics<br/>top-1 62.7%, top-3 76.9%"]
+        D --> A --> F1 --> T --> M
+    end
+
+    subgraph APP["The app — live, on a laptop CPU, offline"]
+        direction LR
+        C["Webcam<br/>640 x 480, 15-25 fps"]
+        H["MediaPipe Holistic<br/>face 468, hands 2 x 21,<br/>pose 33 points"]
+        S["Clip<br/>button: 3-2-1 + 2 s<br/>or segmenter: wrist up = sign"]
+        K["Clean-up<br/>trim_idle: still frames<br/>keep_moving_hand: still 2nd hand"]
+        F2["features.extract<br/>the same code as in training"]
+        R["ONNX Runtime<br/>~1-3 ms per sign"]
+        U["Interface<br/>top-3 + confidence, EN / HY / RU,<br/>speech, sentence, Learn score"]
+        C --> H --> S --> K --> F2 --> R --> U
+    end
+
+    M --> R
+    F1 -. "same module (asl.features)" .- F2

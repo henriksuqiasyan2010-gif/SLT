@@ -148,6 +148,11 @@ QScrollBar::handle:vertical {{ background: {LILAC}; border-radius: 4px; min-heig
 QScrollBar::add-line, QScrollBar::sub-line, QScrollBar::add-page, QScrollBar::sub-page {{
     background: none; height: 0; }}
 QStatusBar {{ color: {TEXT_ON_WINDOW_2}; }}
+QMenu {{ background: {LAVENDER}; color: {INK}; border: none; padding: 8px; }}
+QMenu::item {{ padding: 10px 22px; border-radius: 12px; }}
+QMenu::item:selected {{ background: {LILAC}; }}
+QMenu::item:disabled {{ color: {CAPTION}; }}
+QMenu::separator {{ height: 1px; background: {LILAC}; margin: 6px 12px; }}
 QStatusBar::item {{ border: none; }}
 """ + chip_stylesheet()
 

@@ -1,0 +1,17 @@
+﻿sign,en,hy,ru,learned,attempts,successes,success_rate,best_p,val_accuracy,seeded_from
+sick,sick,հիվանդ,больной,True,7,7,1.0,0.9754,0.914,"tests: attempts 1, recordings 4, sessions 2 (main-reg30)"
+high,high,բարձր,высоко,True,5,5,1.0,0.9576,0.904,"tests: attempts 1, recordings 2, sessions 2 (main-reg30)"
+hat,hat,գլխարկ,шапка,True,5,5,1.0,0.955,0.691,"tests: attempts 1, recordings 2, sessions 2 (main-reg30)"
+please,please,խնդրում եմ,пожалуйста,True,5,5,1.0,0.9346,0.859,"tests: attempts 1, recordings 2, sessions 2 (main-reg30)"
+hello,hello,բարև,привет,True,5,5,1.0,0.8739,0.697,"tests: attempts 1, recordings 2, sessions 2 (main-reg30)"
+airplane,airplane,ինքնաթիռ,самолёт,True,4,4,1.0,0.9598,0.893,"tests: attempts 1, recordings 2, sessions 1 (main-reg30)"
+shower,shower,ցնցուղ,душ,True,4,4,1.0,0.9598,0.806,"tests: attempts 1, recordings 2, sessions 1 (main-reg30)"
+find,find,գտնել,найти,True,4,4,1.0,0.9477,0.889,"tests: attempts 1, recordings 2, sessions 1 (main-reg30)"
+happy,happy,ուրախ,радостный,True,4,4,1.0,0.7381,0.676,"tests: attempts 1, recordings 2, sessions 1 (main-reg30)"
+balloon,balloon,փուչիկ,воздушный шарик,True,3,3,1.0,0.9387,0.625,
+dad,dad,հայրիկ,папа,True,4,3,0.75,0.8823,0.712,
+after,after,հետո,после,True,5,3,0.6,0.9527,0.465,
+book,book,գիրք,книга,True,6,3,0.5,0.815,0.554,
+can,can,կարողանալ,мочь,True,7,3,0.43,0.9734,0.605,
+because,because,որովհետև,потому что,True,13,3,0.23,0.9301,0.565,
+mom,mom,մայրիկ,мама,False,4,2,0.5,0.8719,0.56,"tests: attempts 1, recordings 2, sessions 1 (main-reg30)"

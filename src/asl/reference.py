@@ -9,21 +9,25 @@ Rule (user's decision, 2026-10-26; also for the Learn-mode references in Phase 6
 """
 
 import json
+from typing import TYPE_CHECKING
 
 import numpy as np
-import pandas as pd
 
 from asl import config
 from asl.landmarks_io import LEFT_HAND, N_LANDMARKS, RIGHT_HAND
 from asl.skeleton import DISPLAY_INDICES
 
+if TYPE_CHECKING:  # pandas only for choosing references offline; the app does not import it
+    import pandas as pd
 
-def load_stats(path=config.DATASET_STATS_CSV) -> pd.DataFrame:
+
+def load_stats(path=config.DATASET_STATS_CSV) -> "pd.DataFrame":
     """Per-clip statistics from the asl-stats kernel (reports/stats/stats.csv)."""
+    import pandas as pd
     return pd.read_csv(path)
 
 
-def pick_reference(stats: pd.DataFrame, sign: str, prefer_right: bool = True) -> pd.Series:
+def pick_reference(stats: "pd.DataFrame", sign: str, prefer_right: bool = True) -> "pd.Series":
     """Row of `stats` (path, participant_id, n_frames, left_frames, right_frames, ...) chosen by the rule."""
     clips = stats[stats["sign"] == sign].copy()
     if clips.empty:
@@ -47,8 +51,8 @@ def pick_reference(stats: pd.DataFrame, sign: str, prefer_right: bool = True) ->
 
 # --- Learn-mode references (kernel asl-references, Phase 6) ----------------------------------
 
-def reference_candidates(stats: pd.DataFrame, sign: str,
-                         participants=config.VAL_PARTICIPANTS) -> pd.DataFrame:
+def reference_candidates(stats: "pd.DataFrame", sign: str,
+                         participants=config.VAL_PARTICIPANTS) -> "pd.DataFrame":
     """Held-out clips of `sign` that may become its Learn-mode reference (the kernel then keeps the
     one the model is most confident about): rule 1 (hand share), rule 3 (right-dominant, if any)
     and a length within REFERENCE_LENGTH_TOL of the sign's median over the whole dataset; at least

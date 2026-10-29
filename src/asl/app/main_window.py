@@ -2,22 +2,27 @@
 video on the left (Single word, Sentence) and the page of the current tab; the Learn page takes the
 whole width. The current tab (and the Sentence "manual" toggle) sets the worker mode: single,
 sentence_manual (button, no segmenter), sentence_auto (segmenter) or learn (button; the attempt is
-scored against the selected sign and counted in progress.json)."""
+scored against the selected sign and counted in progress.json).
+
+Demo mode (the help button's menu or --demo): a recorded session replaces the camera in every mode;
+it is replayed again DEMO_RESTART_S after it ends. Demo runs log to their own files and never count
+in progress.json."""
 
 import csv
 import logging
 from dataclasses import replace
 
-from PySide6.QtCore import Qt, QThread, Signal
+from PySide6.QtCore import QPoint, Qt, QThread, QTimer, Signal
 from PySide6.QtGui import QGuiApplication, QKeySequence, QShortcut
-from PySide6.QtWidgets import QHBoxLayout, QMainWindow, QMessageBox, QStackedWidget, QVBoxLayout, QWidget
+from PySide6.QtWidgets import QHBoxLayout, QMainWindow, QMenu, QMessageBox, QStackedWidget, QVBoxLayout, QWidget
 
 from asl import config
 from asl.app import settings as settings_io
 from asl.app import strings, theme
+from asl.app.demo import demo_sessions
 from asl.app.header import Header, TabSwitch
 from asl.app.learn import LearnPanel, attempt_display_clip
-from asl.app.pipeline import target_score
+from asl.app.pipeline import PredictionLog, target_score
 from asl.app.progress import Progress, defense_set, export_defense_set
 from asl.app.sentence import Sentence, log_correction
 from asl.app.settings_dialog import SettingsDialog
@@ -25,7 +30,7 @@ from asl.app.strings import tr
 from asl.app.widgets import PANEL_WIDTH, ResultPanel, SentencePanel, VideoView
 from asl.app.worker import PipelineWorker
 from asl.audio import AudioPlayer
-from asl.capture import LiveSource, recording_aspect
+from asl.capture import LiveSource, RecordedSource, recording_aspect
 from asl.reference import ReferenceLibrary
 
 log = logging.getLogger(__name__)
@@ -37,6 +42,7 @@ PAGE_MARGINS = (26, 22, 26, 22)
 GAP = 22
 QWIDGETSIZE_MAX = 16777215
 PANEL_MAX_WIDTH = int(PANEL_WIDTH * 1.25)  # a long translation may widen the right column this much
+MENU_PX = 15
 
 
 def show_error(parent, text: str) -> None:
@@ -45,15 +51,15 @@ def show_error(parent, text: str) -> None:
 
 
 def about_box(window) -> QMessageBox:
-    """"About SLT": the logo, what the app does, the model's accuracy, the data credit."""
+    """"About SLT": the logo, the version, what the app does, the model's accuracy, the author, the data credit."""
     m = window.model.metrics if window.model is not None else {}
     orig = m.get("orig", {})
     pct = (lambda v: f"{v:.1%}" if isinstance(v, (int, float)) else "—")  # noqa: E731
     box = QMessageBox(window)
     box.setWindowTitle(tr("about_title"))
     box.setIconPixmap(theme.logo_pixmap())
-    box.setText(tr("about_text", n_signs=config.NUM_CLASSES, model=m.get("preset", "—"),
-                   top1=pct(orig.get("top1")), top3=pct(orig.get("top3"))))
+    box.setText(tr("about_text", version=config.APP_VERSION, n_signs=config.NUM_CLASSES, model=m.get("preset", "—"),
+                   top1=pct(orig.get("top1")), top3=pct(orig.get("top3")), author=config.APP_AUTHOR))
     return box
 
 
@@ -63,8 +69,10 @@ class MainWindow(QMainWindow):
     def __init__(self, settings, model, vocab: dict, source_factory=None, settings_path=config.SETTINGS_JSON,
                  prediction_log=None, fps_tag: str = "app", fps_log_path=config.FPS_LOG, start: bool = True,
                  corrections_log=config.CORRECTIONS_LOG, progress=None, references=None,
-                 defense_set_path=config.DEFENSE_SET_CSV, audio=None):
-        """source_factory() -> LandmarkSource; default: the camera from the settings (LiveSource)."""
+                 defense_set_path=config.DEFENSE_SET_CSV, audio=None, demo_dir=config.DEMO_DIR,
+                 demo_log=None, demo_corrections_log=config.DEMO_CORRECTIONS_LOG):
+        """source_factory() -> LandmarkSource; default: the camera from the settings (LiveSource).
+        demo_log: PredictionLog of the demo runs (default logs/predictions_demo.csv + attempts_demo/)."""
         super().__init__()
         self.settings, self.model, self.vocab = settings, model, vocab
         self.settings_path = settings_path
@@ -76,6 +84,12 @@ class MainWindow(QMainWindow):
         self.defense_set_path = defense_set_path
         self.thread = self.worker = None
         self.last_prediction = None
+        self.demo_sessions = demo_sessions(demo_dir)
+        self.demo = None  # the DemoSession replayed instead of the camera
+        self.demo_log, self.demo_corrections_log = demo_log, demo_corrections_log
+        self.demo_timer = QTimer(self)  # replays the demo session again after it ends
+        self.demo_timer.setSingleShot(True)
+        self.demo_timer.timeout.connect(self.restart_demo)
         self._idle = None  # last record-button state: changed only when it changes (the buttons have shadows)
         self.audio = audio if audio is not None else AudioPlayer(vocab, on_error=self.speech_failed.emit)
         self.speech_failed.connect(lambda d: self.statusBar().showMessage(tr("error_speech", details=d)))
@@ -108,7 +122,7 @@ class MainWindow(QMainWindow):
         self.header.lang.set_current(settings.language)
         self.header.lang.changed.connect(lambda lang: self.apply_settings(replace(self.settings, language=lang)))
         self.header.btn_settings.clicked.connect(self.open_settings)
-        self.header.btn_help.clicked.connect(self.show_about)
+        self.header.btn_help.clicked.connect(self.show_help_menu)
         self.panel.btn_record.clicked.connect(self.record)
         self.panel.btn_speak.clicked.connect(self.speak)
         sp = self.sentence_panel
@@ -133,18 +147,28 @@ class MainWindow(QMainWindow):
 
     # --- worker ---------------------------------------------------------------------------
     def _make_source(self):
+        if self.demo is not None:
+            return RecordedSource(self.demo.path)
         if self.source_factory is not None:
             return self.source_factory()
         return LiveSource(camera_index=self.settings.camera_index)
 
+    def _prediction_log(self):
+        if self.demo is None:
+            return self.prediction_log
+        if self.demo_log is None:
+            self.demo_log = PredictionLog(config.DEMO_PREDICTIONS_LOG, config.DEMO_ATTEMPTS_DIR)
+        return self.demo_log
+
     def start_worker(self) -> None:
         self.video.set_message("hint_camera_starting")
         self.thread = QThread(self)
-        self.worker = PipelineWorker(self._make_source, self.model, lambda: self.settings, self.prediction_log,
+        self.worker = PipelineWorker(self._make_source, self.model, lambda: self.settings, self._prediction_log(),
                                      self.fps_tag, self.fps_log_path)
         self.worker.moveToThread(self.thread)
         self.thread.started.connect(self.worker.run)
         self.worker.finished.connect(self.thread.quit)
+        self.worker.finished.connect(self.on_worker_finished)
         self.worker.frame_ready.connect(self.on_frame)
         self.worker.prediction_ready.connect(self.on_prediction)
         self.worker.camera_failed.connect(self.on_camera_failed)
@@ -160,6 +184,54 @@ class MainWindow(QMainWindow):
         if not self.thread.wait(WORKER_STOP_TIMEOUT_MS):
             log.warning("worker thread did not stop within %d ms", WORKER_STOP_TIMEOUT_MS)
         self.worker = self.thread = None
+
+    def on_worker_finished(self) -> None:
+        """The source ended by itself (not stop_worker): a demo session is played again after a pause."""
+        if self.sender() is self.worker and self.demo is not None:
+            self.demo_timer.start(int(config.DEMO_RESTART_S * 1000))
+
+    # --- demo -----------------------------------------------------------------------------
+    def start_demo(self, session) -> None:
+        """Replay `session` (a DemoSession) instead of the camera; opens the automatic Sentence mode."""
+        log.info("demo %s", session.name)
+        self.demo = session
+        self.tabs.setCurrentIndex(TAB_SENTENCE)
+        self.sentence_panel.manual.setChecked(False)
+        self.restart_demo()
+
+    def restart_demo(self) -> None:
+        self.demo_timer.stop()
+        self.stop_worker()
+        if self.mode() == "sentence_auto":  # each pass builds the session's sentence from the start
+            self.sentence_clear()
+        self.retranslate()
+        self.start_worker()
+
+    def stop_demo(self) -> None:
+        log.info("demo stopped, back to the camera")
+        self.demo_timer.stop()
+        self.demo = None
+        self.stop_worker()
+        self.retranslate()
+        self.start_worker()
+
+    def help_menu(self) -> QMenu:
+        """Demo 1..3 (no camera needed), back to the camera, About."""
+        menu = QMenu(self)
+        menu.setFont(theme.font(MENU_PX, 500))
+        for i, session in enumerate(self.demo_sessions, 1):
+            act = menu.addAction(tr("menu_demo", n=i, signs=", ".join(session.signs)))
+            act.triggered.connect(lambda _=False, s=session: self.start_demo(s))
+        act = menu.addAction(tr("menu_camera"))
+        act.setEnabled(self.demo is not None)
+        act.triggered.connect(self.stop_demo)
+        menu.addSeparator()
+        menu.addAction(tr("about_title")).triggered.connect(self.show_about)
+        return menu
+
+    def show_help_menu(self) -> None:
+        menu, btn = self.help_menu(), self.header.btn_help
+        menu.exec(btn.mapToGlobal(QPoint(btn.width() - menu.sizeHint().width(), btn.height() + 8)))
 
     # --- modes ----------------------------------------------------------------------------
     def mode(self) -> str:
@@ -232,7 +304,10 @@ class MainWindow(QMainWindow):
             self.learn_panel.show_attempt(tr("learn_result_none"), "error")
             return
         p, rank = target_score(prediction, self.model.labels, sign)
-        success = self.progress.record(sign, p, rank, self.settings.threshold)
+        if self.demo is None:
+            success = self.progress.record(sign, p, rank, self.settings.threshold)
+        else:  # a replayed recording is not the user's attempt: scored, not counted
+            success = rank == 1 and p >= self.settings.threshold
         word, pct = words(sign)["en"], f"{p:.0%}"
         if success:
             text, tone = "✓ " + tr("learn_result_ok", word=word, p=pct), "success"
@@ -282,7 +357,7 @@ class MainWindow(QMainWindow):
         if word is None:
             return
         try:
-            log_correction(word, self.mode(), self.corrections_log)
+            log_correction(word, self.mode(), self.corrections_log if self.demo is None else self.demo_corrections_log)
         except OSError:
             log.exception("cannot write the corrections log")
         self.sentence_panel.refresh()
@@ -300,6 +375,8 @@ class MainWindow(QMainWindow):
             self.audio.play_word(pred.top[0][0])
 
     def on_camera_failed(self, details: str) -> None:
+        if self.sender() is not self.worker:  # a worker that was replaced (e.g. by a demo) meanwhile
+            return
         self.video.set_message("hint_camera_missing")
         self.set_record_enabled(False)
         show_error(self, tr("error_camera", index=self.settings.camera_index, details=details))
@@ -332,7 +409,9 @@ class MainWindow(QMainWindow):
         about_box(self).exec()
 
     def retranslate(self) -> None:
-        self.setWindowTitle(tr("app_title"))
+        demo = tr("chip_demo", signs=", ".join(self.demo.signs)) if self.demo is not None else ""
+        self.setWindowTitle(tr("app_title") + (f" — {demo}" if demo else ""))
+        self.video.demo_text = demo
         self.header.retranslate()
         self.panel.retranslate()
         self.sentence_panel.retranslate()
@@ -340,5 +419,6 @@ class MainWindow(QMainWindow):
         self.video.update()
 
     def closeEvent(self, event):  # noqa: N802 - Qt API
+        self.demo_timer.stop()
         self.stop_worker()
         super().closeEvent(event)

@@ -145,6 +145,7 @@ class VideoView(QWidget):
         self.overlay = {}
         self.mirrored = config.PREVIEW_MIRRORED
         self.message_key = "hint_camera_starting"
+        self.demo_text = ""  # demo mode: what is replayed instead of the camera (a sun chip, top left)
 
     @property
     def image(self):  # kept for callers that only need to know that frames arrive
@@ -189,6 +190,9 @@ class VideoView(QWidget):
         paint_skeleton(p, self.payload.landmarks, frame, self.mirrored)
         p.restore()
         self._paint_overlay(p, whole)
+        if self.demo_text:  # a second row under the top chips: the bottom is where the resting hands are
+            paint_chip(p, self.demo_text, whole.left() + MARGIN, whole.top() + MARGIN + theme.CHIP_HEIGHT + 14,
+                       *theme.CHIP_STYLES["sun"])
 
     def _paint_overlay(self, p: QPainter, rect: QRectF) -> None:
         ov = self.overlay

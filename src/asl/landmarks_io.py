@@ -9,7 +9,6 @@ This is verified by tests/test_landmarks_io.py against the `type` and
 from pathlib import Path
 
 import numpy as np
-import pandas as pd
 
 from asl.config import LANDMARK_COLUMNS
 
@@ -34,6 +33,7 @@ RIGHT_HAND = _SLICES["right_hand"]
 
 def load_clip(path) -> np.ndarray:
     """Fast path: read x, y, z and reshape. Returns (T, 543, 3) float32, NaN for missing points."""
+    import pandas as pd  # here, not at the top: the app never reads parquet and is built without pandas
     data = pd.read_parquet(Path(path), columns=LANDMARK_COLUMNS).to_numpy(dtype=np.float32)
     if data.shape[0] % N_LANDMARKS:
         raise ValueError(f"{path}: {data.shape[0]} rows is not a multiple of {N_LANDMARKS}")
@@ -42,6 +42,7 @@ def load_clip(path) -> np.ndarray:
 
 def load_clip_checked(path) -> np.ndarray:
     """Slow path: place every row by (frame, type, landmark_index). Used to validate load_clip."""
+    import pandas as pd
     df = pd.read_parquet(Path(path))
     frames = np.sort(df["frame"].unique())
     frame_pos = {f: i for i, f in enumerate(frames)}

@@ -1,17 +1,44 @@
 """Project-wide constants. User-adjustable settings live in settings.json, not here."""
 
+import os
+import sys
 from pathlib import Path
 
 # --- Paths -------------------------------------------------------------------
-ROOT = Path(__file__).resolve().parents[2]
+# From the repository: everything under ROOT. In the PyInstaller build (build.bat) the read-only files
+# (model, assets, word list) are unpacked into sys._MEIPASS, and what the app writes (settings,
+# progress, logs, the defense-set export) goes to USER_DIR: the folder of SLT.exe, or
+# %LOCALAPPDATA%\SLT if that folder is not writable (e.g. under Program Files).
+FROZEN = bool(getattr(sys, "frozen", False))
+
+
+def _writable(folder: Path) -> bool:
+    probe = folder / ".slt_write_test"
+    try:
+        probe.write_bytes(b"")
+        probe.unlink()
+        return True
+    except OSError:
+        return False
+
+
+def _user_dir() -> Path:
+    exe_dir = Path(sys.executable).resolve().parent
+    if _writable(exe_dir):
+        return exe_dir
+    return Path(os.environ.get("LOCALAPPDATA", Path.home())) / "SLT"
+
+
+ROOT = Path(getattr(sys, "_MEIPASS", "")) if FROZEN else Path(__file__).resolve().parents[2]
+USER_DIR = _user_dir() if FROZEN else ROOT
 DATA_DIR = ROOT / "data"
 SAMPLE_DIR = DATA_DIR / "sample"
 VOCAB_CSV = DATA_DIR / "vocab.csv"
 RECORDINGS_DIR = ROOT / "recordings"
 MODELS_DIR = ROOT / "models"
 ASSETS_DIR = ROOT / "assets"
-REPORTS_DIR = ROOT / "reports"
-LOGS_DIR = ROOT / "logs"
+REPORTS_DIR = USER_DIR / "reports"
+LOGS_DIR = USER_DIR / "logs"
 
 # --- Kaggle ------------------------------------------------------------------
 KAGGLE_USER = "henriksuqiasyan"
@@ -120,7 +147,7 @@ SYNONYM_GROUPS = (("awake", "wake"), ("give", "gift"), ("goose", "duck"), ("kitt
 
 # --- App (asl.app) ----------------------------------------------------------------
 # Defaults of the user settings; the user's values live in settings.json (asl.app.settings).
-SETTINGS_JSON = ROOT / "settings.json"
+SETTINGS_JSON = USER_DIR / "settings.json"
 UI_LANGUAGES = ("hy", "ru", "en")  # interface languages (asl.app.strings); the first one is the default
 SINGLE_RECORD_SECONDS = 2.0  # Single word: recording length after the countdown (PHASES.md: 2 s)
 RECORD_SECONDS_RANGE = (1.0, 5.0)
@@ -153,7 +180,7 @@ SENTENCE_REPEAT_S = 1.0  # the same word is not appended twice within this time
 CORRECTIONS_LOG = LOGS_DIR / "corrections.csv"  # words replaced by the user in the sentence
 
 # --- Learn mode (asl.app.progress) ------------------------------------------------------
-PROGRESS_JSON = ROOT / "progress.json"  # the user's learning progress (git-ignored, like settings.json)
+PROGRESS_JSON = USER_DIR / "progress.json"  # the user's learning progress (git-ignored, like settings.json)
 LEARN_SUCCESSES = 3  # successful attempts (the sign is top-1 and >= the threshold) to count as learned
 DEFENSE_SET_CSV = REPORTS_DIR / "defense_set.csv"
 DEFENSE_SET_MAX = 30  # signs in the defense set (PHASES.md: 20-30)
@@ -176,3 +203,13 @@ AUDIO_FRAME_S = 0.01  # window for the level used by the silence trim
 FONTS_DIR = ASSETS_DIR / "fonts"  # Rubik + Noto Sans Armenian (variable TTF, SIL OFL), loaded at start-up
 BRANDING_DIR = ASSETS_DIR / "branding"  # SLT logo / icon (made by asl.app.theme.save_branding)
 UI_SHADOWS = True  # soft shadows under cards and yellow buttons (QGraphicsDropShadowEffect)
+
+# --- Build and demo (Phase 8) -------------------------------------------------------------
+APP_VERSION = "1.0.0"  # shown in About; build.bat writes it into the exe's version info
+APP_AUTHOR = "Henrik Suqiasyan"  # About (user: only this name, 2026-10-29)
+DEMO_DIR = ASSETS_DIR / "demo"  # the user's Phase 5 sessions (.npy + .meta.json + .json with the signs)
+DEMO_SESSIONS = ("session1", "session2", "session3")
+DEMO_RESTART_S = 5.0  # a demo session is replayed again this long after it ends (the sentence stays visible)
+DEMO_PREDICTIONS_LOG = LOGS_DIR / "predictions_demo.csv"  # demo runs never mix with the user's attempts
+DEMO_ATTEMPTS_DIR = LOGS_DIR / "attempts_demo"
+DEMO_CORRECTIONS_LOG = LOGS_DIR / "corrections_demo.csv"

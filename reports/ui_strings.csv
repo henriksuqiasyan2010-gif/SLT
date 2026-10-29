@@ -4,19 +4,34 @@ tab_single,Single word,Մեկ բառ,Одно слово
 tab_sentence,Sentence,Նախադասություն,Предложение
 tab_learn,Learn,Ուսուցում,Обучение
 about_title,About SLT,SLT ծրագրի մասին,О программе SLT
-about_text,"Recognizes {n_signs} isolated signs of American Sign Language (ASL) from the webcam and shows them in English, Armenian and Russian.
+about_text,"Version {version}
+
+Recognizes {n_signs} isolated signs of American Sign Language (ASL) from the webcam and shows them in English, Armenian and Russian.
 
 Model: {model}. Accuracy on people it has never seen: top-1 {top1}, top-3 {top3}.
 
-Data: Google — Isolated Sign Language Recognition (Kaggle).","Տեսախցիկի միջոցով ճանաչում է ամերիկյան ժեստերի լեզվի (ASL) {n_signs} առանձին ժեստ և ցույց է տալիս դրանք անգլերեն, հայերեն և ռուսերեն։
+Author: {author}
+
+Data: Google — Isolated Sign Language Recognition (Kaggle).","Տարբերակ {version}
+
+Տեսախցիկի միջոցով ճանաչում է ամերիկյան ժեստերի լեզվի (ASL) {n_signs} առանձին ժեստ և ցույց է տալիս դրանք անգլերեն, հայերեն և ռուսերեն։
 
 Մոդել՝ {model}։ Ճշգրտությունը մարդկանց վրա, որոնց մոդելը չի տեսել՝ top-1 {top1}, top-3 {top3}։
 
-Տվյալներ՝ Google — Isolated Sign Language Recognition (Kaggle)։","Распознаёт {n_signs} отдельных жестов американского жестового языка (ASL) с веб-камеры и показывает их на английском, армянском и русском.
+Հեղինակ՝ {author}
+
+Տվյալներ՝ Google — Isolated Sign Language Recognition (Kaggle)։","Версия {version}
+
+Распознаёт {n_signs} отдельных жестов американского жестового языка (ASL) с веб-камеры и показывает их на английском, армянском и русском.
 
 Модель: {model}. Точность на людях, которых модель не видела: top-1 {top1}, top-3 {top3}.
 
+Автор: {author}
+
 Данные: Google — Isolated Sign Language Recognition (Kaggle)."
+menu_demo,Demo {n}: {signs},Դեմո {n}՝ {signs},Демо {n}: {signs}
+menu_camera,Back to the camera,Վերադառնալ տեսախցիկին,Вернуться к камере
+chip_demo,"Demo, no camera · {signs}","Դեմո, առանց տեսախցիկի · {signs}",Демо без камеры · {signs}
 btn_record,Record sign,Տեսագրել ժեստը,Записать жест
 btn_speak,Speak,Արտասանել,Произнести
 overlay_get_ready,Get ready,Պատրաստվեք,Приготовьтесь
@@ -101,7 +116,7 @@ lang_name_hy,Հայերեն,Հայերեն,Հայերեն
 lang_name_ru,Русский,Русский,Русский
 lang_name_en,English,English,English
 tip_settings,Settings,Կարգավորումներ,Настройки
-tip_help,About the program,Ծրագրի մասին,О программе
+tip_help,Demo and About,Դեմո և ծրագրի մասին,Демо и о программе
 key_space,Space,Բացատ,Пробел
 hint_space,Press {key} and show a sign,Սեղմիր {key} և ցույց տուր ժեստը,Нажми {key} и покажи жест
 hint_lower_hand,Lower your hand between signs,Ժեստերի միջև իջեցրու ձեռքը,Между жестами опускай руку

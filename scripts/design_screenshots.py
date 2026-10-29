@@ -1,9 +1,12 @@
-"""Screenshots of the three modes for the design review (Phase 7.5), taken with QWidget.grab().
+"""Screenshots of every mode, taken with QWidget.grab(): the design review (Phase 7.5) and the team kit
+(Phase 8).
 
     python scripts/design_screenshots.py [--langs hy ru] [--out reports/design]
+    python scripts/design_screenshots.py --langs en hy --out reports/team_kit/screenshots
 
-No camera: Single word and Learn replay the user's recordings, Sentence replays session 1. The real
-progress.json is copied, never changed. Files: <out>/<n>_<mode>_<lang>.png at 1280x800 (the mockups' size).
+No camera: Single word and Learn replay the user's recordings, Sentence replays session 1, the demo
+mode session 2. The real progress.json is copied and logs go to a temporary folder, never to logs/.
+Files: <out>/<n>_<mode>_<lang>.png at 1280x800 (the mockups' size).
 """
 
 import argparse
@@ -32,6 +35,7 @@ SINGLE = config.RECORDINGS_DIR / "hello_20261026_192257.npy"
 SESSION = config.SESSIONS_DIR / "session1.npy"
 LEARN = config.RECORDINGS_DIR / "dad_20261028_141638.npy"
 LEARN_SIGN = "dad"
+DEMO_SESSION = 1  # index in assets/demo: session 2 (airplane high find sick mom)
 TIMEOUT_S = 30
 COUNTDOWN_S = 0.3  # shorter than in the app, so the screenshots do not wait 3 s
 
@@ -60,7 +64,8 @@ def shoot(app, out: Path, lang: str, model, vocab) -> list:
                    source_factory=lambda: RecordedSource(source["path"], loop=source["loop"], speed=source["speed"]),
                    settings_path=tmp / "settings.json", prediction_log=PredictionLog(tmp / "p.csv", tmp / "att"),
                    fps_log_path=tmp / "fps.csv", corrections_log=tmp / "c.csv",
-                   progress=Progress.load(tmp / "progress.json"), defense_set_path=tmp / "d.csv")
+                   progress=Progress.load(tmp / "progress.json"), defense_set_path=tmp / "d.csv",
+                   demo_log=PredictionLog(tmp / "pd.csv", tmp / "att_demo"), demo_corrections_log=tmp / "cd.csv")
     w.resize(*SIZE)
     w.show()
     saved = []
@@ -120,6 +125,11 @@ def shoot(app, out: Path, lang: str, model, vocab) -> list:
     box.grab().save(str(path))
     saved.append(path)
     box.close()
+    # 6. demo mode (no camera): session 2 until its five words are in
+    w.start_demo(w.demo_sessions[DEMO_SESSION])
+    wait(app, lambda: len(w.sentence.words) >= 5, timeout=TIMEOUT_S * 2)
+    pause(app, 0.3)
+    grab("6_demo")
     w.close()
     shutil.rmtree(tmp, ignore_errors=True)
     return saved

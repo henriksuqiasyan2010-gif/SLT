@@ -11,7 +11,7 @@
 | 6 | Learn mode | done | 2026-10-29 | 250 references (asl-references: 242 top-1, median p 0.97) in assets/reference; Learn tab: list/search/filter, player 0.5x/1x, Try + score, side by side; progress.json persists (seeded from earlier tests: 9 signs); user's test: 5 new signs learned in 35 attempts (dad 3/4 after the side-by-side, after, book, can, because), feedback: all works; defense_set.csv 15 signs; 144 tests pass |
 | 7 | Translations and Armenian audio | done | 2026-10-29 | vocab check at start-up; audio.py (Armenian file or English pyttsx3, non-blocking, sentence gaps 0.3 s); record_audio.py + audio_script.csv + check_audio.py prepared, no audio recorded (user: decide later; 0/250 files, English fallback accepted); Armenian text renders (glyph + drawing tests); offline run confirmed by the user (3 modes + speech, FPS 17.3, no errors); 150 tests pass |
 | 7.5 | Interface design | done | 2026-10-29 | "Фиолетовый вечер": theme (palette, QSS, shadows flag), Rubik + Noto Sans Armenian bundled (OFL), SLT logo / icon (assets/branding), header, three modes and dialogs restyled; FPS like for like 24.4 -> 24.6 (UI 5.5 vs 6.3-6.9 ms per frame); 152 tests pass; screenshots hy/ru in reports/design; approved by the user |
-| 8 | Packaging and defense kit | not started | | |
+| 8 | Packaging and defense kit | in progress (user steps) | | `build.bat` + `slt.spec` (PyInstaller 6.22.3, one folder, no console, SLT icon, version info): `dist\SLT` 466 MB, runs here (demo 1 and 2: 5/5 words each, camera 22-30 fps); demo mode (? button / `--demo N`, assets/demo, no camera); About: version 1.0.0, author Henrik Suqiasyan, metrics, data credit; team kit `reports/team_kit/` (English: README, METRICS.md, 7 figures, architecture.mmd, 16 screenshots en/hy, data); `docs/DEFENSE_CHECKLIST.md`; 161 tests pass. Waiting: test on another PC, demo video, USB copy, kit to the team |
 
 ## Kaggle kernels
 
@@ -45,10 +45,12 @@
 | 2026-10-27 | `henriksuqiasyan/asl-augment-2 v2` | FEATURES_VERSION 2 augmented features T=32, versions 10-14 (CPU), for main-fv2 | done 2026-10-28 ~00:10 |
 | 2026-10-28 | `henriksuqiasyan/asl-train-main-fv2 v1` | main-reg on FEATURES_VERSION 2 (keep_moving_hand in extract), 15 augmented versions (GPU) | still RUNNING after 11 h on 2026-10-28 11:19 (expected ~1 h), probably stuck in the queue; cancelled by the user; replaced by v2 |
 | 2026-10-28 | `henriksuqiasyan/asl-train-main-fv2 v2` | re-run of v1 (v1 RUNNING 11 h with no result) | done 12:20 (60 min): top-1 64.4% / top-3 79.4% (13 fps 61.4%) vs main-reg30 + live rule 65.1% (61.7%) -> not kept; `reports/main-fv2/` |
+| 2026-10-29 | `henriksuqiasyan/asl-references v1` | CPU: Learn-mode reference per sign (held-out candidates by the reference rule, most confident one) | done (3.5 min): 250 signs, 242 top-1, median p 0.97; `assets/reference/` |
 
 ## Current state (2026-10-29, for the next session)
 
-- Phases 0-7.5 done. **Next: Phase 8 (packaging and defense kit)**: PyInstaller one-folder build with assets/branding/slt.ico, models/, assets/ (fonts, reference, branding), data/vocab.csv and the MediaPipe model files; demo mode; team kit. Armenian audio: not recorded, the team decides later (`scripts/record_audio.py` is ready).
+- Phases 0-7.5 done. **Phase 8: the build, demo mode, About and the team kit are done; the 🧑 USER steps are open**: run `dist\SLT` on another Windows PC without Python (all three modes + demo), record the 2-3 min demo video, copy the build + video to USB, hand `reports/team_kit/` to the team. Rebuild with `build.bat` after any code change (it copies `progress.json` into `dist\SLT`). Armenian audio: not recorded, the team decides later (`scripts/record_audio.py` is ready).
+- New UI strings in `reports/ui_strings.csv` not reviewed by the user yet: `about_text` (version, author), `menu_demo`, `menu_camera`, `chip_demo`, `tip_help`.
 - `models/` = **main-reg30** (FEATURES_VERSION 1); the live path adds `keep_moving_hand`. Val 65.1% with the live rule.
 - Sentence mode: segmenter defaults in `config.SEG_*`; sessions in `recordings/sessions/` (+ `reports/user_tests/phase5_sessions.json`).
 - **Kaggle: nothing is running.** The latest outputs of `asl-preprocess` and `asl-augment-0..2` are FEATURES_VERSION 2 — rerun them before training a FEATURES_VERSION 1 model. `asl-src` holds version 1 code.
@@ -57,5 +59,4 @@
 ## Ideas for later
 
 - **Two-handed signs:** the team records 5-10 two-handed words (several takes each, our camera), and the model is fine-tuned on them together with the dataset. Then soften the second-hand rule: drop the second hand only if it is **still** (path below a threshold), not simply the one that moves less, so real two-handed signs keep both hands.
-
-| 2026-10-29 | `henriksuqiasyan/asl-references v1` | CPU: Learn-mode reference per sign (held-out candidates by the reference rule, most confident one) | done (3.5 min): 250 signs, 242 top-1, median p 0.97; `assets/reference/` |
+- **5-fold check** (all 21 participants, ~4 GPU h): the user chose "not now" in Phase 8; would replace the single fold-0 number in the presentation.

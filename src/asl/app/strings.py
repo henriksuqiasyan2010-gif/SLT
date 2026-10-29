@@ -24,9 +24,16 @@ STRINGS = {
     "tab_learn": {"en": "Learn", "hy": "Ուսուցում", "ru": "Обучение"},
     "about_title": {"en": "About SLT", "hy": "SLT ծրագրի մասին", "ru": "О программе SLT"},
     "about_text": {
-        "en": "Recognizes {n_signs} isolated signs of American Sign Language (ASL) from the webcam and shows them in English, Armenian and Russian.\n\nModel: {model}. Accuracy on people it has never seen: top-1 {top1}, top-3 {top3}.\n\nData: Google — Isolated Sign Language Recognition (Kaggle).",
-        "hy": "Տեսախցիկի միջոցով ճանաչում է ամերիկյան ժեստերի լեզվի (ASL) {n_signs} առանձին ժեստ և ցույց է տալիս դրանք անգլերեն, հայերեն և ռուսերեն։\n\nՄոդել՝ {model}։ Ճշգրտությունը մարդկանց վրա, որոնց մոդելը չի տեսել՝ top-1 {top1}, top-3 {top3}։\n\nՏվյալներ՝ Google — Isolated Sign Language Recognition (Kaggle)։",
-        "ru": "Распознаёт {n_signs} отдельных жестов американского жестового языка (ASL) с веб-камеры и показывает их на английском, армянском и русском.\n\nМодель: {model}. Точность на людях, которых модель не видела: top-1 {top1}, top-3 {top3}.\n\nДанные: Google — Isolated Sign Language Recognition (Kaggle).",
+        "en": "Version {version}\n\nRecognizes {n_signs} isolated signs of American Sign Language (ASL) from the webcam and shows them in English, Armenian and Russian.\n\nModel: {model}. Accuracy on people it has never seen: top-1 {top1}, top-3 {top3}.\n\nAuthor: {author}\n\nData: Google — Isolated Sign Language Recognition (Kaggle).",
+        "hy": "Տարբերակ {version}\n\nՏեսախցիկի միջոցով ճանաչում է ամերիկյան ժեստերի լեզվի (ASL) {n_signs} առանձին ժեստ և ցույց է տալիս դրանք անգլերեն, հայերեն և ռուսերեն։\n\nՄոդել՝ {model}։ Ճշգրտությունը մարդկանց վրա, որոնց մոդելը չի տեսել՝ top-1 {top1}, top-3 {top3}։\n\nՀեղինակ՝ {author}\n\nՏվյալներ՝ Google — Isolated Sign Language Recognition (Kaggle)։",
+        "ru": "Версия {version}\n\nРаспознаёт {n_signs} отдельных жестов американского жестового языка (ASL) с веб-камеры и показывает их на английском, армянском и русском.\n\nМодель: {model}. Точность на людях, которых модель не видела: top-1 {top1}, top-3 {top3}.\n\nАвтор: {author}\n\nДанные: Google — Isolated Sign Language Recognition (Kaggle).",
+    },
+    "menu_demo": {"en": "Demo {n}: {signs}", "hy": "Դեմո {n}՝ {signs}", "ru": "Демо {n}: {signs}"},
+    "menu_camera": {"en": "Back to the camera", "hy": "Վերադառնալ տեսախցիկին", "ru": "Вернуться к камере"},
+    "chip_demo": {
+        "en": "Demo, no camera · {signs}",
+        "hy": "Դեմո, առանց տեսախցիկի · {signs}",
+        "ru": "Демо без камеры · {signs}",
     },
     "btn_record": {"en": "Record sign", "hy": "Տեսագրել ժեստը", "ru": "Записать жест"},
     "btn_speak": {"en": "Speak", "hy": "Արտասանել", "ru": "Произнести"},
@@ -166,7 +173,7 @@ STRINGS = {
     "lang_name_ru": {"en": "Русский", "hy": "Русский", "ru": "Русский"},
     "lang_name_en": {"en": "English", "hy": "English", "ru": "English"},
     "tip_settings": {"en": "Settings", "hy": "Կարգավորումներ", "ru": "Настройки"},
-    "tip_help": {"en": "About the program", "hy": "Ծրագրի մասին", "ru": "О программе"},
+    "tip_help": {"en": "Demo and About", "hy": "Դեմո և ծրագրի մասին", "ru": "Демо и о программе"},
     "key_space": {"en": "Space", "hy": "Բացատ", "ru": "Пробел"},
     "hint_space": {
         "en": "Press {key} and show a sign",
