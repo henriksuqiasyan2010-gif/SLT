@@ -207,6 +207,7 @@ UI_SHADOWS = True  # soft shadows under cards and yellow buttons (QGraphicsDropS
 # --- Build and demo (Phase 8) -------------------------------------------------------------
 APP_VERSION = "1.0.0"  # shown in About; build.bat writes it into the exe's version info
 APP_AUTHOR = "Henrik Suqiasyan"  # About (user: only this name, 2026-10-29)
+APP_USER_MODEL_ID = "SLT.SignLanguageTranslator"  # Windows taskbar: own button and icon, not python.exe's
 DEMO_DIR = ASSETS_DIR / "demo"  # the user's Phase 5 sessions (.npy + .meta.json + .json with the signs)
 DEMO_SESSIONS = ("session1", "session2", "session3")
 DEMO_RESTART_S = 5.0  # a demo session is replayed again this long after it ends (the sentence stays visible)

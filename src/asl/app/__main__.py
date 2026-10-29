@@ -39,6 +39,18 @@ def setup_logging() -> None:
     logging.getLogger("comtypes").setLevel(logging.WARNING)  # pyttsx3 / SAPI5 logs every COM cache lookup
 
 
+def set_taskbar_identity() -> None:
+    """Windows groups the taskbar button by process: without its own app id, a run from source
+    (python -m asl.app) shows python.exe's icon instead of the SLT icon."""
+    if sys.platform != "win32":
+        return
+    try:
+        import ctypes
+        ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(config.APP_USER_MODEL_ID)
+    except (AttributeError, OSError):
+        log.warning("cannot set the taskbar app id", exc_info=True)
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(prog="python -m asl.app", description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -51,6 +63,7 @@ def main(argv=None) -> int:
 
     setup_logging()
     log.info("start %s", " ".join(sys.argv))
+    set_taskbar_identity()  # before the first window
     app = QApplication(sys.argv[:1])
     theme.apply(app)  # bundled fonts, the stylesheet, the app icon
     settings = settings_io.load()
